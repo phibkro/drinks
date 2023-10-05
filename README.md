@@ -40,6 +40,14 @@ TODO: Describe the project
 
 ## Tools
 
+### React
+
+TODO
+
+### Typescript
+
+TODO
+
 ### Vite
 
 is our required frontend build tool. No configuration is required outside of whats included in the repo.
@@ -89,9 +97,23 @@ is a collection of re-usable components that you can copy and paste into your ap
 
 We use shadcn/ui components as our base and build on top of the sensible defaults it provides.
 
+### Zustand
+
+TODO
+
+### Tanstack Query
+
+TODO
+
 ## Testing
 
 TODO
+
+### Component testing with Vitest
+
+TODO
+
+### E2E with Cypress
 
 ## Linting
 
