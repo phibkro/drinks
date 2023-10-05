@@ -77,6 +77,18 @@ export const appRouter = createBrowserRouter([
   ]);
 ```
 
+### Tailwind
+
+is our choice for in-line styling.
+It is popular for good reasons.
+The development experience (DX) provides lets us focus on making a good website without having to bother with the intricacies of plain css.
+
+### shadcn/ui
+
+is a collection of re-usable components that you can copy and paste into your apps. This is not a component library in the sense that it is not a dependency.
+
+We use shadcn/ui components as our base and build on top of the sensible defaults it provides.
+
 ## Testing
 
 TODO
