@@ -16,6 +16,28 @@ TODO: Describe the project
 `npm install`\
 `npm run dev`
 
+## File structure
+
+- `app/` contains configuration files for the app
+  - `index.html` configure metadata here
+    - is technically the main entry point for the application
+  - `public/` contains public assets
+  - `src/` contains the main code for the application
+    - `components/` contains components with more complicated logic
+      - `ui/` contains reusable ui components like buttons and cards
+    - `hooks/` contains custom hooks
+    - `layouts/` contains layout components reused by multiple pages
+    - `data/` contains mock data
+    - `pages/` define separate pages in the application
+      - Importantly have the responsibility of data handling and conditional rendering
+    - `server/` contains code related to fetching data from the server
+    - `lib/` contains different utilities
+      - Basically "etc." but for code reused throughout the application
+    - `global.css` defines css variables and resets default styling
+    - `main.tsx` is the main entry point for our application
+      - Here providers, routing and styles are added to the application
+    - `router.tsx` is where we handle routing
+
 ## Tools
 
 ### Vite
