@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Martini } from "lucide-react";
 
-type ReviewData = {
+export type ReviewData = {
   comment: string;
   rating: number;
 };
