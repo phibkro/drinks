@@ -1,4 +1,3 @@
-import React from "react";
 import { ReviewData } from "./ReviewForm";
 import { Martini } from "lucide-react";
 import { ratedColor } from "./ReviewForm";
@@ -10,7 +9,7 @@ function ReviewListItem(
   key: number,
 ) {
   return (
-    <div className="flex flex-col my-[0.5em] w-[29em]">
+    <div className="flex flex-col my-[0.5em] w-[29em] border-t-2 py-[0.5em]">
       <div className="flex flex-row justify-center my-[0.5em]">
         {martiniGlasses.map((glass) =>
           glass <= rating ? (

@@ -31,8 +31,8 @@ const mockReviews: ReviewData[] = [
 
 function ReviewList() {
   return (
-    <div className="flex flex-col border-2 w-[40em] justify-center items-center">
-      <p className="text-xl my-[1em]">See if other enjoyed this drink</p>
+    <div className="flex flex-col border-t-0 border-2 w-[40em] justify-center items-center">
+      <p className="text-xl my-[1em]">Did other people like this cocktail?</p>
       {mockReviews.map((review) => (
         <ReviewListItem
           comment={review.comment}
