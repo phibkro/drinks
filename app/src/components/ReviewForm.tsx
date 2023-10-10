@@ -2,21 +2,22 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Martini } from "lucide-react";
 import { useState } from "react";
 
+//Type for data submitted through the form
 export type ReviewData = {
-  /*
-  Type for data submitted through the form
-  */
   reviewId: number;
   rating: number;
   comment: string;
 };
 
+//Color used for coloring martiniglass rating
 export const ratedColor = "#eb8634";
 
+//Array for martini glasses
 let martiniGlasses: number[] = [1, 2, 3, 4, 5];
 
 function ReviewForm() {
-  const [rating, setRating] = useState(0); //Set 0 as default rating
+  //Set 0 as default rating
+  const [rating, setRating] = useState(0);
 
   const {
     register,
@@ -25,7 +26,9 @@ function ReviewForm() {
     formState: { errors },
   } = useForm<ReviewData>();
 
-  const onSubmit: SubmitHandler<ReviewData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<ReviewData> = (
+    data, //FUnction for handling form-submitted data
+  ) => console.log(data, rating);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="reviewForm">
@@ -33,7 +36,7 @@ function ReviewForm() {
         <p className="text-xl">Give this cocktail a review!</p>
         <div className="flex flex-row my-[1em]">
           {martiniGlasses.map((glass) =>
-            glass <= rating ? (
+            glass <= rating ? ( //Places all martini glasses for rating
               <Martini
                 color={ratedColor}
                 onClick={() => setRating(glass)}
@@ -51,20 +54,22 @@ function ReviewForm() {
         </div>
         <textarea
           placeholder="Did you like your cocktail?"
-          {...register("comment", { minLength: 1 })}
+          {...register("comment", { required: true })}
           rows={4}
           cols={50}
           className="bg-gray-50 rounded text-black my-[0.5em] px-[0.2em]"
         ></textarea>
         {errors.comment && (
-          <span className=" text-black my-[0.5em] px-[0.2em]">
-            Please add a comment before submitting you review
-          </span>
+          //Error if user doesnt leave comment when reviewing drink
+          <span>Please add a comment before submitting you review</span>
         )}
-        <input
-          type="submit"
-          className="border-2 h-[2em] w-[5em] my-[0.5em] hover:cursor-pointer hover:border-white"
-        />
+        {rating > 0 && (
+          //Hides submit button if user havent rated the drink
+          <input
+            type="submit"
+            className="border-2 h-[2em] w-[5em] my-[0.5em] hover:cursor-pointer hover:border-white"
+          />
+        )}
       </div>
     </form>
   );
