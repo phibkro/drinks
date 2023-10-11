@@ -1,18 +1,4 @@
 import { DrinkDetails } from "@/data/types";
-/* interface DrinkDetails {
-  id: number;
-  name: string;
-  tags: string;
-  alcoholic: string;
-  glass: string;
-  instructions: string;
-  thumbnail: string;
-  ingredients: string[];
-  measure: string[];
-  imageSource: string;
-  imageAttribution: string;
-  creativeCommonsConfirmed: string;
-} */
 
 interface Props extends DrinkDetails {}
 export default function DrinkDetails({
@@ -21,72 +7,9 @@ export default function DrinkDetails({
   strInstructions: instructions,
   strAlcoholic: alcoholic,
   strGlass: glass,
-  strIngredient1,
-  strIngredient2,
-  strIngredient3,
-  strIngredient4,
-  strIngredient5,
-  strIngredient6,
-  strIngredient7,
-  strIngredient8,
-  strIngredient9,
-  strIngredient10,
-  strIngredient11,
-  strIngredient12,
-  strIngredient13,
-  strIngredient14,
-  strIngredient15,
-  strMeasure1,
-  strMeasure2,
-  strMeasure3,
-  strMeasure4,
-  strMeasure5,
-  strMeasure6,
-  strMeasure7,
-  strMeasure8,
-  strMeasure9,
-  strMeasure10,
-  strMeasure11,
-  strMeasure12,
-  strMeasure13,
-  strMeasure14,
-  strMeasure15,
+  ingredients,
+  measures,
 }: Props) {
-  const ingredients = [
-    strIngredient1,
-    strIngredient2,
-    strIngredient3,
-    strIngredient4,
-    strIngredient5,
-    strIngredient6,
-    strIngredient7,
-    strIngredient8,
-    strIngredient9,
-    strIngredient10,
-    strIngredient11,
-    strIngredient12,
-    strIngredient13,
-    strIngredient14,
-    strIngredient15,
-  ].filter((value) => value !== null);
-  const measures = [
-    strMeasure1,
-    strMeasure2,
-    strMeasure3,
-    strMeasure4,
-    strMeasure5,
-    strMeasure6,
-    strMeasure7,
-    strMeasure8,
-    strMeasure9,
-    strMeasure10,
-    strMeasure11,
-    strMeasure12,
-    strMeasure13,
-    strMeasure14,
-    strMeasure15,
-  ].filter((value) => value !== null);
-  // ^ transforming multiple individual variables to arrays without null values
   return (
     <div className="flex flex-wrap gap-8">
       <header className="basis-full text-left">

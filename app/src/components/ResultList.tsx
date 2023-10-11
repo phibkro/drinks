@@ -1,7 +1,8 @@
-import { ResultItem, ResultListItem } from "./ResultListItem";
+import { DrinkDetails } from "@/data/types";
+import { ResultListItem } from "./ResultListItem";
 
 interface Result {
-  results: ResultItem[];
+  results: DrinkDetails[];
 }
 
 export function ResultList(props: Result) {

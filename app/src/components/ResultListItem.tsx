@@ -1,18 +1,11 @@
-import { Key } from "react";
-
-export interface ResultItem {
-  image: string;
-  name: string;
-  ingredients: string[];
-  uniqueKey: Key;
-}
+import { DrinkDetails } from "@/data/types";
+import { Link } from "react-router-dom";
 
 export function ResultListItem({
-  name,
-  image,
+  strDrink: name,
+  strDrinkThumb: image,
   ingredients,
-  uniqueKey,
-}: ResultItem) {
+}: DrinkDetails) {
   const renderList = () => {
     const listItems = [];
     for (let i = 0; i < ingredients.length; i++) {
@@ -21,15 +14,14 @@ export function ResultListItem({
     return listItems;
   };
   return (
-    <div key={uniqueKey} className="flex">
-      <div className="basis-1/3">
-        <img src={image} alt="" />
-      </div>
-
-      <div className="basis-2/3">
-        <h1>{name}</h1>
+    <Link to={`details/${name}`}>
+      <div className="flex gap-2 hover:cursor-pointer">
+        <div className="basis-1/4">
+          <img src={image} alt={`Image of ${name}`} />
+        </div>
+        <h2>{name}</h2>
         <ul>{renderList()}</ul>
       </div>
-    </div>
+    </Link>
   );
 }
