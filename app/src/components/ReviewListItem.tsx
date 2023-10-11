@@ -1,12 +1,9 @@
 import { Martini } from "lucide-react";
 import { ratedColor } from "./ReviewForm";
 
-let martiniGlasses: number[] = [1, 2, 3, 4, 5];
+const martiniGlasses: number[] = [1, 2, 3, 4, 5];
 
-function ReviewListItem(
-  review: { comment: string; rating: number },
-  key: number,
-) {
+function ReviewListItem(review: { comment: string; rating: number }) {
   return (
     <div className="my-[0.5em] flex w-[29em] flex-col border-t-2 py-[0.5em]">
       <div className="my-[0.5em] flex flex-row justify-center">

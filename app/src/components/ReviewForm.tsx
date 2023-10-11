@@ -14,7 +14,7 @@ export type ReviewData = {
 export const ratedColor = "#eb8634";
 
 //Array for martini glasses
-let martiniGlasses: number[] = [1, 2, 3, 4, 5];
+const martiniGlasses: number[] = [1, 2, 3, 4, 5];
 
 function ReviewForm() {
   //Set 0 as default rating
@@ -23,7 +23,6 @@ function ReviewForm() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<ReviewData>();
 
