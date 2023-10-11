@@ -1,4 +1,3 @@
-import React from "react";
 import { ReviewData } from "./ReviewForm";
 import ReviewListItem from "./ReviewListItem";
 
@@ -31,8 +30,8 @@ const mockReviews: ReviewData[] = [
 
 function ReviewList() {
   return (
-    <div className="flex flex-col border-t-0 border-2 w-[40em] justify-center items-center">
-      <p className="text-xl my-[1em]">Did other people like this cocktail?</p>
+    <div className="flex w-[40em] flex-col items-center justify-center border-2 border-t-0">
+      <p className="my-[1em] text-xl">Did other people like this cocktail?</p>
       {mockReviews.map((review) => (
         <ReviewListItem
           comment={review.comment}
