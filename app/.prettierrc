@@ -20,6 +20,5 @@
   "htmlWhitespaceSensitivity": "css",
   "endOfLine": "lf",
   "embeddedLanguageFormatting": "auto",
-  "singleAttributePerLine": false,
-  "editorconfig": false
+  "singleAttributePerLine": false
 }
