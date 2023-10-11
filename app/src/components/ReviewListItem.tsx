@@ -1,17 +1,17 @@
 import { Martini } from "lucide-react";
-import { ReviewData, ratedColor } from "./ReviewForm";
+import { ratedColor } from "./ReviewForm";
 
 let martiniGlasses: number[] = [1, 2, 3, 4, 5];
 
 function ReviewListItem(
-  { comment, rating, reviewId }: ReviewData,
+  review: { comment: string; rating: number },
   key: number,
 ) {
   return (
     <div className="my-[0.5em] flex w-[29em] flex-col border-t-2 py-[0.5em]">
       <div className="my-[0.5em] flex flex-row justify-center">
         {martiniGlasses.map((glass) =>
-          glass <= rating ? (
+          glass <= review.rating ? (
             <Martini
               color={ratedColor}
               className="hover:cursor-pointer"
@@ -23,7 +23,7 @@ function ReviewListItem(
         )}
       </div>
       <div>
-        <p>{comment}</p>
+        <p>{review.comment}</p>
       </div>
     </div>
   );
