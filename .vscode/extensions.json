@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "vivaxy.vscode-conventional-commits",
+    "dbaeumer.vscode-eslint",
+    "gitlab.gitlab-workflow",
+    "christian-kohler.npm-intellisense",
+    "esbenp.prettier-vscode",
+    "yoavbls.pretty-ts-errors",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
