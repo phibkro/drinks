@@ -16,7 +16,7 @@ export const ratedColor = "#eb8634";
 //Array for martini glasses
 const martiniGlasses: number[] = [1, 2, 3, 4, 5];
 
-function ReviewForm() {
+function ReviewForm({ className }: { className?: string }) {
   //Set 0 as default rating
   const [rating, setRating] = useState(0);
 
@@ -31,7 +31,11 @@ function ReviewForm() {
   ) => console.log(data, rating);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} id="reviewForm">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      id="reviewForm"
+      className={className}
+    >
       <div className="flex h-[20em] w-[40em] flex-col items-center justify-center border-2">
         <p className="text-xl">Give this cocktail a review!</p>
         <div className="my-[1em] flex flex-row">
