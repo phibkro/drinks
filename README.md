@@ -121,6 +121,28 @@ ESlint is used for linting. Our configs lie in .eslintrc.cjs. To manually test t
 
 `npm run lint`
 
+## Formatting (Prettier)
+
+Prettier is our choice of formatter.
+To manually format the project run
+
+`npm run format`
+
+Our team prefers to use the VSCode Prettier extension with the "Format on save" option enabled.
+That way it is practically impossible to push unformatted code.
+
+`.prettierrc` contains our configurations so everyone has the same formatting rules.
+These are set to the defaults with the exception of enabling plugins.
+
+### Plugins
+
+The plugins we use are:
+
+- "prettier-plugin-organize-imports"
+- "prettier-plugin-tailwindcss"
+
+These sort and clean up our imports and tailwind classes so to avoid meaningless merge conflicts.
+
 ## Commit messages
 
 We follow the conventional commits specifications described in <https://www.conventionalcommits.org/en/v1.0.0/>
