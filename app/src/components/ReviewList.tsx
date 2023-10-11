@@ -35,13 +35,9 @@ export function ReviewListItem(review: { comment: string; rating: number }) {
       <div className="my-[0.5em] flex flex-row justify-center">
         {martiniGlasses.map((glass) =>
           glass <= review.rating ? (
-            <Martini
-              color={ratedColor}
-              className="hover:cursor-pointer"
-              key={glass}
-            />
+            <Martini color={ratedColor} key={glass} />
           ) : (
-            <Martini className="hover:cursor-pointer" key={glass} />
+            <Martini key={glass} />
           ),
         )}
       </div>
