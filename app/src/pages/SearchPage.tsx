@@ -21,7 +21,7 @@ export default function SearchPage() {
   return (
     <main className="flex">
       <div className="basis-1/4">
-        <Sidebar></Sidebar>
+        <Sidebar />
       </div>
       <div className="flex basis-3/4 flex-col gap-4">
         <Input
