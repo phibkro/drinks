@@ -1,4 +1,6 @@
 import DrinkDetails from "@/components/DrinkDetails";
+import ReviewForm from "@/components/ReviewForm";
+import ReviewList from "@/components/ReviewList";
 import * as data from "@/data/M_cocktails.json";
 import { useParams } from "react-router-dom";
 
@@ -14,8 +16,10 @@ export default function DetailsPage() {
     (drink) => drink.strDrink.toLowerCase() === drinkName.toLowerCase(),
   )[0];
   return (
-    <main>
+    <main className="flex flex-col">
       <DrinkDetails {...drinkData} />
+      <ReviewForm className="self-center" />
+      <ReviewList drinkId={Number(drinkData.idDrink)} className="self-center" />
     </main>
   );
 }
