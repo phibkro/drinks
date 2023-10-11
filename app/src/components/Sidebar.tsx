@@ -6,116 +6,49 @@ import { ratedColor } from "./ReviewForm";
 
 export function Sidebar() {
   return (
-    <div className="">
+    <div>
       <div>
         <h2 className="text-xl">Sorting</h2>
         <RadioGroup defaultValue="option-one">
-          <div className="flex items-center space-x-2">
+          <Label className="text-lg" htmlFor="option-one">
             <RadioGroupItem value="option-one" id="option-one" />
-            <Label className="text-lg" htmlFor="option-one">
-              A-Z
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
+            A-Z
+          </Label>
+          <Label className="text-lg" htmlFor="option-two">
             <RadioGroupItem value="option-two" id="option-two" />
-            <Label className="text-lg" htmlFor="option-two">
-              Z-A
-            </Label>
-          </div>
+            Z-A
+          </Label>
         </RadioGroup>
       </div>
       <div>
         <h2 className="text-xl">Alcohol</h2>
         <div className="flex">
           <Checkbox />
-          <div className="grid gap-1.5 leading-none">
-            <label
-              htmlFor="terms1"
-              className="text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Non-alcoholic
-            </label>
-          </div>
+          <label
+            htmlFor="terms1"
+            className="text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Non-alcoholic
+          </label>
         </div>
 
         <h2 className="text-xl">Rating</h2>
-        <div className="flex">
-          <Checkbox />
-          <div className="grid gap-1.5 leading-none">
+        {[...Array(5).keys()].map((n) => (
+          <div className="flex" key={n}>
+            <Checkbox />
             <label
               htmlFor="terms1"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              <Martini color={ratedColor} className="hover:cursor-pointer" />
-            </label>
+            ></label>
+            {[...Array(n + 1).keys()].map((m) => (
+              <Martini
+                color={ratedColor}
+                className="hover:cursor-pointer"
+                key={m}
+              />
+            ))}
           </div>
-        </div>
-
-        <div className="flex">
-          <Checkbox />
-          <div className="grid gap-1.5 leading-none">
-            <label
-              htmlFor="terms1"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              <div className="flex">
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div className="flex">
-          <Checkbox />
-          <div className="grid gap-1.5 leading-none">
-            <label
-              htmlFor="terms1"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              <div className="flex">
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div className="flex">
-          <Checkbox />
-          <div className="grid gap-1.5 leading-none">
-            <label
-              htmlFor="terms1"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              <div className="flex">
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div className="flex">
-          <Checkbox />
-          <div className="grid gap-1.5 leading-none">
-            <label
-              htmlFor="terms1"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              <div className="flex">
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-                <Martini color={ratedColor} className="hover:cursor-pointer" />
-              </div>
-            </label>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
