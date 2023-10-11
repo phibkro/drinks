@@ -1,5 +1,5 @@
+import { DrinkDetails } from "@/data/types";
 import { create } from "zustand";
-import type { DrinkDetails } from "@/components/DrinkDetails";
 
 type State = {
   searchResults: Array<DrinkDetails>;
