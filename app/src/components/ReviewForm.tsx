@@ -19,6 +19,7 @@ const martiniGlasses: number[] = [1, 2, 3, 4, 5];
 function ReviewForm({ className }: { className?: string }) {
   //Set 0 as default rating
   const [rating, setRating] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
 
   const {
     register,
@@ -27,8 +28,11 @@ function ReviewForm({ className }: { className?: string }) {
   } = useForm<ReviewData>();
 
   const onSubmit: SubmitHandler<ReviewData> = (
-    data, //FUnction for handling form-submitted data
-  ) => console.log(data, rating);
+    data, //Function for handling form-submitted data
+  ) => {
+    setSubmitted(true);
+    console.log(data, rating);
+  };
 
   return (
     <form
