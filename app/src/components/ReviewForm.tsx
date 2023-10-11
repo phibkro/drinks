@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 //Type for data submitted through the form
 export type ReviewData = {
   reviewId: number;
+  drinkId: number;
   rating: number;
   comment: string;
 };
