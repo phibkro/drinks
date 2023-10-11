@@ -22,7 +22,6 @@ export const appRouter = createBrowserRouter([
         path: "details",
         element: (
           <>
-            <h2>Details page</h2>
             <Outlet />
           </>
         ),

@@ -1,19 +1,15 @@
-import { Outlet } from "react-router-dom";
-import reactLogo from "./assets/react.svg";
+import { HomeIcon } from "lucide-react";
+import { Link, Outlet } from "react-router-dom";
 import { ModeToggle } from "./components/mode-toggle";
-import viteLogo from "/vite.svg";
 
 function App() {
   return (
     <div className="flex min-h-screen flex-col gap-5 p-8">
       <header>
         <nav className="flex justify-between">
-          <a href="https://vitejs.dev" target="_blank">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
+          <Link to={import.meta.env.BASE_URL}>
+            <HomeIcon />
+          </Link>
           <ModeToggle />
         </nav>
       </header>
