@@ -5,7 +5,7 @@ import viteLogo from "/vite.svg";
 
 function App() {
   return (
-    <div className="p-8 flex flex-col gap-5 min-h-screen">
+    <div className="flex min-h-screen flex-col gap-5 p-8">
       <header>
         <nav className="flex justify-between">
           <a href="https://vitejs.dev" target="_blank">

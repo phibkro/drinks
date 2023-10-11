@@ -10,5 +10,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <RouterProvider router={appRouter} />
     </ThemeProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

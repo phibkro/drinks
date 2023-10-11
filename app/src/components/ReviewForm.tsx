@@ -1,6 +1,6 @@
-import { SubmitHandler, useForm } from "react-hook-form";
 import { Martini } from "lucide-react";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 //Type for data submitted through the form
 export type ReviewData = {
@@ -32,9 +32,9 @@ function ReviewForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="reviewForm">
-      <div className="flex flex-col border-2 w-[40em] h-[20em] justify-center items-center">
+      <div className="flex h-[20em] w-[40em] flex-col items-center justify-center border-2">
         <p className="text-xl">Give this cocktail a review!</p>
-        <div className="flex flex-row my-[1em]">
+        <div className="my-[1em] flex flex-row">
           {martiniGlasses.map((glass) =>
             glass <= rating ? ( //Places all martini glasses for rating
               <Martini
@@ -57,7 +57,7 @@ function ReviewForm() {
           {...register("comment", { required: true })}
           rows={4}
           cols={50}
-          className="bg-gray-50 rounded text-black my-[0.5em] px-[0.2em]"
+          className="my-[0.5em] rounded bg-gray-50 px-[0.2em] text-black"
         ></textarea>
         {errors.comment && (
           //Error if user doesnt leave comment when reviewing drink
@@ -67,7 +67,7 @@ function ReviewForm() {
           //Hides submit button if user havent rated the drink
           <input
             type="submit"
-            className="border-2 h-[2em] w-[5em] my-[0.5em] hover:cursor-pointer hover:border-white"
+            className="my-[0.5em] h-[2em] w-[5em] border-2 hover:cursor-pointer hover:border-white"
           />
         )}
       </div>
