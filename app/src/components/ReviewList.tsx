@@ -10,7 +10,7 @@ function ReviewList({
 }) {
   return (
     <div
-      className={`flex w-[40em] flex-col items-center justify-center border-2 border-t-0 ${className}`}
+      className={`flex w-[40em] flex-col items-center justify-center border-2 ${className}`}
     >
       <p className="my-[1em] text-xl">Did other people like this cocktail?</p>
       {reviewData.reviews

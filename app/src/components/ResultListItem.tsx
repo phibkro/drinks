@@ -15,12 +15,15 @@ export function ResultListItem({
   };
   return (
     <Link to={`details/${name}`}>
-      <div className="flex gap-2 hover:cursor-pointer">
+      <div className="flex gap-4 bg-primary-foreground hover:cursor-pointer">
         <div className="basis-1/4">
           <img src={image} alt={`Image of ${name}`} />
         </div>
         <h2>{name}</h2>
-        <ul>{renderList()}</ul>
+        <div>
+          <h3>Ingredients</h3>
+          <ul>{renderList()}</ul>
+        </div>
       </div>
     </Link>
   );

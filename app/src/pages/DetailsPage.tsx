@@ -19,7 +19,7 @@ export default function DetailsPage() {
     )[0],
   );
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col gap-8">
       <DrinkDetails {...drinkData} />
       <ReviewForm className="self-center" />
       <ReviewList drinkId={Number(drinkData.idDrink)} className="self-center" />

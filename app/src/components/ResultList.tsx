@@ -10,5 +10,5 @@ export function ResultList(props: Result) {
   props.results.forEach((item) => {
     listTest.push(ResultListItem(item));
   });
-  return <div>{listTest}</div>;
+  return <div className="flex flex-col gap-5">{listTest}</div>;
 }
