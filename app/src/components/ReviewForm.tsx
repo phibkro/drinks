@@ -34,7 +34,11 @@ function ReviewForm({ className }: { className?: string }) {
     console.log(data, rating);
   };
 
-  return (
+  return submitted ? (
+    <div className="flex h-[20em] w-[40em] flex-col items-center justify-center self-center border-2">
+      <p className="text-xl">{"Thank you for submitting a review <3"}</p>
+    </div>
+  ) : (
     <form
       onSubmit={handleSubmit(onSubmit)}
       id="reviewForm"
