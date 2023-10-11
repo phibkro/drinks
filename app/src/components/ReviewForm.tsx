@@ -19,19 +19,26 @@ let martiniGlasses: number[] = [1, 2, 3, 4, 5];
 function ReviewForm() {
   //Set 0 as default rating
   const [rating, setRating] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<ReviewData>();
 
   const onSubmit: SubmitHandler<ReviewData> = (
-    data, //FUnction for handling form-submitted data
-  ) => console.log(data, rating);
+    data, //Function for handling form-submitted data
+  ) => {
+    setSubmitted(true);
+    console.log(data, rating);
+  };
 
-  return (
+  return submitted ? (
+    <div className="flex h-[20em] w-[40em] flex-col items-center justify-center border-2">
+      <p className="text-xl">{"Thank you for reviewing this drink <3"}</p>
+    </div>
+  ) : (
     <form onSubmit={handleSubmit(onSubmit)} id="reviewForm">
       <div className="flex h-[20em] w-[40em] flex-col items-center justify-center border-2">
         <p className="text-xl">Give this cocktail a review!</p>
