@@ -105,15 +105,19 @@ TODO
 
 TODO
 
-## Testing
+## Testing with Cypress
 
-TODO
+Cypress is our choice of testing library for its ease of use and its excellent E2E testing environment.
+To open the Cypress testing app run `npm run cypress:open` and it will automatically open.
+From there on you can choose whether to run component or end-to-end (E2E) tests.
 
-### Component testing with Vitest
+### Component testing
 
-TODO
+We do not write custom tests the shadcn/ui components as it is a stable "library" and we are not tinkering with its primitives.
 
-### E2E with Cypress
+### End-to-end testing
+
+Our most important tests are our e2e tests that ensures the app works as intended for our users.
 
 ## Linting
 
@@ -178,7 +182,6 @@ flowchart LR
   end
   GraphQL --> React-App
 ```
-
 
 ### Component hierarchy
 
