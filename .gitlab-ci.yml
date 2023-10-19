@@ -7,55 +7,57 @@ default:
   image: node
 
 variables:
-  ENVIRONMENT_NAMES: "main|dev"
+  ENVIRONMENT_NAMES: "/^(main|dev)/"
 
 .standard_rules:
   rules:
     - if: "$CI_PIPELINE_SOURCE == 'merge_request_event'"
-    - if: "$CI_COMMIT_BRANCH =~ /^($ENVIRONMENT_NAMES)$/"
+    - if: "$CI_COMMIT_BRANCH =~ $ENVIRONMENT_NAMES"
 
 # build stage
 build-job:
-  # test stage for now as nothing depends on the build
-  stage: test
+  stage: build
   rules:
-    - if: "$CI_COMMIT_BRANCH =~ /^($ENVIRONMENT_NAMES)$/"
+    - if: "$CI_COMMIT_BRANCH =~ $ENVIRONMENT_NAMES"
   script:
     - cd app
-    - npm ci
+    - npm install
     - npm run build
   artifacts:
     paths:
-      - "app/dist/"
+      - app/dist/
 
 # test stage
 lint:
   stage: test
   extends: .standard_rules
+  needs: []
   dependencies: []
   script:
     - cd app
-    - npm ci
+    - npm install
     - npm run lint
 
 test-components:
   stage: test
   extends: .standard_rules
   image: cypress/base
+  needs: []
   dependencies: []
   script:
     - cd app
-    - npm ci
+    - npm install
     - npm run test-components
 
 test-e2e:
   stage: test
   extends: .standard_rules
   image: cypress/base
+  needs: []
   dependencies: []
   script:
     - cd app
-    - npm ci
+    - npm install
     - npm run test-e2e
   allow_failure: true
 
@@ -63,29 +65,32 @@ test-e2e:
 
 pages:
   stage: deploy
-  image: busybox
+  image: node
   variables:
     ENVIRONMENT_NAME: "$CI_COMMIT_BRANCH"
   rules:
     # only deploy to pages if branch name is "main" or "dev"
-    - if: "$CI_COMMIT_BRANCH =~ /^($ENVIRONMENT_NAMES)$/"
+    - if: "$CI_COMMIT_BRANCH =~ $ENVIRONMENT_NAMES"
     # declare environment_name dynamically
     - if: "$CI_COMMIT_BRANCH == 'main'"
       variables:
-        ENVIRONMENT_NAME: "production"
+        ENVIRONMENT_NAME: ""
     - if: "$CI_COMMIT_BRANCH == 'dev'"
       variables:
         ENVIRONMENT_NAME: "development"
 
+  needs:
+    - job: build-job
   cache:
     # Keep previous builds
     paths:
       - public
   script:
     # deploy to branch name
-    - mv app/dist/ "public/$ENVIRONMENT_NAME"
+    - mkdir public
+    - mv app/dist public/$ENVIRONMENT_NAME
   artifacts:
     paths:
       - "public/"
   environment:
-    name: "$ENVIRONMENT_NAME"
+    name: $ENVIRONMENT_NAME
