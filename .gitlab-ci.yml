@@ -6,19 +6,16 @@ stages:
 default:
   image: node
 
-variables:
-  ENVIRONMENT_NAMES: "/^(main|dev)/"
-
 .standard_rules:
   rules:
     - if: "$CI_PIPELINE_SOURCE == 'merge_request_event'"
-    - if: "$CI_COMMIT_BRANCH =~ $ENVIRONMENT_NAMES"
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
 
 # build stage
 build-job:
   stage: build
   rules:
-    - if: "$CI_COMMIT_BRANCH =~ $ENVIRONMENT_NAMES"
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
   script:
     - cd app
     - npm install
@@ -66,18 +63,9 @@ test-e2e:
 pages:
   stage: deploy
   image: node
-  variables:
-    ENVIRONMENT_NAME: "$CI_COMMIT_BRANCH"
   rules:
     # only deploy to pages if branch name is "main" or "dev"
-    - if: "$CI_COMMIT_BRANCH =~ $ENVIRONMENT_NAMES"
-    # declare environment_name dynamically
-    - if: "$CI_COMMIT_BRANCH == 'main'"
-      variables:
-        ENVIRONMENT_NAME: ""
-    - if: "$CI_COMMIT_BRANCH == 'dev'"
-      variables:
-        ENVIRONMENT_NAME: "development"
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
 
   needs:
     - job: build-job
@@ -88,9 +76,9 @@ pages:
   script:
     # deploy to branch name
     - mkdir public
-    - mv app/dist public/$ENVIRONMENT_NAME
+    - mv app/dist public/
   artifacts:
     paths:
       - "public/"
   environment:
-    name: $ENVIRONMENT_NAME
+    name: production
