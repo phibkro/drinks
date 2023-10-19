@@ -1,0 +1,91 @@
+stages:
+  - build
+  - test
+  - deploy
+
+default:
+  image: node
+
+variables:
+  ENVIRONMENT_NAMES: "main|dev"
+
+.standard_rules:
+  rules:
+    - if: "$CI_PIPELINE_SOURCE == 'merge_request_event'"
+    - if: "$CI_COMMIT_BRANCH =~ /^($ENVIRONMENT_NAMES)$/"
+
+# build stage
+build-job:
+  # test stage for now as nothing depends on the build
+  stage: test
+  rules:
+    - if: "$CI_COMMIT_BRANCH =~ /^($ENVIRONMENT_NAMES)$/"
+  script:
+    - cd app
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - "app/dist/"
+
+# test stage
+lint:
+  stage: test
+  extends: .standard_rules
+  dependencies: []
+  script:
+    - cd app
+    - npm ci
+    - npm run lint
+
+test-components:
+  stage: test
+  extends: .standard_rules
+  image: cypress/base
+  dependencies: []
+  script:
+    - cd app
+    - npm ci
+    - npm run test-components
+
+test-e2e:
+  stage: test
+  extends: .standard_rules
+  image: cypress/base
+  dependencies: []
+  script:
+    - cd app
+    - npm ci
+    - npm run test-e2e
+  allow_failure: true
+
+# deploy stage
+
+pages:
+  stage: deploy
+  image: busybox
+  variables:
+    ENVIRONMENT_NAME: "$CI_COMMIT_BRANCH"
+  rules:
+    # only deploy to pages if branch name is "main" or "dev"
+    - if: "$CI_COMMIT_BRANCH =~ /^($ENVIRONMENT_NAMES)$/"
+    # declare environment_name dynamically
+    - if: "$CI_COMMIT_BRANCH == 'main'"
+      variables:
+        ENVIRONMENT_NAME: "production"
+    - if: "$CI_COMMIT_BRANCH == 'dev'"
+      variables:
+        ENVIRONMENT_NAME: "development"
+
+  cache:
+    # Keep previous builds
+    paths:
+      - public
+  script:
+    # deploy to branch name
+    - mv app/dist/ "public/$ENVIRONMENT_NAME"
+  artifacts:
+    paths:
+      - "public/"
+  environment:
+    name: "$ENVIRONMENT_NAME"
