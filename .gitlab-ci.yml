@@ -6,10 +6,13 @@ stages:
 default:
   image: node
 
+variables:
+  ENVIRONMENTS: /^(main|dev)/
+
 .standard_rules:
   rules:
     - if: "$CI_PIPELINE_SOURCE == 'merge_request_event'"
-    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+    - if: "$CI_COMMIT_BRANCH =~ $ENVIRONMENTS"
 
 # build stage
 build-job:
@@ -59,14 +62,12 @@ test-e2e:
   allow_failure: true
 
 # deploy stage
-
 pages:
   stage: deploy
   image: node
   rules:
     # only deploy to pages if branch name is "main" or "dev"
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
-
   needs:
     - job: build-job
   cache:
