@@ -1,6 +1,6 @@
 import { HomeIcon } from "lucide-react";
 import { Link, Outlet } from "react-router-dom";
-import { ModeToggle } from "./components/mode-toggle";
+import { ModeToggle } from "./components/ui/ModeToggle";
 
 function App() {
   return (
