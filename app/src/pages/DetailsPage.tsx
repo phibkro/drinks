@@ -1,7 +1,7 @@
 import DrinkDetails from "@/components/DrinkDetails";
 import ReviewForm from "@/components/ReviewForm";
 import ReviewList from "@/components/ReviewList";
-import * as data from "@/data/M_cocktails.json";
+import * as data from "@/data/m_cocktails.json";
 import { transformCocktailDBResult } from "@/lib/utils";
 import { useParams } from "react-router-dom";
 

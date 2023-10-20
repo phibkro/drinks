@@ -1,7 +1,7 @@
 import { ResultList } from "@/components/ResultList";
 import { Sidebar } from "@/components/Sidebar";
 import { Input } from "@/components/ui/Input";
-import * as data from "@/data/M_cocktails.json";
+import * as data from "@/data/m_cocktails.json";
 import useCocktailStore from "@/hooks/useCocktailStore";
 import { transformCocktailDBResult } from "@/lib/utils";
 import { useState } from "react";
