@@ -25,7 +25,7 @@ export default function SearchPage() {
       </div>
       <div className="flex basis-3/4 flex-col gap-4">
         <Input
-          placeholder={'"Margharita"'}
+          placeholder={'"Margarita"'}
           onChange={(event) => {
             setInputValue(event.target.value);
           }}
