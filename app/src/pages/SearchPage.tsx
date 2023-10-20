@@ -37,7 +37,11 @@ export default function SearchPage() {
             }
           }}
         />
-        <ResultList results={searchResults} />
+        {searchResults.length ? (
+          <ResultList results={searchResults} />
+        ) : (
+          <p>No results</p>
+        )}
       </div>
     </main>
   );
