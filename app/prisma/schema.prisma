@@ -24,3 +24,15 @@ model Ingredients {
   ingredient String
   drink      HasIngredient[]
 }
+
+model HasIngredient {
+  drinkId Int
+  drink   Drink @relation(fields: [drinkId], references: [id])
+
+  ingredientId Int
+  Ingredients  Ingredients @relation(fields: [ingredientId], references: [id])
+
+  measure String
+
+  @@id([drinkId, ingredientId])
+}
