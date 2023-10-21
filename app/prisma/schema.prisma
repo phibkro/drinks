@@ -36,3 +36,13 @@ model HasIngredient {
 
   @@id([drinkId, ingredientId])
 }
+
+model Review {
+  id Int @id @default(autoincrement())
+
+  drinkId Int
+  drink   Drink @relation(fields: [drinkId], references: [id])
+
+  rating      Int
+  textContent String
+}
