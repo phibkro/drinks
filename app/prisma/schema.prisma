@@ -9,3 +9,18 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Drink {
+  id           Int             @id @default(autoincrement())
+  name         String
+  instructions String
+  alcoholic    Boolean
+  ingredients  HasIngredient[]
+  reviews      Review[]
+}
+
+model Ingredients {
+  id         Int             @id @default(autoincrement())
+  ingredient String
+  drink      HasIngredient[]
+}
