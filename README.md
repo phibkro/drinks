@@ -105,15 +105,19 @@ TODO
 
 TODO
 
-## Testing
+## Testing with Cypress
 
-TODO
+Cypress is our choice of testing library for its ease of use and its excellent E2E testing environment.
+To open the Cypress testing app run `npm run cypress:open` and it will automatically open.
+From there on you can choose whether to run component or end-to-end (E2E) tests.
 
-### Component testing with Vitest
+### Component testing
 
-TODO
+We do not write custom tests the shadcn/ui components as it is a stable "library" and we are not tinkering with its primitives.
 
-### E2E with Cypress
+### End-to-end testing
+
+Our most important tests are our e2e tests that ensures the app works as intended for our users.
 
 ## Linting
 
@@ -159,4 +163,78 @@ We also use the conventional commits VSCode extension for ease of use
 [optional body]
 
 [optional footer(s)]
+```
+
+## Diagram
+
+```mermaid
+flowchart LR
+  subgraph FRONTEND
+    React-App
+  end
+  subgraph DATABASE
+    DB
+  end
+
+    DB[(PostgresDB)] --> Prisma 
+  subgraph BACKEND
+    Prisma --> GraphQL
+  end
+  GraphQL --> React-App
+```
+
+### Component hierarchy
+
+```mermaid
+classDiagram
+
+cocktailStore --> App
+
+App --> SearchPage
+
+SearchPage <--> cocktailStore
+SearchPage --> DetailsPage
+SearchPage --> ResultList
+
+DetailsPage --> DrinkDetails
+DetailsPage --> ReviewForm
+DetailsPage --> ReviewList
+ReviewList <..> ReviewListItem
+
+
+class cocktailStore {
+  searchResults
+
+  setSearchResults()
+  clearSearchResults()
+}
+class App {
+  useQuery()
+}
+
+class SearchPage {
+  drink[] searchResults
+  String inputValue
+}
+class ResultList {
+  drink[]
+}
+
+class DetailsPage {
+  String drinkName
+}
+class DrinkDetails {
+  drinkDetails
+}
+class ReviewForm {
+  int rating
+  string text
+}
+class ReviewList {
+  drinkId
+  review
+}
+class ReviewListItem {
+  review
+}
 ```
