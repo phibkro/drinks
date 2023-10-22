@@ -11,28 +11,29 @@ datasource db {
 }
 
 model Drink {
-  id           Int             @id @default(autoincrement())
-  name         String
-  instructions String
-  alcoholic    Boolean
-  ingredients  HasIngredient[]
-  reviews      Review[]
+  id                 Int       @id @default(autoincrement())
+  name               String
+  instructions       String
+  alcoholic          Boolean
+  ingredientMeasures Measure[]
+  reviews            Review[]
 }
 
 model Ingredient {
-  id         Int             @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   ingredient String
-  drink      HasIngredient[]
+  measure    Measure[]
 }
 
-model HasIngredient {
+model Measure {
   drinkId Int
   drink   Drink @relation(fields: [drinkId], references: [id])
 
   ingredientId Int
   Ingredients  Ingredient @relation(fields: [ingredientId], references: [id])
 
-  measure String
+  unit     String
+  quantity Float
 
   @@id([drinkId, ingredientId])
 }
