@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
+    "build": "tsc",
+    "start": "npm run build && node ./dist/index.js",
+    "test": "echo \"no tests yet\" "
   },
   "keywords": [],
   "author": "",

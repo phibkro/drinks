@@ -3,6 +3,15 @@
   "version": "0.0.0",
   "description": "Share your drink recipes and review others!",
   "main": "index.js",
+  "scripts": {
+    "start": "npm run app:start & npm run server:start",
+    "dev": "npm start && npm run app:dev",
+    "test": "npm run app:test & cd server && npm test",
+    "app:dev": "cd app && npm run dev",
+    "app:start": "cd app && npm run build && npm run preview",
+    "app:test": "cd app && npm run test",
+    "server:start": "cd server && npm start"
+  },
   "repository": {
     "type": "git",
     "url": "https://gitlab.stud.idi.ntnu.no/it2810-h23/Team-40/prosjekt2"

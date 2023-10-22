@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier ./src --write",
     "preview": "vite preview",
+    "test": "npm run lint && npm run test-components && npm run test-e2e",
     "test-e2e": "cypress run",
     "test-components": "cypress run --component",
     "cypress:open": "cypress open"
