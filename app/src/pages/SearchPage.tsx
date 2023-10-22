@@ -1,10 +1,10 @@
 import { ResultList } from "@/components/ResultList";
 import { Sidebar } from "@/components/Sidebar";
 import { Input } from "@/components/ui/Input";
-import * as data from "@/data/m_cocktails.json";
 import useCocktailStore from "@/hooks/useCocktailStore";
 import { transformCocktailDBResult } from "@/lib/utils";
 import { useState } from "react";
+import * as data from "../../../data/m_cocktails.json";
 
 export default function SearchPage() {
   const { searchResults, setSearchResults } = useCocktailStore();

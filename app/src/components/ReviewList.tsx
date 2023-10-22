@@ -1,5 +1,5 @@
-import * as reviewData from "@/data/mock_reviews.json";
 import { Martini } from "lucide-react";
+import * as reviewData from "../../../data/mock_reviews.json";
 import { ratedColor } from "./ReviewForm";
 
 export default function ReviewList({

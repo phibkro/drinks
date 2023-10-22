@@ -1,6 +1,6 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
+import * as data from "../../data/m_cocktails.json";
 import App from "./App";
-import * as data from "./data/m_cocktails.json";
 import DetailsPage from "./pages/DetailsPage";
 import SearchPage from "./pages/SearchPage";
 
