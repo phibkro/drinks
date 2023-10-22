@@ -165,22 +165,28 @@ We also use the conventional commits VSCode extension for ease of use
 [optional footer(s)]
 ```
 
-## Diagram
+## Diagrams
+
+### Our Tech-stack
 
 ```mermaid
 flowchart LR
-  subgraph FRONTEND
-    React-App
-  end
-  subgraph DATABASE
-    DB
-  end
+  DB_ACCESS --> Prisma
 
-    DB[(PostgresDB)] --> Prisma 
-  subgraph BACKEND
-    Prisma --> GraphQL
-  end
-  GraphQL --> React-App
+  subgraph FULL_STACK
+    direction LR
+      DB[(PostgresDB)] --> Prisma 
+      Prisma --> ApolloServer
+      subgraph BACKEND
+        DB
+        Prisma
+        ApolloServer
+      end
+      ApolloServer --> ApolloClient
+      subgraph FRONTEND
+        ApolloClient --> React-App
+      end
+    end
 ```
 
 ### Component hierarchy
