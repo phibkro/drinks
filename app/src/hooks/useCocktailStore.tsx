@@ -1,5 +1,5 @@
-import { DrinkDetails } from "@/data/types";
 import { create } from "zustand";
+import { DrinkDetails } from "../../../data/types";
 
 type State = {
   searchResults: Array<DrinkDetails>;

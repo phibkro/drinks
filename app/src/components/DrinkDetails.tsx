@@ -1,4 +1,4 @@
-import { DrinkDetails } from "@/data/types";
+import { DrinkDetails } from "../../../data/types";
 
 interface Props extends DrinkDetails {}
 export default function DrinkDetails({

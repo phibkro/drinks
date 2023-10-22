@@ -1,5 +1,5 @@
-import { DrinkDetails } from "@/data/types";
 import { Link } from "react-router-dom";
+import { DrinkDetails } from "../../../data/types";
 
 interface Result {
   results: DrinkDetails[];
