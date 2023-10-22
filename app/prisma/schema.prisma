@@ -19,7 +19,7 @@ model Drink {
   reviews      Review[]
 }
 
-model Ingredients {
+model Ingredient {
   id         Int             @id @default(autoincrement())
   ingredient String
   drink      HasIngredient[]
@@ -30,7 +30,7 @@ model HasIngredient {
   drink   Drink @relation(fields: [drinkId], references: [id])
 
   ingredientId Int
-  Ingredients  Ingredients @relation(fields: [ingredientId], references: [id])
+  Ingredients  Ingredient @relation(fields: [ingredientId], references: [id])
 
   measure String
 
