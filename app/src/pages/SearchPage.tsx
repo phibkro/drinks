@@ -1,7 +1,7 @@
 import { ResultList } from "@/components/ResultList";
 import { Sidebar } from "@/components/Sidebar";
-import { Input } from "@/components/ui/input";
-import * as data from "@/data/M_cocktails.json";
+import { Input } from "@/components/ui/Input";
+import * as data from "@/data/m_cocktails.json";
 import useCocktailStore from "@/hooks/useCocktailStore";
 import { transformCocktailDBResult } from "@/lib/utils";
 import { useState } from "react";
@@ -25,7 +25,7 @@ export default function SearchPage() {
       </div>
       <div className="flex basis-3/4 flex-col gap-4">
         <Input
-          placeholder={'"Margharita"'}
+          placeholder={'"Margarita"'}
           onChange={(event) => {
             setInputValue(event.target.value);
           }}
@@ -37,7 +37,11 @@ export default function SearchPage() {
             }
           }}
         />
-        <ResultList results={searchResults} />
+        {searchResults.length ? (
+          <ResultList results={searchResults} />
+        ) : (
+          <p>No results</p>
+        )}
       </div>
     </main>
   );

@@ -1,4 +1,4 @@
-import * as reviewData from "@/data/mockReviews.json";
+import * as reviewData from "@/data/mock_reviews.json";
 import { Martini } from "lucide-react";
 import { ratedColor } from "./ReviewForm";
 
