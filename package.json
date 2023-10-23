@@ -4,6 +4,7 @@
   "description": "Share your drink recipes and review others!",
   "main": "index.js",
   "scripts": {
+    "install": "cd app && npm install & cd server && npm install",
     "start": "npm run app:start & npm run server:start",
     "dev": "npm start && npm run app:dev",
     "test": "npm run app:test & cd server && npm test",
