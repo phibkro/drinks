@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 const typeDefs = `#graphql
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-  # TODO: This "Book" type defines the queryable fields for every book in our data source.
+  # This "Book" type defines the queryable fields for every book in our data source.
   type Book {
     title: String
     author: String
