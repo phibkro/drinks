@@ -10,20 +10,52 @@ const prisma = new PrismaClient();
 const typeDefs = `#graphql
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-  # This "Book" type defines the queryable fields for every book in our data source.
+  # TODO: This "Book" type defines the queryable fields for every book in our data source.
   type Book {
     title: String
     author: String
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  # TODO: Drink type should contain all properties defined in prisma.schema
+  type Drink {
+    id: ID!
+  }
+
+  # TODO: Ingredient type should contain id, name, not measure, and drinks
+  # Think about why this makes sense
+  type Ingredient {
+  }
+
+  # Measure type should not be defined
+  # Think about why this makes sense
+
+  # TODO: Review type should contain id, drink, rating and textContent
+  type Review {
+  }
+
+  # You should be able to query
+    # drink
+      # TODO: all drinks
+      # TODO: single drink by id
+      # TODO: single drink by name
+    # ingredient
+      # TODO: all ingredients
+      # TODO: single ingredient by id
+      # TODO: single ingredient by name
+    # review
+      # TODO: all reviews for a drink
+      # TODO: all reviews
+      # TODO single review by id
   type Query {
     books: [Book]
   }
+  # You should be able to mutate
+    # TODO: create a review
+      # defined with a rating
+      # defined with textContent
 `;
 
+// Temporary static data
 const books = [
   {
     title: "The Awakening",
@@ -38,6 +70,8 @@ const books = [
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
+  // TODO: Query ingredients by drink by
+  // getting all ingredients for measures in a drink
   Query: {
     books: () => books,
   },
