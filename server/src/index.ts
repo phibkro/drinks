@@ -1,5 +1,8 @@
 import { ApolloServer } from "@apollo/server";
+import { PrismaClient } from "@prisma/client";
 import { startStandaloneServer } from "@apollo/server/standalone";
+
+const prisma = new PrismaClient();
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
