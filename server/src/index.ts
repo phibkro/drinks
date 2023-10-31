@@ -1,5 +1,5 @@
 import { ApolloServer } from "@apollo/server";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { startStandaloneServer } from "@apollo/server/standalone";
 
 const prisma = new PrismaClient();
@@ -17,8 +17,14 @@ const typeDefs = `#graphql
   }
 
   # TODO: Drink type should contain all properties defined in prisma.schema
+  # Skal id ha type ID! ?
   type Drink {
     id: ID!
+    name: String!
+    instructions: String!
+    alcoholic: Boolean!
+    ingredientMeasures: [Measure!]
+    reviews: Review[]
   }
 
   # TODO: Ingredient type should contain id, name, not measure, and drinks
@@ -53,7 +59,7 @@ const typeDefs = `#graphql
     # TODO: create a review
       # defined with a rating
       # defined with textContent
-`;
+`
 
 // Temporary static data
 const books = [
@@ -74,6 +80,12 @@ const resolvers = {
   // getting all ingredients for measures in a drink
   Query: {
     books: () => books,
+    allDrinks: () => prisma.drink.findMany,
+    drinkById: (drinkId: number) => prisma.drink.findUniqueOrThrow({
+      where: {
+        id: drinkId
+      }
+    }),
   },
 };
 
