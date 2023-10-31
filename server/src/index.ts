@@ -21,6 +21,11 @@ const typeDefs = `#graphql
   # TODO: Drink type should contain all properties defined in prisma.schema
   type Drink {
     id: ID!
+    name: String!
+    instructions: String!
+    alcoholic: Boolean!
+    ingredientMeasures: [Measure!]
+    reviews: Review[]
   }
 
   type Ingredient {
@@ -76,6 +81,12 @@ const resolvers = {
   // getting all ingredients for measures in a drink
   Query: {
     books: () => books,
+    allDrinks: () => prisma.drink.findMany(),
+    drinkById: (drinkId: number) => prisma.drink.findUnique({
+      where: {
+        id: drinkId
+      }
+    }),
     ingredients: () => prisma.ingredient.findMany(),
     ingredient: (_parent, args) =>
       prisma.ingredient.findUnique({ where: { id: args.id } }),
