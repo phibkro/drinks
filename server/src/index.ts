@@ -82,14 +82,12 @@ const resolvers = {
   // getting all ingredients for measures in a drink
   Query: {
     books: () => books,
-<<<<<<< server/src/index.ts
     allDrinks: () => prisma.drink.findMany(),
     drinkById: (drinkId: number) => prisma.drink.findUniqueOrThrow({
       where: {
         id: drinkId
       }
     }),
-=======
     ingredients: () => prisma.ingredient.findMany(),
     ingredient: (_parent, args) =>
       prisma.ingredient.findUnique({ where: { id: args.id } }),
@@ -97,7 +95,6 @@ const resolvers = {
       prisma.ingredient.findFirst({
         where: { name: args.name },
       }), */
->>>>>>> server/src/index.ts
   },
 };
 
