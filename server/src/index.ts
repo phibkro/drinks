@@ -1,3 +1,5 @@
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { addMocksToSchema } from "@graphql-tools/mock";
 import { ApolloServer } from "@apollo/server";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { startStandaloneServer } from "@apollo/server/standalone";
@@ -27,9 +29,10 @@ const typeDefs = `#graphql
     reviews: Review[]
   }
 
-  # TODO: Ingredient type should contain id, name, not measure, and drinks
-  # Think about why this makes sense
   type Ingredient {
+    id: ID!
+    name: String!
+    measure: [Measure!]
   }
 
   # Measure type should not be defined
@@ -44,16 +47,15 @@ const typeDefs = `#graphql
       # TODO: all drinks
       # TODO: single drink by id
       # TODO: single drink by name
-    # ingredient
-      # TODO: all ingredients
-      # TODO: single ingredient by id
-      # TODO: single ingredient by name
     # review
       # TODO: all reviews for a drink
       # TODO: all reviews
       # TODO single review by id
   type Query {
     books: [Book]
+    ingredients: [Ingredient]
+    ingredient(id: ID!): Ingredient
+    # ingredientByName(name: String!): Ingredient
   }
   # You should be able to mutate
     # TODO: create a review
@@ -80,21 +82,44 @@ const resolvers = {
   // getting all ingredients for measures in a drink
   Query: {
     books: () => books,
-    allDrinks: () => prisma.drink.findMany,
+<<<<<<< server/src/index.ts
+    allDrinks: () => prisma.drink.findMany(),
     drinkById: (drinkId: number) => prisma.drink.findUniqueOrThrow({
       where: {
         id: drinkId
       }
     }),
+=======
+    ingredients: () => prisma.ingredient.findMany(),
+    ingredient: (_parent, args) =>
+      prisma.ingredient.findUnique({ where: { id: args.id } }),
+    /* ingredientByName: (_parent, args) =>
+      prisma.ingredient.findFirst({
+        where: { name: args.name },
+      }), */
+>>>>>>> server/src/index.ts
   },
 };
 
+const environment = process.env.NODE_ENV || "development";
+
+const server =
+  environment === "production"
+    ? new ApolloServer({
+        typeDefs,
+        resolvers,
+      })
+    : new ApolloServer({
+        schema: addMocksToSchema({
+          schema: makeExecutableSchema({ typeDefs, resolvers }),
+          mocks: {
+            // TODO: Add mocks for all types
+          },
+          preserveResolvers: true,
+        }),
+      });
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
