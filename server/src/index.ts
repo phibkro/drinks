@@ -1,3 +1,5 @@
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { addMocksToSchema } from "@graphql-tools/mock";
 import { ApolloServer } from "@apollo/server";
 import { PrismaClient } from "@prisma/client";
 import { startStandaloneServer } from "@apollo/server/standalone";
@@ -77,12 +79,25 @@ const resolvers = {
   },
 };
 
+const environment = process.env.NODE_ENV || "development";
+
+const server =
+  environment === "production"
+    ? new ApolloServer({
+        typeDefs,
+        resolvers,
+      })
+    : new ApolloServer({
+        schema: addMocksToSchema({
+          schema: makeExecutableSchema({ typeDefs, resolvers }),
+          mocks: {
+            // TODO: Add mocks for all types
+          },
+          preserveResolvers: true,
+        }),
+      });
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
