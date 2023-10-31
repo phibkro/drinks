@@ -21,9 +21,10 @@ const typeDefs = `#graphql
     id: ID!
   }
 
-  # TODO: Ingredient type should contain id, name, not measure, and drinks
-  # Think about why this makes sense
   type Ingredient {
+    id: ID!
+    name: String!
+    measure: [Measure!]
   }
 
   # Measure type should not be defined
@@ -38,16 +39,15 @@ const typeDefs = `#graphql
       # TODO: all drinks
       # TODO: single drink by id
       # TODO: single drink by name
-    # ingredient
-      # TODO: all ingredients
-      # TODO: single ingredient by id
-      # TODO: single ingredient by name
     # review
       # TODO: all reviews for a drink
       # TODO: all reviews
       # TODO single review by id
   type Query {
     books: [Book]
+    ingredients: [Ingredient]
+    ingredient(id: ID!): Ingredient
+    # ingredientByName(name: String!): Ingredient
   }
   # You should be able to mutate
     # TODO: create a review
@@ -74,6 +74,13 @@ const resolvers = {
   // getting all ingredients for measures in a drink
   Query: {
     books: () => books,
+    ingredients: () => prisma.ingredient.findMany(),
+    ingredient: (_parent, args) =>
+      prisma.ingredient.findUnique({ where: { id: args.id } }),
+    /* ingredientByName: (_parent, args) =>
+      prisma.ingredient.findFirst({
+        where: { name: args.name },
+      }), */
   },
 };
 
