@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { addMocksToSchema } from "@graphql-tools/mock";
 import { ApolloServer } from "@apollo/server";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { startStandaloneServer } from "@apollo/server/standalone";
 
 const prisma = new PrismaClient();
@@ -19,7 +19,6 @@ const typeDefs = `#graphql
   }
 
   # TODO: Drink type should contain all properties defined in prisma.schema
-  # Skal id ha type ID! ?
   type Drink {
     id: ID!
     name: String!
@@ -61,7 +60,7 @@ const typeDefs = `#graphql
     # TODO: create a review
       # defined with a rating
       # defined with textContent
-`
+`;
 
 // Temporary static data
 const books = [
@@ -83,7 +82,7 @@ const resolvers = {
   Query: {
     books: () => books,
     allDrinks: () => prisma.drink.findMany(),
-    drinkById: (drinkId: number) => prisma.drink.findUniqueOrThrow({
+    drinkById: (drinkId: number) => prisma.drink.findUnique({
       where: {
         id: drinkId
       }
