@@ -39,6 +39,10 @@ const typeDefs = `#graphql
 
   # TODO: Review type should contain id, drink, rating and textContent
   type Review {
+    id: ID!
+    drink: Drink!
+    rating: Int
+    textContent: String!
   }
 
   # You should be able to query
