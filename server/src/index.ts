@@ -103,7 +103,10 @@ const resolvers = {
       prisma.ingredient.findFirst({
         where: { name: args.name },
       }), */
+   //return all reviews
+    allReviews: () => prisma.review.findMany(),
 
+  
  
 
 
