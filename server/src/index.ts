@@ -18,7 +18,6 @@ const typeDefs = `#graphql
     author: String
   }
 
-  # TODO: Drink type should contain all properties defined in prisma.schema
   type Drink {
     id: ID!
     name: String!
@@ -37,7 +36,6 @@ const typeDefs = `#graphql
   # Measure type should not be defined
   # Think about why this makes sense
 
-  # TODO: Review type should contain id, drink, rating and textContent
   type Review {
     id: ID!
     drink: Drink!
@@ -50,10 +48,6 @@ const typeDefs = `#graphql
       # TODO: all drinks
       # TODO: single drink by id
       # TODO: single drink by name
-    # review
-      # TODO: all reviews for a drink
-      # TODO: all reviews
-      # TODO single review by id
   type Query {
     books: [Book]
     ingredients: [Ingredient]
@@ -62,8 +56,6 @@ const typeDefs = `#graphql
     allReviews: [Review]
     reviewsByDrinkId(id: ID!): [Review]
     reviewById(id: ID!): Review
-
-
   }
   # You should be able to mutate
     # TODO: create a review
@@ -91,11 +83,12 @@ const resolvers = {
   Query: {
     books: () => books,
     allDrinks: () => prisma.drink.findMany(),
-    drinkById: (drinkId: number) => prisma.drink.findUnique({
-      where: {
-        id: drinkId
-      }
-    }),
+    drinkById: (drinkId: number) =>
+      prisma.drink.findUnique({
+        where: {
+          id: drinkId,
+        },
+      }),
     ingredients: () => prisma.ingredient.findMany(),
     ingredient: (_parent, args) =>
       prisma.ingredient.findUnique({ where: { id: args.id } }),
@@ -103,28 +96,27 @@ const resolvers = {
       prisma.ingredient.findFirst({
         where: { name: args.name },
       }), */
-   //return all reviews
+    //return all reviews
     allReviews: () => prisma.review.findMany(),
 
     //return reviews of spesific drink
-    reviewsByDrinkId: (drinkId: number) => prisma.review.findMany({
-      where: {
-        drink: {
-          id: drinkId
-        }
-       }
-    }),
+    reviewsByDrinkId: (drinkId: number) =>
+      prisma.review.findMany({
+        where: {
+          drink: {
+            id: drinkId,
+          },
+        },
+      }),
 
     //return review by given id
-    reviewById: (reviewId: number) => prisma.review.findUnique({
-      where: {
-        id: reviewId
-      }
-    })
- 
-
-    },
-
+    reviewById: (reviewId: number) =>
+      prisma.review.findUnique({
+        where: {
+          id: reviewId,
+        },
+      }),
+  },
 };
 
 const environment = process.env.NODE_ENV || "development";
