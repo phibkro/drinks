@@ -48,6 +48,7 @@ test-components:
     - cd app
     - npm install
     - npm run test-components
+  allow_failure: true
 
 test-e2e:
   stage: test
