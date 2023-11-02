@@ -57,10 +57,9 @@ const typeDefs = `#graphql
     reviewsByDrinkId(id: ID!): [Review]
     reviewById(id: ID!): Review
   }
-  # You should be able to mutate
-    # TODO: create a review
-      # defined with a rating
-      # defined with textContent
+  type Mutation {
+    addReview(drinkId: ID!, rating: Int!, textContent: String!): Review
+  }
 `;
 
 // Temporary static data
@@ -114,6 +113,20 @@ const resolvers = {
       prisma.review.findUnique({
         where: {
           id: reviewId,
+        },
+      }),
+  },
+  Mutation: {
+    addReview: (_parent, args) =>
+      prisma.review.create({
+        data: {
+          drink: {
+            connect: {
+              id: args.drinkId,
+            },
+          },
+          rating: args.rating,
+          textContent: args.textContent,
         },
       }),
   },
