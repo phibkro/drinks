@@ -106,8 +106,15 @@ const resolvers = {
    //return all reviews
     allReviews: () => prisma.review.findMany(),
 
-  
- 
+    //return reviews of spesific drink
+    reviewsByDrinkId: (drinkId: number) => prisma.review.findMany({
+      where: {
+        drink: {
+          id: drinkId
+        }
+       }
+    }),
+
 
 
     },
