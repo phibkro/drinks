@@ -115,7 +115,13 @@ const resolvers = {
        }
     }),
 
-
+    //return review by given id
+    reviewById: (reviewId: number) => prisma.review.findUnique({
+      where: {
+        id: reviewId
+      }
+    })
+ 
 
     },
 
