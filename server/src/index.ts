@@ -41,7 +41,7 @@ const typeDefs = `#graphql
   type Review {
     id: ID!
     drink: Drink!
-    rating: Int
+    rating: Int!
     textContent: String!
   }
 
@@ -59,6 +59,11 @@ const typeDefs = `#graphql
     ingredients: [Ingredient]
     ingredient(id: ID!): Ingredient
     # ingredientByName(name: String!): Ingredient
+    allReviews: [Review]
+    reviewsByDrinkId(id: ID!): [Review]
+    reviewById(id: ID!): Review
+
+
   }
   # You should be able to mutate
     # TODO: create a review
@@ -98,7 +103,12 @@ const resolvers = {
       prisma.ingredient.findFirst({
         where: { name: args.name },
       }), */
-  },
+
+ 
+
+
+    },
+
 };
 
 const environment = process.env.NODE_ENV || "development";
