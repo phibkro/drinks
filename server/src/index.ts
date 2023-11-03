@@ -10,14 +10,6 @@ const prisma = new PrismaClient();
 // that together define the "shape" of queries that are executed against
 // your data.
 const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
-  }
-
   type Drink {
     id: ID!
     name: String!
@@ -33,9 +25,6 @@ const typeDefs = `#graphql
     measure: [Measure!]
   }
 
-  # Measure type should not be defined
-  # Think about why this makes sense
-
   type Review {
     id: ID!
     drink: Drink!
@@ -43,16 +32,13 @@ const typeDefs = `#graphql
     textContent: String!
   }
 
-  # You should be able to query
-    # drink
-      # TODO: all drinks
-      # TODO: single drink by id
-      # TODO: single drink by name
   type Query {
-    books: [Book]
+    allDrinks: [Drink]
+    drinkById(id: ID!): Drink
+
     ingredients: [Ingredient]
     ingredient(id: ID!): Ingredient
-    # ingredientByName(name: String!): Ingredient
+
     allReviews: [Review]
     reviewsByDrinkId(id: ID!): [Review]
     reviewById(id: ID!): Review
@@ -62,25 +48,12 @@ const typeDefs = `#graphql
   }
 `;
 
-// Temporary static data
-const books = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
-
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
   // TODO: Query ingredients by drink by
   // getting all ingredients for measures in a drink
   Query: {
-    books: () => books,
     allDrinks: () => prisma.drink.findMany(),
     drinkById: (drinkId: number) =>
       prisma.drink.findUnique({
@@ -91,14 +64,8 @@ const resolvers = {
     ingredients: () => prisma.ingredient.findMany(),
     ingredient: (_parent, args) =>
       prisma.ingredient.findUnique({ where: { id: args.id } }),
-    /* ingredientByName: (_parent, args) =>
-      prisma.ingredient.findFirst({
-        where: { name: args.name },
-      }), */
-    //return all reviews
-    allReviews: () => prisma.review.findMany(),
 
-    //return reviews of spesific drink
+    allReviews: () => prisma.review.findMany(),
     reviewsByDrinkId: (drinkId: number) =>
       prisma.review.findMany({
         where: {
@@ -107,8 +74,6 @@ const resolvers = {
           },
         },
       }),
-
-    //return review by given id
     reviewById: (reviewId: number) =>
       prisma.review.findUnique({
         where: {
