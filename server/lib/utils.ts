@@ -15,15 +15,15 @@ async function main() {
 
 main();
 
-function CSVCheck(data: string, delimiter) {
+function CSVCheck(data: string, delimiter: string) {
   const lines = data.split("\n");
   // id,strDrink,dateModified,idDrink,strAlcoholic,strCategory,strDrinkThumb,strGlass,strIBA,strIngredient1,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strInstructions,strMeasure1,strMeasure10,strMeasure11,strMeasure12,strMeasure13,strMeasure14,strMeasure15,strMeasure2,strMeasure3,strMeasure4,strMeasure5,strMeasure6,strMeasure7,strMeasure8,strMeasure9,strVideo
-  const columnTitles = lines[0].split(";");
+  const columnTitles = lines[0].split(delimiter);
   let wrongLines = [];
   let wrongCount = 0;
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const lineColumns = line.split(";");
+    const lineColumns = line.split(delimiter);
 
     if (lineColumns.length !== columnTitles.length) {
       wrongCount++;
