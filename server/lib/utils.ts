@@ -1,7 +1,15 @@
 import { readFile, writeFile } from "fs/promises";
 
 async function main() {
-  const data = await readFile("./data/cleaned_all_drinks.csv", "utf8");
+  if (process.argv.length < 3) {
+    throw new Error("Please provide a file path");
+  }
+  if (process.argv[2].endsWith(".csv") === false) {
+    throw new Error("Please provide a csv file");
+  }
+  const filePath = process.argv[2];
+  // const filePath = "data/cleaned_all_drinks.csv";
+  const data = await readFile(filePath, "utf8");
   CSVCheck(data, ";");
 }
 
