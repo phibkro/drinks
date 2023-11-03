@@ -11,6 +11,15 @@ It is built with modern web technologies like React, Typescript, Tailwind and Gr
 - Clone the repo
 - Run `npm install` in the root directory to install dependencies for the frontend and backend
 
+## Setup server
+
+- Spin up a postgres database
+- Create a `.env` file in the `/server` directory
+- Add the database url to the `.env` file
+  - `DATABASE_URL="postgresql://<username>:<password>@<host>:<port>/<database>"`
+- Run `npx prisma migrate dev` in the `/server` directory to create the database schema
+- Run `npx prisma db seed` in the `/server` directory to seed the database with mock data
+
 ## Scripts
 
 - `npm run dev` runs the app and server in development mode
