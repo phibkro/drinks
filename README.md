@@ -6,19 +6,39 @@ Share your drink recipes and review others!
 Drinks is a full stack app for viewing and reviewing drink recipes!
 It is built with modern web technologies like React, Typescript, Tailwind and GraphQL.
 
-## Installation
+## Setup dev environment
 
 - Clone the repo
 - Run `npm install` in the root directory to install dependencies for the frontend and backend
 
-## Setup server
+### Backend
 
 - Spin up a postgres database
-- Create a `.env` file in the `/server` directory
+  - Mac
+    - I use [Postgres.app](https://postgresapp.com/) to host my database and [Postico](https://eggerapps.at/postico/) to interact with it
+    - You can also use [Homebrew](https://formulae.brew.sh/formula/postgresql)
+    - Or [Docker](https://hub.docker.com/_/postgres)
+- Create a `.env` file in the `/server/prisma` directory
 - Add the database url to the `.env` file
   - `DATABASE_URL="postgresql://<username>:<password>@<host>:<port>/<database>"`
-- Run `npx prisma migrate dev` in the `/server` directory to create the database schema
-- Run `npx prisma db seed` in the `/server` directory to seed the database with mock data
+- Run `npm prisma:reset` in the `/server` directory to create the database schema and seed it with mock data
+- Your backend is now ready to go!
+
+### Update database schema
+
+- Run `npx prisma migrate dev` in the `/server` directory to create the new database schema
+
+### Generating seed data
+
+To generate our seed data we use the [TheCocktailDB](https://www.thecocktaildb.com/api.php) API.
+
+Ingredients data was downloaded from [TheCocktailDB]( www.thecocktaildb.com/api/json/v1/1/list.php?i=list) and manually cleaned and prepared for use in `server/src/prisma/seed.ts`.
+
+All drinks data was downloaded from a [Kaggle dataset](https://www.kaggle.com/datasets/ai-first/cocktail-ingredients/).
+The data was manually cleaned,
+then converted to JSON using `server/src/lib/csvToJSON.ts`.
+Furthermore it was cleaned and prepared with `server/src/lib/createDrinksSeed.ts`.
+These programs can be run with `npm run run:drinksToJSON` and `npm run run:drinksToSeed` respectively within the `server/` folder.
 
 ## Scripts
 
