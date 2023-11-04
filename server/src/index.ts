@@ -50,6 +50,8 @@ const typeDefs = `#graphql
     allReviews: [Review]
     reviewsByDrinkId(id: ID!): [Review]
     reviewById(id: ID!): Review
+
+    measures: [Measure]
   }
   type Mutation {
     addReview(drinkId: ID!, rating: Int!, textContent: String!): Review
@@ -88,6 +90,7 @@ const resolvers = {
           id: reviewId,
         },
       }),
+    measures: () => prisma.measure.findMany(),
   },
   Mutation: {
     addReview: (_parent, args) =>
