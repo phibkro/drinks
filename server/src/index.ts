@@ -29,8 +29,7 @@ const typeDefs = `#graphql
     id: ID!
     ingredient: Ingredient!
     drink: Drink!
-    unit: String!
-    quantity: Float!
+    measure: String!
   }
 
   type Review {

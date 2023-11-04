@@ -32,8 +32,7 @@ model Measure {
   ingredientId Int
   Ingredients  Ingredient @relation(fields: [ingredientId], references: [id])
 
-  unit     String
-  quantity Float
+  measure String
 
   @@id([drinkId, ingredientId])
 }
