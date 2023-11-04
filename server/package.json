@@ -10,7 +10,11 @@
     "test": "echo \"no tests yet\" ",
     "run:drinksToJSON": "node --loader ts-node/esm src/lib/csvToJSON.ts src/data/cleaned_all_drinks.csv",
     "run:createDrinksSeed": "node --loader ts-node/esm src/lib/createDrinksSeed.ts",
-    "prisma:reset": "prisma migrate reset"
+    "run:createIngredientAndMeasuresSeed": "node --loader ts-node/esm src/lib/createIngredientsAndMeasuresSeeds.ts",
+    "prisma:reset": "prisma migrate reset",
+    "prisma:prototype": "prisma db push",
+    "prisma:migrate-dev": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm src/prisma/seed.ts"
