@@ -16,13 +16,21 @@ const typeDefs = `#graphql
     instructions: String!
     alcoholic: Boolean!
     ingredientMeasures: [Measure!]
-    reviews: Review[]
+    reviews: [Review]
   }
 
   type Ingredient {
     id: ID!
     name: String!
     measure: [Measure!]
+  }
+
+  type Measure {
+    id: ID!
+    ingredient: Ingredient!
+    drink: Drink!
+    unit: String!
+    quantity: Float!
   }
 
   type Review {
@@ -108,12 +116,9 @@ const server =
     : new ApolloServer({
         schema: addMocksToSchema({
           schema: makeExecutableSchema({ typeDefs, resolvers }),
-          mocks: {
-            // TODO: Add mocks for all types
-          },
-          preserveResolvers: true,
         }),
       });
+
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 

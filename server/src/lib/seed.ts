@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import ingredientData from "../../data/processed/ingredients.json" assert { type: "json" };
+import ingredientData from "../data/ingredients.json" assert { type: "json" };
 
 const prisma = new PrismaClient();
 async function main() {
