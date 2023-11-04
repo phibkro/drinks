@@ -31,7 +31,8 @@ export function csvToJson(csv: string) {
     const columns = line.split(";");
     const item: any = {};
     header.forEach((column, index) => {
-      item[column] = columns[index];
+      // For some reason we have to manually remove the quotes from the string TWICE ??
+      item[column] = columns[index].replace(`\"`, "").replace(`\"`, "").trim();
     });
     return item;
   });
