@@ -4,6 +4,8 @@ CREATE TABLE "Drink" (
     "name" TEXT NOT NULL,
     "instructions" TEXT NOT NULL,
     "alcoholic" BOOLEAN NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "glass" TEXT NOT NULL,
 
     CONSTRAINT "Drink_pkey" PRIMARY KEY ("id")
 );
@@ -20,8 +22,7 @@ CREATE TABLE "Ingredient" (
 CREATE TABLE "Measure" (
     "drinkId" INTEGER NOT NULL,
     "ingredientId" INTEGER NOT NULL,
-    "unit" TEXT NOT NULL,
-    "quantity" DOUBLE PRECISION NOT NULL,
+    "measure" TEXT NOT NULL,
 
     CONSTRAINT "Measure_pkey" PRIMARY KEY ("drinkId","ingredientId")
 );
