@@ -15,7 +15,7 @@ const typeDefs = `#graphql
     name: String!
     instructions: String!
     alcoholic: Boolean!
-    ingredientMeasures: [Measure!]
+    measures: [Measure!]
     reviews: [Review]
   }
 
@@ -43,14 +43,15 @@ const typeDefs = `#graphql
     allDrinks: [Drink]
     drinkById(id: ID!): Drink
 
-    ingredients: [Ingredient]
-    ingredient(id: ID!): Ingredient
+    allIngredients: [Ingredient]
+    ingredientById(id: ID!): Ingredient
 
     allReviews: [Review]
     reviewsByDrinkId(id: ID!): [Review]
     reviewById(id: ID!): Review
 
-    measures: [Measure]
+    allMeasures: [Measure]
+    measuresInDrink(id: ID!): [Measure]
   }
   type Mutation {
     addReview(drinkId: ID!, rating: Int!, textContent: String!): Review
@@ -70,8 +71,8 @@ const resolvers = {
           id: drinkId,
         },
       }),
-    ingredients: () => prisma.ingredient.findMany(),
-    ingredient: (_parent, args) =>
+    allIngredients: () => prisma.ingredient.findMany(),
+    ingredientById: (_parent, args) =>
       prisma.ingredient.findUnique({ where: { id: args.id } }),
 
     allReviews: () => prisma.review.findMany(),
@@ -89,7 +90,16 @@ const resolvers = {
           id: reviewId,
         },
       }),
-    measures: () => prisma.measure.findMany(),
+    allMeasures: () => prisma.measure.findMany(),
+    measuresInDrink: (drinkId: number) => {
+      return prisma.measure.findMany({
+        where: {
+          drink: {
+            id: drinkId,
+          },
+        },
+      });
+    },
   },
   Mutation: {
     addReview: (_parent, args) =>
