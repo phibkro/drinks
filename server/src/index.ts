@@ -115,6 +115,27 @@ const resolvers = {
         },
       }),
   },
+
+  // Trivial resolvers for relations
+  Drink: {
+    // Resolve the 'measures' field for the Drink type
+    measures: (parent) =>
+      prisma.measure.findMany({ where: { drinkId: parent.id } }),
+  },
+  Ingredient: {
+    // Resolve the 'measure' field for the Ingredient type
+    measure: (parent) =>
+      prisma.measure.findMany({ where: { ingredientId: parent.id } }),
+  },
+  Measure: {
+    // Resolve the 'ingredient' field for the Measure type
+    ingredient: (parent) =>
+      prisma.ingredient.findUnique({ where: { id: parent.ingredientId } }),
+
+    // Resolve the 'drink' field for the Measure type
+    drink: (parent) =>
+      prisma.drink.findUnique({ where: { id: parent.drinkId } }),
+  },
 };
 
 const environment = process.env.NODE_ENV || "development";
