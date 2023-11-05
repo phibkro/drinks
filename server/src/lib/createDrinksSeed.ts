@@ -10,6 +10,8 @@ async function main() {
       name: drink.strDrink,
       instructions: drink.strInstructions,
       alcoholic: drink.strAlcoholic === "Alcoholic",
+      imageUrl: drink.strDrinkThumb,
+      glass: drink.strGlass,
     })),
   };
 
