@@ -6,11 +6,12 @@
   "scripts": {
     "install": "cd app && npm install & cd server && npm install",
     "start": "npm run app:start & npm run server:start",
-    "dev": "npm start && npm run app:dev",
+    "dev": "npm run server:dev & npm run app:dev",
     "test": "npm run app:test & cd server && npm test",
     "app:dev": "cd app && npm run dev",
     "app:start": "cd app && npm run build && npm run preview",
     "app:test": "cd app && npm run test",
+    "server:dev": "cd server && npm run dev",
     "server:start": "cd server && npm start"
   },
   "repository": {
