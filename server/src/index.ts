@@ -44,6 +44,7 @@ const typeDefs = `#graphql
   type Query {
     allDrinks: [Drink]
     drinkById(id: ID!): Drink
+    searchDrinksByName(name: String!): [Drink]
 
     allIngredients: [Ingredient]
     ingredientById(id: ID!): Ingredient
@@ -73,6 +74,16 @@ const resolvers = {
           id: drinkId,
         },
       }),
+    searchDrinksByName: (_parent, args) => {
+      return prisma.drink.findMany({
+        where: {
+          name: {
+            contains: args.name,
+            mode: "insensitive",
+          },
+        },
+      });
+    },
     allIngredients: () => prisma.ingredient.findMany(),
     ingredientById: (_parent, args) =>
       prisma.ingredient.findUnique({ where: { id: args.id } }),
