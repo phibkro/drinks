@@ -15,6 +15,8 @@ const typeDefs = `#graphql
     name: String!
     instructions: String!
     alcoholic: Boolean!
+    imageUrl: String!
+    glass: String!
     measures: [Measure!]
     reviews: [Review]
   }
