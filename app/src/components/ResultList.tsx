@@ -1,8 +1,21 @@
 import { Link } from "react-router-dom";
-import { DrinkDetails } from "../../../data/types";
 
+interface DBDrink {
+  id: number;
+  name: string;
+  instructions: string;
+  alcoholic: string;
+  imageUrl: string;
+  glass: string;
+  measures: Array<{
+    measure: string;
+    ingredient: {
+      name: string;
+    };
+  }>;
+}
 interface Result {
-  results: DrinkDetails[];
+  results: DBDrink[];
 }
 
 export function ResultList(props: Result) {
@@ -13,15 +26,16 @@ export function ResultList(props: Result) {
   return <div className="flex flex-col gap-5">{listTest}</div>;
 }
 
-export function ResultListItem({
-  strDrink: name,
-  strDrinkThumb: image,
-  ingredients,
-}: DrinkDetails) {
+export function ResultListItem({ name, imageUrl, measures }: DBDrink) {
   const renderList = () => {
     const listItems = [];
-    for (let i = 0; i < ingredients.length; i++) {
-      listItems.push(<li key={i}>{ingredients[i]}</li>);
+    for (let i = 0; i < measures.length; i++) {
+      const currentMeasure = measures[i];
+      listItems.push(
+        <li key={i}>
+          {currentMeasure.measure + " " + currentMeasure.ingredient.name}
+        </li>,
+      );
     }
     return listItems;
   };
@@ -29,7 +43,7 @@ export function ResultListItem({
     <Link to={`details/${name}`}>
       <div className="flex gap-4 bg-primary-foreground hover:cursor-pointer">
         <div className="basis-1/4">
-          <img src={image} alt={`Image of ${name}`} />
+          <img src={imageUrl} alt={`Image of ${name}`} />
         </div>
         <h2>{name}</h2>
         <div>
