@@ -122,6 +122,19 @@ const resolvers = {
             name: sorting === "ASC" ? "asc" : "desc",
           },
         ],
+
+        // returner alle drinks med gitt rating
+        where: {
+          reviews: {
+            every: {
+              rating: rating,
+            },
+          },
+          alcoholic: alcohol,
+        },
+        include: {
+          reviews: true,
+        },
       }),
   },
   Mutation: {
