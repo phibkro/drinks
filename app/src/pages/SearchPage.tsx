@@ -1,22 +1,21 @@
 import { ResultList } from "@/components/ResultList";
 import { Sidebar } from "@/components/Sidebar";
 import { Input } from "@/components/ui/Input";
-import useCocktailStore from "@/hooks/useCocktailStore";
-import { transformCocktailDBResult } from "@/lib/utils";
+import { GET_DRINKS } from "@/lib/queries";
+import { useQuery } from "@apollo/client";
 import { useState } from "react";
-import * as data from "../../../data/m_cocktails.json";
 
 export default function SearchPage() {
-  const { searchResults, setSearchResults } = useCocktailStore();
+  const { loading, error, data } = useQuery(GET_DRINKS);
   const [inputValue, setInputValue] = useState("");
-  const handleSearch = (searchString: string) => {
-    const validDrinks = data.drinks
+  const handleSearch = () => {
+    /* const validDrinks = data.drinks
       .filter((drink) =>
         drink.strDrink.toLowerCase().includes(searchString.toLowerCase()),
       )
       .map((result) => transformCocktailDBResult(result));
     setSearchResults(validDrinks);
-    console.log(validDrinks);
+    console.log(validDrinks); */
   };
   return (
     <main className="flex">
@@ -33,15 +32,13 @@ export default function SearchPage() {
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               console.log(inputValue);
-              handleSearch(inputValue);
+              handleSearch();
             }
           }}
         />
-        {searchResults.length ? (
-          <ResultList results={searchResults} />
-        ) : (
-          <p>No results</p>
-        )}
+        {loading && <p>Loading...</p>}
+        {error && <p>Error :</p>}
+        {data && <ResultList results={data.allDrinks} />}
       </div>
     </main>
   );
