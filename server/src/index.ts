@@ -10,21 +10,15 @@ const prisma = new PrismaClient();
 // that together define the "shape" of queries that are executed against
 // your data.
 const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
-  }
-
   type Drink {
     id: ID!
     name: String!
     instructions: String!
     alcoholic: Boolean!
-    ingredientMeasures: [Measure!]
-    reviews: Review[]
+    imageUrl: String!
+    glass: String!
+    measures: [Measure!]
+    reviews: [Review]
   }
 
   type Ingredient {
@@ -33,8 +27,12 @@ const typeDefs = `#graphql
     measure: [Measure!]
   }
 
-  # Measure type should not be defined
-  # Think about why this makes sense
+  type Measure {
+    id: ID!
+    ingredient: Ingredient!
+    drink: Drink!
+    measure: String!
+  }
 
   type Review {
     id: ID!
@@ -43,36 +41,24 @@ const typeDefs = `#graphql
     textContent: String!
   }
 
-  # You should be able to query
-    # drink
-      # TODO: all drinks
-      # TODO: single drink by id
-      # TODO: single drink by name
   type Query {
-    books: [Book]
-    ingredients: [Ingredient]
-    ingredient(id: ID!): Ingredient
-    # ingredientByName(name: String!): Ingredient
+    allDrinks: [Drink]
+    drinkById(id: ID!): Drink
+
+    allIngredients: [Ingredient]
+    ingredientById(id: ID!): Ingredient
+
     allReviews: [Review]
     reviewsByDrinkId(id: ID!): [Review]
     reviewById(id: ID!): Review
+
+    allMeasures: [Measure]
+    measuresInDrink(id: ID!): [Measure]
   }
   type Mutation {
     addReview(drinkId: ID!, rating: Int!, textContent: String!): Review
   }
 `;
-
-// Temporary static data
-const books = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
 
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
@@ -80,7 +66,6 @@ const resolvers = {
   // TODO: Query ingredients by drink by
   // getting all ingredients for measures in a drink
   Query: {
-    books: () => books,
     allDrinks: () => prisma.drink.findMany(),
     drinkById: (drinkId: number) =>
       prisma.drink.findUnique({
@@ -88,17 +73,11 @@ const resolvers = {
           id: drinkId,
         },
       }),
-    ingredients: () => prisma.ingredient.findMany(),
-    ingredient: (_parent, args) =>
+    allIngredients: () => prisma.ingredient.findMany(),
+    ingredientById: (_parent, args) =>
       prisma.ingredient.findUnique({ where: { id: args.id } }),
-    /* ingredientByName: (_parent, args) =>
-      prisma.ingredient.findFirst({
-        where: { name: args.name },
-      }), */
-    //return all reviews
-    allReviews: () => prisma.review.findMany(),
 
-    //return reviews of spesific drink
+    allReviews: () => prisma.review.findMany(),
     reviewsByDrinkId: (drinkId: number) =>
       prisma.review.findMany({
         where: {
@@ -107,14 +86,22 @@ const resolvers = {
           },
         },
       }),
-
-    //return review by given id
     reviewById: (reviewId: number) =>
       prisma.review.findUnique({
         where: {
           id: reviewId,
         },
       }),
+    allMeasures: () => prisma.measure.findMany(),
+    measuresInDrink: (drinkId: number) => {
+      return prisma.measure.findMany({
+        where: {
+          drink: {
+            id: drinkId,
+          },
+        },
+      });
+    },
   },
   Mutation: {
     addReview: (_parent, args) =>
@@ -130,6 +117,27 @@ const resolvers = {
         },
       }),
   },
+
+  // Trivial resolvers for relations
+  Drink: {
+    // Resolve the 'measures' field for the Drink type
+    measures: (parent) =>
+      prisma.measure.findMany({ where: { drinkId: parent.id } }),
+  },
+  Ingredient: {
+    // Resolve the 'measure' field for the Ingredient type
+    measure: (parent) =>
+      prisma.measure.findMany({ where: { ingredientId: parent.id } }),
+  },
+  Measure: {
+    // Resolve the 'ingredient' field for the Measure type
+    ingredient: (parent) =>
+      prisma.ingredient.findUnique({ where: { id: parent.ingredientId } }),
+
+    // Resolve the 'drink' field for the Measure type
+    drink: (parent) =>
+      prisma.drink.findUnique({ where: { id: parent.drinkId } }),
+  },
 };
 
 const environment = process.env.NODE_ENV || "development";
@@ -143,12 +151,10 @@ const server =
     : new ApolloServer({
         schema: addMocksToSchema({
           schema: makeExecutableSchema({ typeDefs, resolvers }),
-          mocks: {
-            // TODO: Add mocks for all types
-          },
           preserveResolvers: true,
         }),
       });
+
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 
