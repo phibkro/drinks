@@ -1,21 +1,21 @@
 import { ResultList } from "@/components/ResultList";
 import { Sidebar } from "@/components/Sidebar";
 import { Input } from "@/components/ui/Input";
-import { GET_DRINKS } from "@/lib/queries";
+import { Label } from "@/components/ui/Label";
+import { SEARCH_DRINKS_BY_NAME } from "@/lib/queries";
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
 export default function SearchPage() {
-  const { loading, error, data } = useQuery(GET_DRINKS);
   const [inputValue, setInputValue] = useState("");
+  const { loading, error, data, refetch } = useQuery(SEARCH_DRINKS_BY_NAME, {
+    variables: { name: "" },
+  });
   const handleSearch = () => {
-    /* const validDrinks = data.drinks
-      .filter((drink) =>
-        drink.strDrink.toLowerCase().includes(searchString.toLowerCase()),
-      )
-      .map((result) => transformCocktailDBResult(result));
-    setSearchResults(validDrinks);
-    console.log(validDrinks); */
+    refetch({
+      name: inputValue,
+    });
+    console.log(data);
   };
   return (
     <main className="flex">
@@ -23,22 +23,29 @@ export default function SearchPage() {
         <Sidebar />
       </div>
       <div className="flex basis-3/4 flex-col gap-4">
-        <Input
-          placeholder={'"Margarita"'}
-          onChange={(event) => {
-            setInputValue(event.target.value);
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSearch();
           }}
-          value={inputValue}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              console.log(inputValue);
-              handleSearch();
-            }
-          }}
-        />
+        >
+          <Label>Search for your favorite drink!</Label>
+          <Input
+            placeholder={'"Margarita"'}
+            onChange={(event) => {
+              setInputValue(event.target.value);
+            }}
+            value={inputValue}
+          />
+        </form>
+
         {loading && <p>Loading...</p>}
         {error && <p>Error :</p>}
-        {data && <ResultList results={data.allDrinks} />}
+        {data.searchDrinksByName.length !== 0 ? (
+          <ResultList results={data.searchDrinksByName} />
+        ) : (
+          <p>No results</p>
+        )}
       </div>
     </main>
   );

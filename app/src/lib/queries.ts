@@ -17,3 +17,22 @@ export const GET_DRINKS = gql`
     }
   }
 `;
+
+export const SEARCH_DRINKS_BY_NAME = gql`
+  query SearchDrinksByName($name: String!) {
+    searchDrinksByName(name: $name) {
+      id
+      name
+      alcoholic
+      glass
+      instructions
+      imageUrl
+      measures {
+        measure
+        ingredient {
+          name
+        }
+      }
+    }
+  }
+`;
