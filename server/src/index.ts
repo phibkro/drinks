@@ -55,6 +55,7 @@ const typeDefs = `#graphql
 
     allMeasures: [Measure]
     measuresInDrink(id: ID!): [Measure]
+    filteringAndSorting(sorting: SortingOptions, rating: Int!, alcohol: Boolean!)
   }
   type Mutation {
     addReview(drinkId: ID!, rating: Int!, textContent: String!): Review
@@ -113,6 +114,15 @@ const resolvers = {
         },
       });
     },
+
+    filteringAndSorting: (sorting: String, rating: number, alcohol: boolean) =>
+      prisma.drink.findMany({
+        orderBy: [
+          {
+            name: sorting === "ASC" ? "asc" : "desc",
+          },
+        ],
+      }),
   },
   Mutation: {
     addReview: (_parent, args) =>
