@@ -28,7 +28,7 @@ export default function SearchPage() {
             handleSearch();
           }}
         >
-          <Label>Search for a drink</Label>
+          <Label>Search for your favorite drink!</Label>
           <Input
             placeholder={'"Margarita"'}
             onChange={(event) => {
