@@ -15,6 +15,7 @@ export default function SearchPage() {
     refetch({
       name: inputValue,
     });
+    console.log(data);
   };
   return (
     <main className="flex">
@@ -40,7 +41,11 @@ export default function SearchPage() {
 
         {loading && <p>Loading...</p>}
         {error && <p>Error :</p>}
-        {data && <ResultList results={data.searchDrinksByName} />}
+        {data.searchDrinksByName.length !== 0 ? (
+          <ResultList results={data.searchDrinksByName} />
+        ) : (
+          <p>No results</p>
+        )}
       </div>
     </main>
   );
