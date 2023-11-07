@@ -1,6 +1,6 @@
 import { ResultList } from "@/components/ResultList";
 import { Sidebar } from "@/components/Sidebar";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/Label";
 import { SEARCH_DRINKS_BY_NAME } from "@/lib/queries";
 import { useQuery } from "@apollo/client";
@@ -17,6 +17,8 @@ export default function SearchPage() {
     });
     console.log(data);
   };
+  console.log(data);
+
   return (
     <main className="flex">
       <div className="basis-1/4">
@@ -41,7 +43,7 @@ export default function SearchPage() {
 
         {loading && <p>Loading...</p>}
         {error && <p>Error :</p>}
-        {data.searchDrinksByName.length !== 0 ? (
+        {data?.searchDrinksByName.length ? (
           <ResultList results={data.searchDrinksByName} />
         ) : (
           <p>No results</p>
