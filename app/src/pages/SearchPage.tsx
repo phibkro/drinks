@@ -122,8 +122,8 @@ export default function SearchPage() {
         </form>
 
         {loading && <p>Loading...</p>}
-        {error && <p>Error :</p>}
-        {data?.searchDrinksByName.length ? (
+        {error && <p>Error : {error.message}</p>}
+        {data ? (
           <ResultList results={data.searchDrinksByName} />
         ) : (
           <p>No results</p>

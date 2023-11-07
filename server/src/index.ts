@@ -79,10 +79,10 @@ const resolvers = {
   // getting all ingredients for measures in a drink
   Query: {
     allDrinks: () => prisma.drink.findMany(),
-    drinkById: (drinkId: number) =>
+    drinkById: (_parent, args) =>
       prisma.drink.findUnique({
         where: {
-          id: drinkId,
+          id: args.drinkId,
         },
       }),
     searchDrinksByName: (_parent, args) => {
@@ -104,26 +104,26 @@ const resolvers = {
       prisma.ingredient.findUnique({ where: { id: args.id } }),
 
     allReviews: () => prisma.review.findMany(),
-    reviewsByDrinkId: (drinkId: number) =>
+    reviewsByDrinkId: (_parent, args) =>
       prisma.review.findMany({
         where: {
           drink: {
-            id: drinkId,
+            id: args.drinkId,
           },
         },
       }),
-    reviewById: (reviewId: number) =>
+    reviewById: (_parent, args) =>
       prisma.review.findUnique({
         where: {
-          id: reviewId,
+          id: args.reviewId,
         },
       }),
     allMeasures: () => prisma.measure.findMany(),
-    measuresInDrink: (drinkId: number) => {
+    measuresInDrink: (_parent, args) => {
       return prisma.measure.findMany({
         where: {
           drink: {
-            id: drinkId,
+            id: args.drinkId,
           },
         },
       });
