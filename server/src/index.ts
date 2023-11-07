@@ -14,7 +14,7 @@ const typeDefs = `#graphql
     id: ID!
     name: String!
     instructions: String!
-    alcoholic: Boolean
+    alcoholic: Boolean!
     imageUrl: String!
     glass: String!
     measures: [Measure!]
@@ -47,7 +47,7 @@ const typeDefs = `#graphql
     DESC
   }
   input SearchOptions {
-    sorting: SortOptions
+    sort: SortOptions
     alcohol: Boolean
   }
 
@@ -65,8 +65,7 @@ const typeDefs = `#graphql
 
     allMeasures: [Measure]
     measuresInDrink(id: ID!): [Measure]
-    # filteringAndSorting(sort: SortingOptions,, rating: Int!, alcohol: Boolean!)
-    filteringAndSorting(sort: SortOptions, alcohol: Boolean): [Drink]
+ 
   }
   type Mutation {
     addReview(drinkId: ID!, rating: Int!, textContent: String!): Review
@@ -88,7 +87,11 @@ const resolvers = {
       }),
     searchDrinksByName: (_parent, args) => {
       return prisma.drink.findMany({
+        orderBy: {
+          name: args.options?.sort === "ASC" ? "asc" : "desc",
+        },
         where: {
+          alcoholic: args.options?.alcohol,
           name: {
             contains: args.name,
             mode: "insensitive",
@@ -125,41 +128,6 @@ const resolvers = {
         },
       });
     },
-    /*
-    filteringAndSorting: (sorting: String, rating: number, alcohol: boolean) =>
-      prisma.drink.findMany({
-        orderBy: [
-          {
-            name: sorting === "ASC" ? "asc" : "desc",
-          },
-        ],
-
-        // returner alle drinks med gitt rating
-        where: {
-          reviews: {
-            every: {
-              rating: rating,
-            },
-          },
-          alcoholic: alcohol,
-        },
-        include: {
-          reviews: true,
-        },
-      }), 
-    */
-    filteringAndSorting: (_parent, args) =>
-      prisma.drink.findMany({
-        orderBy: {
-          name: args.sort === "ASC" ? "asc" : "desc",
-        },
-        where: {
-          alcoholic: args.alcohol !== null ? args.alcohol : { not: null },
-        },
-        include: {
-          reviews: true,
-        },
-      }),
   },
   Mutation: {
     addReview: (_parent, args) =>
