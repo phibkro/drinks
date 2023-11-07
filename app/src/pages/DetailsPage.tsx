@@ -1,28 +1,27 @@
 import DrinkDetails from "@/components/DrinkDetails";
 import ReviewForm from "@/components/ReviewForm";
 import ReviewList from "@/components/ReviewList";
-import { transformCocktailDBResult } from "@/lib/utils";
+import { GET_DRINK_BY_ID } from "@/lib/queries";
+import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import * as data from "../../../data/m_cocktails.json";
 
 export default function DetailsPage() {
-  const { drinkName } = useParams();
-  if (drinkName === undefined) {
-    // Should not run as the errorBoundary/errorElement in router.tsx handles it
-    return <p>Drinkname is undefined?</p>;
-  }
-  // instead of using unsafe loaderData
-  // Directly fetch from mock data for typesafety
-  const drinkData = transformCocktailDBResult(
-    data.drinks.filter(
-      (drink) => drink.strDrink.toLowerCase() === drinkName.toLowerCase(),
-    )[0],
-  );
+  const { drinkId } = useParams();
+  const { loading, error, data } = useQuery(GET_DRINK_BY_ID, {
+    variables: { id: Number(drinkId) },
+  });
+  console.log(data);
   return (
     <main className="flex flex-col gap-8">
-      <DrinkDetails {...drinkData} />
-      <ReviewForm className="self-center" />
-      <ReviewList drinkId={Number(drinkData.idDrink)} className="self-center" />
+      {loading && <p>Loading...</p>}
+      {error && <p>Error : {error.message}</p>}
+      {data && (
+        <>
+          <DrinkDetails {...data.drinkById} />
+          <ReviewForm className="self-center" />
+          <ReviewList drinkId={data.drinkById.id} className="self-center" />
+        </>
+      )}
     </main>
   );
 }
