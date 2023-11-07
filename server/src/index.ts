@@ -46,11 +46,15 @@ const typeDefs = `#graphql
     ASC
     DESC
   }
+  input SearchOptions {
+    sorting: SortOptions
+    alcohol: Boolean
+  }
 
   type Query {
     allDrinks: [Drink]
     drinkById(id: ID!): Drink
-    searchDrinksByName(name: String!): [Drink]
+    searchDrinksByName(name: String!, options: SearchOptions ): [Drink]
 
     allIngredients: [Ingredient]
     ingredientById(id: ID!): Ingredient
