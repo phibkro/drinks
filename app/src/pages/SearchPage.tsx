@@ -1,6 +1,6 @@
 import { ResultList } from "@/components/ResultList";
 import { Sidebar } from "@/components/Sidebar";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { SEARCH_DRINKS_BY_NAME } from "@/lib/queries";
 import { useQuery } from "@apollo/client";
@@ -42,8 +42,8 @@ export default function SearchPage() {
         </form>
 
         {loading && <p>Loading...</p>}
-        {error && <p>Error :</p>}
-        {data?.searchDrinksByName.length ? (
+        {error && <p>Error : {error.message}</p>}
+        {data ? (
           <ResultList results={data.searchDrinksByName} />
         ) : (
           <p>No results</p>
