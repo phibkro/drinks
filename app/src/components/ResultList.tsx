@@ -26,7 +26,7 @@ export function ResultList(props: Result) {
   return <div className="flex flex-col gap-5">{listTest}</div>;
 }
 
-export function ResultListItem({ name, imageUrl, measures }: DBDrink) {
+export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
   const renderList = () => {
     const listItems = [];
     for (let i = 0; i < measures.length; i++) {
@@ -40,7 +40,7 @@ export function ResultListItem({ name, imageUrl, measures }: DBDrink) {
     return listItems;
   };
   return (
-    <Link to={`details/${name}`}>
+    <Link to={`details/${id}`}>
       <div className="flex gap-4 bg-primary-foreground hover:cursor-pointer">
         <div className="basis-1/4">
           <img src={imageUrl} alt={`Image of ${name}`} />
