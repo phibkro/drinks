@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { addMocksToSchema } from "@graphql-tools/mock";
-import { ApolloServer } from "@apollo/server";
+import { ApolloServer, BaseContext } from "@apollo/server";
 import { PrismaClient } from "@prisma/client";
 import { startStandaloneServer } from "@apollo/server/standalone";
 
@@ -39,6 +39,11 @@ const typeDefs = `#graphql
     drink: Drink!
     rating: Int!
     textContent: String!
+  }
+
+  enum SortingOptions {
+    ASC
+    DESC
   }
 
   type Query {
@@ -176,7 +181,7 @@ const resolvers = {
 
 const environment = process.env.NODE_ENV || "development";
 
-const server =
+const server: ApolloServer<BaseContext> =
   environment === "production"
     ? new ApolloServer({
         typeDefs,
