@@ -41,10 +41,20 @@ const typeDefs = `#graphql
     textContent: String!
   }
 
+  # enum SortingOptions {
+  enum SortOptions {
+    asc
+    desc
+  }
+  input SearchOptions {
+    sort: SortOptions
+    alcohol: Boolean
+  }
+
   type Query {
     allDrinks: [Drink]
     drinkById(id: Int!): Drink
-    searchDrinksByName(name: String!): [Drink]
+    searchDrinksByName(name: String!, options: SearchOptions ): [Drink]
 
     allIngredients: [Ingredient]
     ingredientById(id: Int!): Ingredient
@@ -76,7 +86,11 @@ const resolvers = {
       }),
     searchDrinksByName: (_parent, args) => {
       return prisma.drink.findMany({
+        orderBy: {
+          name: args.options?.sort,
+        },
         where: {
+          alcoholic: args.options?.alcohol,
           name: {
             contains: args.name,
             mode: "insensitive",
