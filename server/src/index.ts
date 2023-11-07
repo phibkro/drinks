@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 // your data.
 const typeDefs = `#graphql
   type Drink {
-    id: ID!
+    id: Int!
     name: String!
     instructions: String!
     alcoholic: Boolean!
@@ -22,20 +22,20 @@ const typeDefs = `#graphql
   }
 
   type Ingredient {
-    id: ID!
+    id: Int!
     name: String!
     measure: [Measure!]
   }
 
   type Measure {
-    id: ID!
+    id: Int!
     ingredient: Ingredient!
     drink: Drink!
     measure: String!
   }
 
   type Review {
-    id: ID!
+    id: Int!
     drink: Drink!
     rating: Int!
     textContent: String!
@@ -43,21 +43,21 @@ const typeDefs = `#graphql
 
   type Query {
     allDrinks: [Drink]
-    drinkById(id: ID!): Drink
+    drinkById(id: Int!): Drink
     searchDrinksByName(name: String!): [Drink]
 
     allIngredients: [Ingredient]
-    ingredientById(id: ID!): Ingredient
+    ingredientById(id: Int!): Ingredient
 
     allReviews: [Review]
-    reviewsByDrinkId(id: ID!): [Review]
-    reviewById(id: ID!): Review
+    reviewsByDrinkId(id: Int!): [Review]
+    reviewById(id: Int!): Review
 
     allMeasures: [Measure]
-    measuresInDrink(id: ID!): [Measure]
+    measuresInDrink(id: Int!): [Measure]
   }
   type Mutation {
-    addReview(drinkId: ID!, rating: Int!, textContent: String!): Review
+    addReview(drinkId: Int!, rating: Int!, textContent: String!): Review
   }
 `;
 
