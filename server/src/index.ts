@@ -43,8 +43,8 @@ const typeDefs = `#graphql
 
   # enum SortingOptions {
   enum SortOptions {
-    ASC
-    DESC
+    asc
+    desc
   }
   input SearchOptions {
     sort: SortOptions
@@ -88,7 +88,7 @@ const resolvers = {
     searchDrinksByName: (_parent, args) => {
       return prisma.drink.findMany({
         orderBy: {
-          name: args.options?.sort === "ASC" ? "asc" : "desc",
+          name: args.options?.sort,
         },
         where: {
           alcoholic: args.options?.alcohol,

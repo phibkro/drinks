@@ -11,35 +11,26 @@ import { Martini } from "lucide-react";
 import { useState } from "react";
 
 export default function SearchPage() {
-  const [inputValue, setInputValue] = useState("");
-  const [checked, setChecked] = useState(false);
-  //const [sort, setSort] = useState("ASC");
   const { loading, error, data, refetch } = useQuery(SEARCH_DRINKS_BY_NAME, {
     variables: {
       name: "",
+      options: {
+        sort: "asc",
+        alcohol: true,
+      },
     },
   });
-  const [sort, setSort] = useState("ASC");
+  const [inputValue, setInputValue] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [sort, setSort] = useState("asc");
   const handleSearch = () => {
-    if (checked) {
-      console.log("non alcoholic", sort);
-      refetch({
-        name: inputValue,
-        options: {
-          sort: sort,
-          alcohol: false,
-        },
-      });
-    } else {
-      refetch({
-        name: inputValue,
-        options: {
-          sort: sort,
-        },
-      });
-    }
-
-    //console.log(data);
+    refetch({
+      name: inputValue,
+      options: {
+        sort: sort,
+        alcohol: !checked,
+      },
+    });
   };
 
   //usikker på om dette ble omvendt men fiks senere
@@ -60,7 +51,7 @@ export default function SearchPage() {
               setSort(value);
               console.log(value);
             }}
-            defaultValue="option-one"
+            defaultValue="asc"
             className="flex flex-col"
           >
             <Label

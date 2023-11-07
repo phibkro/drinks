@@ -19,8 +19,8 @@ export const GET_DRINKS = gql`
 `;
 
 export const SEARCH_DRINKS_BY_NAME = gql`
-  query SearchDrinksByName($name: String!) {
-    searchDrinksByName(name: $name) {
+  query SearchDrinksByName($name: String!, $options: SearchOptions) {
+    searchDrinksByName(name: $name, options: $options) {
       id
       name
       alcoholic
