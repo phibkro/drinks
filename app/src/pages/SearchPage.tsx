@@ -1,5 +1,4 @@
 import { ResultList } from "@/components/ResultList";
-import { ratedColor } from "@/components/ReviewForm";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Input } from "@/components/ui/Input";
@@ -7,7 +6,6 @@ import { Label } from "@/components/ui/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup";
 import { SEARCH_DRINKS_BY_NAME } from "@/lib/queries";
 import { useQuery } from "@apollo/client";
-import { Martini } from "lucide-react";
 import { useState } from "react";
 
 export default function SearchPage() {
@@ -80,7 +78,7 @@ export default function SearchPage() {
               Non-alcoholic
             </label>
           </div>
-
+          {/* 
           <h2 className="text-xl">Rating</h2>
           {Array(5)
             .fill(5)
@@ -101,7 +99,7 @@ export default function SearchPage() {
                     />
                   ))}
               </div>
-            ))}
+            ))}*/}
           <Button onClick={handleSearch}>Apply</Button>
         </div>
       </div>
