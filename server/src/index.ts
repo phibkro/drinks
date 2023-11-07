@@ -41,7 +41,8 @@ const typeDefs = `#graphql
     textContent: String!
   }
 
-  enum SortingOptions {
+  # enum SortingOptions {
+  enum SortOptions {
     ASC
     DESC
   }
@@ -60,7 +61,8 @@ const typeDefs = `#graphql
 
     allMeasures: [Measure]
     measuresInDrink(id: ID!): [Measure]
-    filteringAndSorting(sorting: SortingOptions, rating: Int!, alcohol: Boolean!)
+    # filteringAndSorting(sort: SortingOptions,, rating: Int!, alcohol: Boolean!)
+    filteringAndSorting(sort: SortOptions, alcohol: Boolean!): [Drink]
   }
   type Mutation {
     addReview(drinkId: ID!, rating: Int!, textContent: String!): Review
@@ -119,7 +121,7 @@ const resolvers = {
         },
       });
     },
-
+    /*
     filteringAndSorting: (sorting: String, rating: number, alcohol: boolean) =>
       prisma.drink.findMany({
         orderBy: [
@@ -136,6 +138,19 @@ const resolvers = {
             },
           },
           alcoholic: alcohol,
+        },
+        include: {
+          reviews: true,
+        },
+      }), 
+    */
+    filteringAndSorting: (_parent, args) =>
+      prisma.drink.findMany({
+        orderBy: {
+          name: args.sort,
+        },
+        where: {
+          alcoholic: args.alcohol,
         },
         include: {
           reviews: true,
@@ -181,7 +196,7 @@ const resolvers = {
 
 const environment = process.env.NODE_ENV || "development";
 
-const server: ApolloServer<BaseContext> =
+const server =
   environment === "production"
     ? new ApolloServer({
         typeDefs,
