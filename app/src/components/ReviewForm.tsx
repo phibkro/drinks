@@ -1,3 +1,5 @@
+import { ADD_REVIEW } from "@/lib/queries";
+import { useMutation } from "@apollo/client";
 import { Martini } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -16,22 +18,34 @@ export const ratedColor = "#eb8634";
 //Array for martini glasses
 const martiniGlasses: number[] = [1, 2, 3, 4, 5];
 
-function ReviewForm({ className }: { className?: string }) {
+function ReviewForm({
+  className,
+  drinkId,
+}: {
+  className?: string;
+  drinkId?: number;
+}) {
   //Set 0 as default rating
   const [rating, setRating] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-
+  const [addReview, { data, loading, error }] = useMutation(ADD_REVIEW, {
+    variables: { drinkId: drinkId, textContent: "", rating: rating },
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ReviewData>();
 
-  const onSubmit: SubmitHandler<ReviewData> = (
-    data, //Function for handling form-submitted data
-  ) => {
+  const onSubmit: SubmitHandler<ReviewData> = (data) => {
     setSubmitted(true);
-    console.log(data, rating);
+    addReview({
+      variables: {
+        drinkId: drinkId,
+        textContent: data.comment,
+        rating: rating,
+      },
+    });
   };
 
   return submitted ? (

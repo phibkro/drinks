@@ -55,3 +55,14 @@ export const SEARCH_DRINKS_BY_NAME = gql`
     }
   }
 `;
+
+export const ADD_REVIEW = gql`
+mutation AddReview($drinkId: Int!, $textContent: String!, $rating: Int!) {
+  addReview(drinkId: $drinkId, textContent: $textContent, rating: $rating) {
+    textContent
+    rating
+    drink {
+      id
+    }
+  }
+}`;

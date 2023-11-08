@@ -148,6 +148,7 @@ const resolvers = {
     // Resolve the 'measures' field for the Drink type
     measures: (parent) =>
       prisma.measure.findMany({ where: { drinkId: parent.id } }),
+    reviews: (parent) => prisma.review.findMany({where: {drinkId: parent.id}}),
   },
   Ingredient: {
     // Resolve the 'measure' field for the Ingredient type
@@ -163,6 +164,9 @@ const resolvers = {
     drink: (parent) =>
       prisma.drink.findUnique({ where: { id: parent.drinkId } }),
   },
+  Review: {
+    drink: (parent) => prisma.drink.findUnique({ where: { id: parent.drinkId }}),
+  }
 };
 
 const environment = process.env.NODE_ENV || "development";
