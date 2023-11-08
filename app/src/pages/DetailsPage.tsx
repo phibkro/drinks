@@ -1,28 +1,51 @@
 import DrinkDetails from "@/components/DrinkDetails";
 import ReviewForm from "@/components/ReviewForm";
 import ReviewList from "@/components/ReviewList";
-import * as data from "@/data/M_cocktails.json";
-import { transformCocktailDBResult } from "@/lib/utils";
+import { GET_DRINK_BY_ID, GET_REVIEW_BY_DRINKID } from "@/lib/queries";
+import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 export default function DetailsPage() {
-  const { drinkName } = useParams();
-  if (drinkName === undefined) {
-    // Should not run as the errorBoundary/errorElement in router.tsx handles it
-    return <p>Drinkname is undefined?</p>;
+  const { drinkId } = useParams();
+  const {
+    loading: loadingDrink,
+    error: errorDrink,
+    data: dataDrink,
+  } = useQuery(GET_DRINK_BY_ID, {
+    variables: { id: Number(drinkId) },
+  });
+  const {
+    loading: loadingReviews,
+    error: errorReviews,
+    data: dataReviews,
+  } = useQuery(GET_REVIEW_BY_DRINKID, {
+    variables: { drinkId: Number(drinkId) },
+  });
+  if (dataReviews) {
+    console.log("reviews", dataReviews.reviewsByDrinkId[0]);
   }
-  // instead of using unsafe loaderData
-  // Directly fetch from mock data for typesafety
-  const drinkData = transformCocktailDBResult(
-    data.drinks.filter(
-      (drink) => drink.strDrink.toLowerCase() === drinkName.toLowerCase(),
-    )[0],
-  );
+  console.log(dataDrink);
   return (
     <main className="flex flex-col gap-8">
-      <DrinkDetails {...drinkData} />
-      <ReviewForm className="self-center" />
-      <ReviewList drinkId={Number(drinkData.idDrink)} className="self-center" />
+      {loadingDrink && <p>Loading...</p>}
+      {errorDrink && <p>Error : {errorDrink.message}</p>}
+      {dataDrink && (
+        <>
+          <DrinkDetails {...dataDrink.drinkById} />
+          <ReviewForm
+            drinkId={dataDrink.drinkById.id}
+            className="self-center"
+          />
+          {loadingReviews && <p>Loading...</p>}
+          {errorReviews && <p>Error : {errorReviews.message}</p>}
+          {dataReviews && (
+            <ReviewList
+              className="self-center"
+              reviews={dataReviews.reviewsByDrinkId}
+            />
+          )}
+        </>
+      )}
     </main>
   );
 }

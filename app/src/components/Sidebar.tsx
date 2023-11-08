@@ -1,6 +1,6 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { Label } from "@/components/ui/Label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup";
 import { Martini } from "lucide-react";
 import { ratedColor } from "./ReviewForm";
 
@@ -31,22 +31,26 @@ export function Sidebar() {
       </div>
 
       <h2 className="text-xl">Rating</h2>
-      {[...Array(5).keys()].map((n) => (
-        <div className="flex" key={n}>
-          <Checkbox />
-          <label
-            htmlFor="terms1"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          ></label>
-          {[...Array(n + 1).keys()].map((m) => (
-            <Martini
-              color={ratedColor}
-              className="hover:cursor-pointer"
-              key={m}
-            />
-          ))}
-        </div>
-      ))}
+      {Array(5)
+        .fill(5)
+        .map((_, n) => (
+          <div className="flex" key={n}>
+            <Checkbox />
+            <label
+              htmlFor="terms1"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            ></label>
+            {Array(n + 1)
+              .fill(n + 1)
+              .map((_, m) => (
+                <Martini
+                  color={ratedColor}
+                  className="hover:cursor-pointer"
+                  key={m}
+                />
+              ))}
+          </div>
+        ))}
     </div>
   );
 }

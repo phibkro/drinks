@@ -1,13 +1,24 @@
-import { DrinkDetails } from "@/data/types";
-
-interface Props extends DrinkDetails {}
+interface DBDrink {
+  id: number;
+  name: string;
+  instructions: string;
+  alcoholic: string;
+  imageUrl: string;
+  glass: string;
+  measures: Array<{
+    measure: string;
+    ingredient: {
+      name: string;
+    };
+  }>;
+}
+interface Props extends DBDrink {}
 export default function DrinkDetails({
-  strDrink: name,
-  strDrinkThumb: thumbnail,
-  strInstructions: instructions,
-  strAlcoholic: alcoholic,
-  strGlass: glass,
-  ingredients,
+  name,
+  imageUrl,
+  instructions,
+  alcoholic,
+  glass,
   measures,
 }: Props) {
   return (
@@ -16,15 +27,16 @@ export default function DrinkDetails({
         <h1 className="text-4xl">{name}</h1>
       </header>
       <div className="md:basis-2/6">
-        <img src={thumbnail} alt={`Photo of a ${name}`} />
+        <img src={imageUrl} alt={`Photo of a ${name}`} />
       </div>
       <div>
         <h2>Ingredients</h2>
         <ul className="list-disc">
-          {ingredients.map((ingredient, i) => (
-            <li key={i} className="ml-5">{`${
-              measures[i] ? measures[i] : ""
-            } ${ingredient}`}</li>
+          {measures.map((measure, i) => (
+            <li
+              key={i}
+              className="ml-5"
+            >{`${measure.measure} ${measure.ingredient.name}`}</li>
           ))}
         </ul>
       </div>

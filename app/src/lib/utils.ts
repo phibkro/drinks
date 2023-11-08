@@ -1,6 +1,6 @@
-import { CocktailDBResult } from "@/data/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { CocktailDBResult } from "../../../data/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
