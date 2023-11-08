@@ -40,7 +40,6 @@ export default function DetailsPage() {
           {errorReviews && <p>Error : {errorReviews.message}</p>}
           {dataReviews && (
             <ReviewList
-              drinkId={dataDrink.drinkById.id}
               className="self-center"
               reviews={dataReviews.reviewsByDrinkId}
             />
