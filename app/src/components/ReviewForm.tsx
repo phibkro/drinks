@@ -22,13 +22,13 @@ function ReviewForm({
   className,
   drinkId,
 }: {
-  className: string;
+  className?: string;
   drinkId?: number;
 }) {
   //Set 0 as default rating
   const [rating, setRating] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const [addReview, { data, loading, error }] = useMutation(ADD_REVIEW, {
+  const [addReview] = useMutation(ADD_REVIEW, {
     variables: { drinkId: drinkId, textContent: "", rating: rating },
   });
   const {
