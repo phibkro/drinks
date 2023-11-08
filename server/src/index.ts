@@ -54,7 +54,7 @@ const typeDefs = `#graphql
   type Query {
     allDrinks: [Drink]
     drinkById(id: Int!): Drink
-    searchDrinksByName(name: String!, options: SearchOptions ): [Drink]
+    searchDrinksByName(name: String!, options: SearchOptions, offset: Int, limit: Int ): [Drink]
 
     allIngredients: [Ingredient]
     ingredientById(id: Int!): Ingredient
@@ -85,7 +85,11 @@ const resolvers = {
         },
       }),
     searchDrinksByName: (_parent, args) => {
+      console.log();
+      
       return prisma.drink.findMany({
+        skip: args.offset,
+        take: args.limit,
         orderBy: {
           name: args.options?.sort,
         },

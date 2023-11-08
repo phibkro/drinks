@@ -9,18 +9,27 @@ import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
 export default function SearchPage() {
-  const { loading, error, data, refetch } = useQuery(SEARCH_DRINKS_BY_NAME, {
-    variables: {
-      name: "",
-      options: {
-        sort: "asc",
-        alcohol: true,
+  const [limit, setLimit] = useState(10);
+  const { loading, error, data, fetchMore, refetch } = useQuery(
+    SEARCH_DRINKS_BY_NAME,
+    {
+      variables: {
+        name: "",
+        options: {
+          sort: "asc",
+          alcohol: true,
+        },
+        offset: 0,
+        limit: limit,
       },
     },
-  });
+  );
   const [inputValue, setInputValue] = useState("");
   const [checked, setChecked] = useState(false);
   const [sort, setSort] = useState("asc");
+  function limitAdd(n: number) {
+    setLimit(limit + n);
+  }
   const handleSearch = () => {
     refetch({
       name: inputValue,
@@ -124,7 +133,16 @@ export default function SearchPage() {
         {loading && <p>Loading...</p>}
         {error && <p>Error : {error.message}</p>}
         {data ? (
-          <ResultList results={data.searchDrinksByName} />
+          <>
+            <ResultList results={data.searchDrinksByName} />
+            <Button
+              onClick={() => {
+                limitAdd(10);
+              }}
+            >
+              Load more drinks
+            </Button>
+          </>
         ) : (
           <p>No results</p>
         )}
