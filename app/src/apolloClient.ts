@@ -10,10 +10,9 @@ export const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          searchDrinksByName: offsetLimitPagination()
-          
-        }
-      }
-    }
+          searchDrinksByName: offsetLimitPagination(),
+        },
+      },
+    },
   }),
 });
