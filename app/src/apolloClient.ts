@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 export const client = new ApolloClient({
   // Use when running locally
@@ -9,12 +10,7 @@ export const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          searchDrinksByName:{
-            keyArgs: false,
-            merge(existing = [], incoming) {
-              return [...existing, ...incoming];
-            },
-          }
+          searchDrinkByName: offsetLimitPagination()
           
         }
       }

@@ -20,7 +20,7 @@ export default function SearchPage() {
           alcohol: true,
         },
         offset: 0,
-        limit: limit,
+        limit: 10,
       },
     },
   );
@@ -137,7 +137,14 @@ export default function SearchPage() {
             <ResultList results={data.searchDrinksByName} />
             <Button
               onClick={() => {
-                limitAdd(10);
+                //console.log(data);
+
+                //limitAdd(10);
+                fetchMore({
+                  variables: {
+                    offset: data.searchDrinksByName.length,
+                  },
+                });
               }}
             >
               Load more drinks
