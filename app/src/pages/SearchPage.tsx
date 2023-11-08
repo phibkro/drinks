@@ -9,18 +9,24 @@ import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
 export default function SearchPage() {
-  const { loading, error, data, refetch } = useQuery(SEARCH_DRINKS_BY_NAME, {
-    variables: {
-      name: "",
-      options: {
-        sort: "asc",
-        alcohol: true,
+  const { loading, error, data, fetchMore, refetch } = useQuery(
+    SEARCH_DRINKS_BY_NAME,
+    {
+      variables: {
+        name: "",
+        options: {
+          sort: "asc",
+          alcohol: true,
+        },
+        offset: 0,
+        limit: 10,
       },
     },
-  });
+  );
   const [inputValue, setInputValue] = useState("");
   const [checked, setChecked] = useState(false);
   const [sort, setSort] = useState("asc");
+
   const handleSearch = () => {
     refetch({
       name: inputValue,
@@ -41,7 +47,6 @@ export default function SearchPage() {
   return (
     <main className="flex">
       <div className="basis-1/4">
-        {/*<Sidebar />*/}
         <div className="flex flex-col gap-2">
           <h2 className="text-xl">Sorting</h2>
           <RadioGroup
@@ -124,7 +129,20 @@ export default function SearchPage() {
         {loading && <p>Loading...</p>}
         {error && <p>Error : {error.message}</p>}
         {data ? (
-          <ResultList results={data.searchDrinksByName} />
+          <>
+            <ResultList results={data.searchDrinksByName} />
+            <Button
+              onClick={() => {
+                fetchMore({
+                  variables: {
+                    offset: data.searchDrinksByName.length,
+                  },
+                });
+              }}
+            >
+              Load more drinks
+            </Button>
+          </>
         ) : (
           <p>No results</p>
         )}
