@@ -1,28 +1,30 @@
 import { Martini } from "lucide-react";
-import * as reviewData from "../../../data/mock_reviews.json";
 import { ratedColor } from "./ReviewForm";
 
+interface ReviewShape {
+  textContent: string;
+  rating: number;
+  id: number;
+}
 export default function ReviewList({
-  drinkId,
   className,
+  reviews,
 }: {
-  drinkId: number;
   className: string;
+  reviews: ReviewShape[];
 }) {
   return (
     <div
       className={`flex w-[40em] flex-col items-center justify-center border-2 ${className}`}
     >
       <p className="my-[1em] text-xl">Did other people like this cocktail?</p>
-      {reviewData.reviews
-        .filter((review) => review.drinkId === drinkId)
-        .map((review) => (
-          <ReviewListItem
-            comment={review.comment}
-            rating={review.rating}
-            key={review.reviewId}
-          />
-        ))}
+      {reviews.map((review) => (
+        <ReviewListItem
+          comment={review.textContent}
+          rating={review.rating}
+          key={review.id}
+        />
+      ))}
     </div>
   );
 }
