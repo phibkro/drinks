@@ -9,7 +9,6 @@ import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
 export default function SearchPage() {
-  const [limit, setLimit] = useState(10);
   const { loading, error, data, fetchMore, refetch } = useQuery(
     SEARCH_DRINKS_BY_NAME,
     {
@@ -27,9 +26,7 @@ export default function SearchPage() {
   const [inputValue, setInputValue] = useState("");
   const [checked, setChecked] = useState(false);
   const [sort, setSort] = useState("asc");
-  function limitAdd(n: number) {
-    setLimit(limit + n);
-  }
+
   const handleSearch = () => {
     refetch({
       name: inputValue,
@@ -50,7 +47,6 @@ export default function SearchPage() {
   return (
     <main className="flex">
       <div className="basis-1/4">
-        {/*<Sidebar />*/}
         <div className="flex flex-col gap-2">
           <h2 className="text-xl">Sorting</h2>
           <RadioGroup
@@ -137,9 +133,6 @@ export default function SearchPage() {
             <ResultList results={data.searchDrinksByName} />
             <Button
               onClick={() => {
-                //console.log(data);
-
-                //limitAdd(10);
                 fetchMore({
                   variables: {
                     offset: data.searchDrinksByName.length,
