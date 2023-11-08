@@ -10,7 +10,7 @@ export const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          searchDrinkByName: offsetLimitPagination()
+          searchDrinksByName: offsetLimitPagination()
           
         }
       }
