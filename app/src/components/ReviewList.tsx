@@ -1,14 +1,17 @@
 import { Martini } from "lucide-react";
 import { ratedColor } from "./ReviewForm";
 
+interface ReviewShape {
+  textContent: string;
+  rating: number;
+  id: number;
+}
 export default function ReviewList({
-  drinkId,
   className,
   reviews,
 }: {
-  drinkId: number;
   className: string;
-  reviews: unknown[];
+  reviews: ReviewShape[];
 }) {
   return (
     <div
