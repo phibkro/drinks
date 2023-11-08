@@ -22,7 +22,7 @@ function ReviewForm({
   className,
   drinkId,
 }: {
-  className?: string;
+  className: string;
   drinkId?: number;
 }) {
   //Set 0 as default rating
