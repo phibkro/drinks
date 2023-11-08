@@ -38,8 +38,18 @@ export const GET_DRINK_BY_ID = gql`
 `;
 
 export const SEARCH_DRINKS_BY_NAME = gql`
-  query SearchDrinksByName($name: String!, $options: SearchOptions, $offset: Int, $limit: Int) {
-    searchDrinksByName(name: $name, options: $options, offset: $offset, limit: $limit) {
+  query SearchDrinksByName(
+    $name: String!
+    $options: SearchOptions
+    $offset: Int
+    $limit: Int
+  ) {
+    searchDrinksByName(
+      name: $name
+      options: $options
+      offset: $offset
+      limit: $limit
+    ) {
       id
       name
       alcoholic
