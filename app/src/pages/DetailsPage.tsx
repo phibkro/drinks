@@ -18,7 +18,7 @@ export default function DetailsPage() {
       {data && (
         <>
           <DrinkDetails {...data.drinkById} />
-          <ReviewForm className="self-center" />
+          <ReviewForm drinkId={data.drinkById.id} className="self-center" />
           <ReviewList drinkId={data.drinkById.id} className="self-center" />
         </>
       )}
