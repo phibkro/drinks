@@ -3,7 +3,10 @@ import App from "./App";
 import DetailsPage from "./pages/DetailsPage";
 import SearchPage from "./pages/SearchPage";
 
+// For browserRouter
 const rootPath = import.meta.env.BASE_URL;
+// For hashRouter
+// const rootPath = "/";
 export const appRouter = createBrowserRouter([
   {
     path: rootPath,
