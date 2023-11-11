@@ -1,5 +1,7 @@
 # Drinks
 
+[[_TOC_]]
+
 ## Project description
 
 Share your drink recipes and review others!
@@ -78,6 +80,16 @@ More specific commands you find by checking out the subrepos `/app` and `/server
   - `src/` contains the main code for the server
     - `index.ts` is the main entry point for the server
       - Here we define the server and connect it to the database
+
+## Semantic versioning
+
+We use semantic versioning to keep track of our releases.
+
+App versioning is unnecessary as the consumers of our app are not dependent on a specific version of our app.
+
+Our server/backend is versioned as it is a public API that is consumed by our frontend.
+
+Please refer to <https://semver.org/> for more information.
 
 ## Tech-stack
 
