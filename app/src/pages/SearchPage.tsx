@@ -88,7 +88,7 @@ export default function SearchPage() {
           <h2 className="text-xl">Alcohol</h2>
           <label
             htmlFor="terms1"
-            className="flex flex-row text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="flex flex-row gap-1 text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             <Checkbox
               className="self-center"
