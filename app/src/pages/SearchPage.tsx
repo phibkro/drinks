@@ -59,32 +59,30 @@ export default function SearchPage() {
           value={inputValue}
         />
       </form>
-      <div className="flex flex-row gap-24 self-center">
-        <div>
-          <h2 className="text-center text-xl">Sorting</h2>
-          <RadioGroup
-            onValueChange={(value) => {
-              setSort(value);
-            }}
-            defaultValue="asc"
-            className="flex flex-row"
+      <div className="flex flex-row gap-12 self-center">
+        <RadioGroup
+          onValueChange={(value) => {
+            setSort(value);
+          }}
+          defaultValue="asc"
+          className="flex flex-col"
+        >
+          <h2 className="text-center text-xl ">Sorting</h2>
+          <Label
+            className="flex items-center gap-1 text-lg"
+            htmlFor="option-one"
           >
-            <Label
-              className="flex items-center gap-1 text-lg"
-              htmlFor="option-one"
-            >
-              <RadioGroupItem value="asc" id="option-one" />
-              A-Z
-            </Label>
-            <Label
-              className="flex items-center gap-1 text-lg"
-              htmlFor="option-two"
-            >
-              <RadioGroupItem value="desc" id="option-two" />
-              Z-A
-            </Label>
-          </RadioGroup>
-        </div>
+            <RadioGroupItem value="asc" id="option-one" />
+            A-Z
+          </Label>
+          <Label
+            className="flex items-center gap-1 text-lg"
+            htmlFor="option-two"
+          >
+            <RadioGroupItem value="desc" id="option-two" />
+            Z-A
+          </Label>
+        </RadioGroup>
 
         <div className="flex flex-col">
           <h2 className="text-xl">Alcohol</h2>
