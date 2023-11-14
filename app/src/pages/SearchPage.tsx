@@ -45,45 +45,65 @@ export default function SearchPage() {
   //console.log(data);
 
   return (
-    <main className="flex">
-      <div className="basis-1/4">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-xl">Sorting</h2>
-          <RadioGroup
-            onValueChange={(value) => {
-              setSort(value);
-              console.log(value);
+    <main className="flex flex-col py-24">
+      <div className="flex basis-3/4 flex-col gap-4">
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSearch();
+          }}
+        >
+          <Label>Search for your favorite drink!</Label>
+          <Input
+            placeholder={'"Margarita"'}
+            onChange={(event) => {
+              setInputValue(event.target.value);
             }}
-            defaultValue="asc"
-            className="flex flex-col"
-          >
-            <Label
-              className="flex items-center gap-1 text-lg"
-              htmlFor="option-one"
+            value={inputValue}
+          />
+        </form>
+        <div className="basis-1/4 self-center">
+          <div className="flex flex-row gap-12">
+            <RadioGroup
+              onValueChange={(value) => {
+                setSort(value);
+                console.log(value);
+              }}
+              defaultValue="asc"
+              className="flex flex-col"
             >
-              <RadioGroupItem value="asc" id="option-one" />
-              A-Z
-            </Label>
-            <Label
-              className="flex items-center gap-1 text-lg"
-              htmlFor="option-two"
-            >
-              <RadioGroupItem value="desc" id="option-two" />
-              Z-A
-            </Label>
-          </RadioGroup>
+              <h2 className="text-xl">Sorting</h2>
+              <Label
+                className="flex items-center gap-1 text-lg"
+                htmlFor="option-one"
+              >
+                <RadioGroupItem value="asc" id="option-one" />
+                A-Z
+              </Label>
+              <Label
+                className="flex items-center gap-1 text-lg"
+                htmlFor="option-two"
+              >
+                <RadioGroupItem value="desc" id="option-two" />
+                Z-A
+              </Label>
+            </RadioGroup>
 
-          <h2 className="text-xl">Alcohol</h2>
-          <div className="flex">
-            <Checkbox checked={checked} onCheckedChange={handleCheckbox} />
-            <label
-              htmlFor="terms1"
-              className="text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Non-alcoholic
-            </label>
-          </div>
-          {/* 
+            <div className="flex flex-col">
+              <h2 className="text-xl">Alcohol</h2>
+              <label
+                htmlFor="terms1"
+                className="flex flex-row text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                <Checkbox
+                  className="self-center"
+                  checked={checked}
+                  onCheckedChange={handleCheckbox}
+                />
+                <p className="self-center">Non-alcoholic</p>
+              </label>
+            </div>
+            {/* 
           <h2 className="text-xl">Rating</h2>
           {Array(5)
             .fill(5)
@@ -105,26 +125,8 @@ export default function SearchPage() {
                   ))}
               </div>
             ))}*/}
-          <Button onClick={handleSearch}>Apply</Button>
+          </div>
         </div>
-      </div>
-
-      <div className="flex basis-3/4 flex-col gap-4">
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            handleSearch();
-          }}
-        >
-          <Label>Search for your favorite drink!</Label>
-          <Input
-            placeholder={'"Margarita"'}
-            onChange={(event) => {
-              setInputValue(event.target.value);
-            }}
-            value={inputValue}
-          />
-        </form>
 
         {loading && <p>Loading...</p>}
         {error && <p>Error : {error.message}</p>}
