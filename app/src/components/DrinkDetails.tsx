@@ -2,7 +2,7 @@ interface DBDrink {
   id: number;
   name: string;
   instructions: string;
-  alcoholic: string;
+  alcoholic: boolean;
   imageUrl: string;
   glass: string;
   measures: Array<{
@@ -22,7 +22,7 @@ export default function DrinkDetails({
   measures,
 }: Props) {
   return (
-    <div className="flex flex-wrap gap-8">
+    <div data-cy="drink-details" className="flex flex-wrap gap-8">
       <header className="basis-full text-left">
         <h1 className="text-4xl">{name}</h1>
       </header>
@@ -44,11 +44,12 @@ export default function DrinkDetails({
         <h2>Other details</h2>
         <table>
           <tbody>
-            {[alcoholic, glass].map((value) => (
-              <tr>
-                <td>{value}</td>
-              </tr>
-            ))}
+            <tr>
+              <td>{alcoholic ? "Alcoholic" : "Non alcoholic"}</td>
+            </tr>
+            <tr>
+              <td>{glass}</td>
+            </tr>
           </tbody>
         </table>
       </div>
