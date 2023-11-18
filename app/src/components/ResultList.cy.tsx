@@ -84,5 +84,55 @@ describe("DrinkDetails Component", () => {
       );
 
     // test second ResultListItem in mock data
+    cy.get(":nth-child(2) > .flex h2")
+      .should("exist")
+      .and("be.visible")
+      .and("have.text", drinkData2.name);
+
+    cy.get(":nth-child(2) > .flex")
+      .find("img")
+      .should("be.visible")
+      .and("have.attr", "src", drinkData2.imageUrl);
+
+    cy.get(":nth-child(2) > .flex h3")
+      .should("exist")
+      .and("be.visible")
+      .and("have.text", "Ingredients");
+
+    cy.get(":nth-child(2) > .flex ul li")
+      .should("exist")
+      .and("be.visible")
+      .and("have.length", 3);
+
+    cy.get(":nth-child(2) > .flex ul li")
+      .first()
+      .should("exist")
+      .and("be.visible")
+      .and(
+        "have.text",
+        drinkData2.measures[0].measure +
+          " " +
+          drinkData2.measures[0].ingredient.name,
+      );
+
+    cy.get(":nth-child(2) > .flex ul li:eq(1)")
+      .should("exist")
+      .and("be.visible")
+      .and(
+        "have.text",
+        drinkData2.measures[1].measure +
+          " " +
+          drinkData2.measures[1].ingredient.name,
+      );
+
+    cy.get(":nth-child(2) > .flex ul li:eq(2)")
+      .should("exist")
+      .and("be.visible")
+      .and(
+        "have.text",
+        drinkData2.measures[2].measure +
+          " " +
+          drinkData2.measures[2].ingredient.name,
+      );
   });
 });
