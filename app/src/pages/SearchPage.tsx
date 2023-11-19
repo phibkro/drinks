@@ -118,6 +118,7 @@ export default function SearchPage() {
         >
           <Label>Search for your favorite drink!</Label>
           <Input
+            type="text"
             placeholder={'"Margarita"'}
             onChange={(event) => {
               setInputValue(event.target.value);

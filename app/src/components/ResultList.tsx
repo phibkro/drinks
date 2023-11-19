@@ -23,7 +23,11 @@ export function ResultList(props: Result) {
   props.results.forEach((item) => {
     listTest.push(ResultListItem(item));
   });
-  return <div className="flex flex-col gap-5">{listTest}</div>;
+  return (
+    <div data-cy="result-list" className="flex flex-col gap-5">
+      {listTest}
+    </div>
+  );
 }
 
 export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
