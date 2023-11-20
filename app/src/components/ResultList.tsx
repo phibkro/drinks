@@ -47,7 +47,12 @@ export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
         className="flex gap-4 bg-primary-foreground"
       >
         <div className="basis-1/4">
-          <img src={imageUrl} alt={`Image of ${name}`} />
+          <img
+            width={700}
+            height={700}
+            src={imageUrl}
+            alt={`Image of ${name}`}
+          />
         </div>
         <h2>{name}</h2>
         <div>
