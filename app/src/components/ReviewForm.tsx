@@ -18,7 +18,7 @@ export type ReviewData = {
 export const ratedColor = "#eb8634";
 
 //Array for martini glasses
-const martiniGlasses: number[] = [1, 2, 3, 4, 5];
+const ratingRange = [1, 2, 3, 4, 5];
 
 function ReviewForm({
   className,
@@ -66,12 +66,12 @@ function ReviewForm({
     >
       <p className="text-xl">Give this cocktail a review!</p>
       <div className="flex flex-row">
-        {martiniGlasses.map((glass) => (
+        {ratingRange.map((i) => (
           <Martini
-            color={glass <= rating ? ratedColor : "white"}
-            onClick={() => setRating(glass)}
+            color={i <= rating ? ratedColor : "white"}
+            onClick={() => setRating(i)}
             className="hover:cursor-pointer"
-            key={glass}
+            key={i}
           />
         ))}
       </div>
