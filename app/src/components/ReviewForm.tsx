@@ -66,22 +66,14 @@ function ReviewForm({
     >
       <p className="text-xl">Give this cocktail a review!</p>
       <div className="flex flex-row">
-        {martiniGlasses.map((glass) =>
-          glass <= rating ? ( //Places all martini glasses for rating
-            <Martini
-              color={ratedColor}
-              onClick={() => setRating(glass)}
-              className="hover:cursor-pointer"
-              key={glass}
-            />
-          ) : (
-            <Martini
-              onClick={() => setRating(glass)}
-              className="hover:cursor-pointer"
-              key={glass}
-            />
-          ),
-        )}
+        {martiniGlasses.map((glass) => (
+          <Martini
+            color={glass <= rating ? ratedColor : "white"}
+            onClick={() => setRating(glass)}
+            className="hover:cursor-pointer"
+            key={glass}
+          />
+        ))}
       </div>
       <Textarea
         placeholder="Did you like your cocktail?"
