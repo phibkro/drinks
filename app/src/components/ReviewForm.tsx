@@ -1,9 +1,12 @@
 import { ADD_REVIEW } from "@/lib/queries";
 import { useMutation } from "@apollo/client";
+import { RadioGroupItem } from "@radix-ui/react-radio-group";
 import { Martini } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "./ui/Button";
+import { Label } from "./ui/Label";
+import { RadioGroup } from "./ui/RadioGroup";
 import { Textarea } from "./ui/Textarea";
 
 //Type for data submitted through the form
@@ -64,23 +67,34 @@ function ReviewForm({
       border-2
       `}
     >
-      <p className="text-xl">Give this cocktail a review!</p>
-      <div className="flex flex-row">
+      <h2 className="text-xl">Give this cocktail a review!</h2>
+
+      <RadioGroup aria-labelledby="Rate it" className="flex flex-row">
         {ratingRange.map((i) => (
-          <Martini
-            color={i <= rating ? ratedColor : "white"}
-            onClick={() => setRating(i)}
-            className="hover:cursor-pointer"
-            key={i}
-          />
+          <RadioGroupItem
+            aria-labelledby={`rating-group-item-${i}_label`}
+            value={`${i}`}
+            onFocus={() => setRating(i)}
+          >
+            <Label id={`rating-group-item-${i}_label`}>{i}</Label>
+            <Martini
+              color={i <= rating ? ratedColor : "white"}
+              onClick={() => setRating(i)}
+              className="hover:cursor-pointer"
+              key={i}
+              aria-label="Martini glass icon"
+            />
+          </RadioGroupItem>
         ))}
-      </div>
+      </RadioGroup>
+      <Label id="textarea_label">What do you think?</Label>
       <Textarea
         placeholder="Did you like your cocktail?"
         {...register("comment", { required: true })}
         className="max-w-prose bg-gray-200 text-black"
         rows={4}
         cols={50}
+        aria-labelledby="textarea_label"
       ></Textarea>
       {errors.comment ? (
         //Error if user doesnt leave comment when reviewing drink
