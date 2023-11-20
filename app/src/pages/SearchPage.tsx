@@ -86,7 +86,7 @@ export default function SearchPage() {
 
           <div className="flex flex-col">
             <h2 className="text-xl">Alcohol</h2>
-            <label
+            <Label
               htmlFor="terms1"
               className="flex flex-row gap-1 text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
@@ -96,7 +96,7 @@ export default function SearchPage() {
                 onCheckedChange={handleCheckbox}
               />
               <p>Non-alcoholic</p>
-            </label>
+            </Label>
           </div>
           <Button onClick={handleSearch}>Apply</Button>
           {/* 
