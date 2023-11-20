@@ -73,15 +73,23 @@ export default function SearchPage() {
               className="flex flex-col"
             >
               <div className="flex items-center gap-1 ">
-                <RadioGroupItem value="asc" id="asc" />
-                <Label className="text-lg" htmlFor="asc">
+                <RadioGroupItem
+                  aria-labelledby="asc_label"
+                  value="asc"
+                  id="asc"
+                />
+                <Label className="text-lg" htmlFor="asc" id="asc_label">
                   A-Z
                 </Label>
               </div>
 
               <div className="flex items-center gap-1 ">
-                <RadioGroupItem value="desc" id="desc" />
-                <Label className="text-lg" htmlFor="desc">
+                <RadioGroupItem
+                  aria-labelledby="desc_label"
+                  value="desc"
+                  id="desc"
+                />
+                <Label className="text-lg" htmlFor="desc" id="desc_label">
                   Z-A
                 </Label>
               </div>
@@ -96,8 +104,13 @@ export default function SearchPage() {
                 checked={checked}
                 onCheckedChange={handleCheckbox}
                 id="non-alcoholic"
+                aria-labelledby="non-alcoholic_label"
               />
-              <Label className="text-lg font-medium" htmlFor="non-alcoholic">
+              <Label
+                className="text-lg font-medium"
+                htmlFor="non-alcoholic"
+                id="non-alcoholic_label"
+              >
                 Non-alcoholic
               </Label>
             </div>
