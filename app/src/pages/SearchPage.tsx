@@ -4,37 +4,35 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup";
+import { useSearchOptionsStore } from "@/hooks/useSearchOptions";
 import { SEARCH_DRINKS_BY_NAME } from "@/lib/queries";
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
 export default function SearchPage() {
+  const query = useSearchOptionsStore((state) => state.query);
+  const setQuery = useSearchOptionsStore((state) => state.setQuery);
   const { loading, error, data, fetchMore, refetch } = useQuery(
     SEARCH_DRINKS_BY_NAME,
     {
-      variables: {
-        name: "",
-        options: {
-          sort: "asc",
-          alcohol: true,
-        },
-        offset: 0,
-        limit: 10,
-      },
+      variables: query,
     },
   );
   const [inputValue, setInputValue] = useState("");
   const [checked, setChecked] = useState(false);
   const [sort, setSort] = useState("asc");
 
-  const handleSearch = () => {
-    refetch({
+  const handleSearch = async () => {
+    await setQuery({
       name: inputValue,
       options: {
         sort: sort,
         alcohol: !checked,
       },
+      offset: 0,
+      limit: 10,
     });
+    refetch(query);
   };
 
   //usikker på om dette ble omvendt men fiks senere
