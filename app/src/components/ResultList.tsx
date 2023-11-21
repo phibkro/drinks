@@ -23,7 +23,7 @@ export function ResultList(props: Result) {
   props.results.forEach((item) => {
     listTest.push(ResultListItem(item));
   });
-  return <div className="flex flex-col gap-5">{listTest}</div>;
+  return <nav className="flex flex-col gap-5">{listTest}</nav>;
 }
 
 export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
@@ -41,9 +41,18 @@ export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
   };
   return (
     <Link to={`details/${id}`}>
-      <div className="flex gap-4 bg-primary-foreground hover:cursor-pointer">
+      <div
+        role="link"
+        tabIndex={0}
+        className="flex gap-4 bg-primary-foreground"
+      >
         <div className="basis-1/4">
-          <img src={imageUrl} alt={`Image of ${name}`} />
+          <img
+            width={700}
+            height={700}
+            src={imageUrl}
+            alt={`Image of ${name}`}
+          />
         </div>
         <h2>{name}</h2>
         <div>

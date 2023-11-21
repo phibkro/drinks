@@ -1,8 +1,13 @@
 import { ADD_REVIEW } from "@/lib/queries";
 import { useMutation } from "@apollo/client";
+import { RadioGroupItem } from "@radix-ui/react-radio-group";
 import { Martini } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Button } from "./ui/Button";
+import { Label } from "./ui/Label";
+import { RadioGroup } from "./ui/RadioGroup";
+import { Textarea } from "./ui/Textarea";
 
 //Type for data submitted through the form
 export type ReviewData = {
@@ -16,7 +21,7 @@ export type ReviewData = {
 export const ratedColor = "#eb8634";
 
 //Array for martini glasses
-const martiniGlasses: number[] = [1, 2, 3, 4, 5];
+const ratingRange = [1, 2, 3, 4, 5];
 
 function ReviewForm({
   className,
@@ -56,47 +61,55 @@ function ReviewForm({
     <form
       onSubmit={handleSubmit(onSubmit)}
       id="reviewForm"
-      className={className}
+      className={`${className}
+      flex h-[20em] w-[40em] flex-col 
+      items-center justify-center gap-4
+      border-2
+      `}
     >
-      <div className="flex h-80 w-[40em] flex-col items-center justify-center border-2">
-        <p className="text-xl">Give this cocktail a review!</p>
-        <div className="my-4 flex flex-row">
-          {martiniGlasses.map((glass) =>
-            glass <= rating ? ( //Places all martini glasses for rating
-              <Martini
-                color={ratedColor}
-                onClick={() => setRating(glass)}
-                className="hover:cursor-pointer"
-                key={glass}
-              />
-            ) : (
-              <Martini
-                onClick={() => setRating(glass)}
-                className="hover:cursor-pointer"
-                key={glass}
-              />
-            ),
-          )}
-        </div>
-        <textarea
-          placeholder="Did you like your cocktail?"
-          {...register("comment", { required: true })}
-          rows={4}
-          cols={50}
-          className="my-4 rounded bg-gray-50 px-2 text-black"
-        ></textarea>
-        {errors.comment && (
-          //Error if user doesnt leave comment when reviewing drink
-          <span>Please add a comment before submitting you review</span>
-        )}
-        {rating > 0 && (
-          //Hides submit button if user havent rated the drink
-          <input
-            type="submit"
-            className="my-2 h-8 w-20 border-2 hover:cursor-pointer hover:border-white"
-          />
-        )}
-      </div>
+      <h2 className="text-xl">Give this cocktail a review!</h2>
+
+      <RadioGroup aria-labelledby="Rate it" className="flex flex-row">
+        {ratingRange.map((i) => (
+          <RadioGroupItem
+            aria-labelledby={`rating-group-item-${i}_label`}
+            value={`${i}`}
+            onFocus={() => setRating(i)}
+          >
+            <Label id={`rating-group-item-${i}_label`}>{i}</Label>
+            <Martini
+              color={i <= rating ? ratedColor : "white"}
+              onClick={() => setRating(i)}
+              className="hover:cursor-pointer"
+              key={i}
+              aria-label="Martini glass icon"
+            />
+          </RadioGroupItem>
+        ))}
+      </RadioGroup>
+      <Label id="textarea_label">What do you think?</Label>
+      <Textarea
+        placeholder="Did you like your cocktail?"
+        {...register("comment", { required: true })}
+        className="max-w-prose bg-gray-200 text-black"
+        rows={4}
+        cols={50}
+        aria-labelledby="textarea_label"
+      ></Textarea>
+      {errors.comment ? (
+        //Error if user doesnt leave comment when reviewing drink
+        <span>Please add a comment before submitting you review</span>
+      ) : (
+        <div className="h-6"></div>
+      )}
+      {rating > 0 ? (
+        //Hides submit button if user havent rated the drink
+        <Button variant="default" type="submit">
+          Submit review
+        </Button>
+      ) : (
+        <div className="h-10 px-4 py-2"></div>
+      )}
     </form>
   );
 }
