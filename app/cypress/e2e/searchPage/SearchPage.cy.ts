@@ -40,7 +40,11 @@ describe("SearchPage Component", () => {
     cy.url().should('include', 'details/0')
   });
 
-  
+  it("should load more elements when load more button is clicked", () => {
+    cy.get('[data-cy="result-list-items"]').should('have.length', 10)
+    cy.get('.basis-3\\/4 > .inline-flex').click()
+    cy.get('[data-cy="result-list-items"]').should('have.length', 20)
+  })
 
   // testing resultlist functionality
 
