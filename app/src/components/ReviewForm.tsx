@@ -49,7 +49,7 @@ function ReviewForm({
   };
 
   return submitted ? (
-    <div className="flex h-[20em] w-[40em] flex-col items-center justify-center self-center border-2">
+    <div className="flex h-80 w-[40em] flex-col items-center justify-center self-center border-2">
       <p className="text-xl">{"Thank you for submitting a review <3"}</p>
     </div>
   ) : (
@@ -58,9 +58,9 @@ function ReviewForm({
       id="reviewForm"
       className={className}
     >
-      <div className="flex h-[20em] w-[40em] flex-col items-center justify-center border-2">
+      <div className="flex h-80 w-[40em] flex-col items-center justify-center border-2">
         <p className="text-xl">Give this cocktail a review!</p>
-        <div className="my-[1em] flex flex-row">
+        <div className="my-4 flex flex-row">
           {martiniGlasses.map((glass) =>
             glass <= rating ? ( //Places all martini glasses for rating
               <Martini
@@ -83,7 +83,7 @@ function ReviewForm({
           {...register("comment", { required: true })}
           rows={4}
           cols={50}
-          className="my-[0.5em] rounded bg-gray-50 px-[0.2em] text-black"
+          className="my-4 rounded bg-gray-50 px-2 text-black"
         ></textarea>
         {errors.comment && (
           //Error if user doesnt leave comment when reviewing drink
@@ -93,7 +93,7 @@ function ReviewForm({
           //Hides submit button if user havent rated the drink
           <input
             type="submit"
-            className="my-[0.5em] h-[2em] w-[5em] border-2 hover:cursor-pointer hover:border-white"
+            className="my-2 h-8 w-20 border-2 hover:cursor-pointer hover:border-white"
           />
         )}
       </div>
