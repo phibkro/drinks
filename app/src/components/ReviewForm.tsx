@@ -54,7 +54,7 @@ function ReviewForm({
   };
 
   return submitted ? (
-    <div className="flex h-[20em] w-[40em] flex-col items-center justify-center self-center border-2">
+    <div className="flex h-80 w-[40em] flex-col items-center justify-center self-center border-2">
       <p className="text-xl">{"Thank you for submitting a review <3"}</p>
     </div>
   ) : (

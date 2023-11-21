@@ -1,7 +1,7 @@
 import { Martini } from "lucide-react";
 import { ratedColor } from "./ReviewForm";
 
-interface ReviewShape {
+export interface ReviewShape {
   textContent: string;
   rating: number;
   id: number;
@@ -17,7 +17,7 @@ export default function ReviewList({
     <div
       className={`flex w-[40em] flex-col items-center justify-center border-2 ${className}`}
     >
-      <p className="my-[1em] text-xl">Did other people like this cocktail?</p>
+      <p className="my-4 text-xl">Did other people like this cocktail?</p>
       {reviews.map((review) => (
         <ReviewListItem
           comment={review.textContent}
