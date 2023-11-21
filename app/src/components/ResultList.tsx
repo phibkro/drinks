@@ -46,8 +46,9 @@ export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
   return (
     <Link to={`details/${id}`}>
       <div
-        data-cy="result-list-item"
+        data-cy="result-list-items"
         className="flex gap-4 bg-primary-foreground hover:cursor-pointer"
+        id={`${id}`}
       >
         <div className="basis-1/4">
           <img src={imageUrl} alt={`Image of ${name}`} />
