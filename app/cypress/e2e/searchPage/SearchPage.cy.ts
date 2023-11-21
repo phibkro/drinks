@@ -35,18 +35,13 @@ describe("SearchPage Component", () => {
     cy.get('input[type=text]').clear().should('have.value', '');
   });
 
-  it("search is ordered alphabetically",() => {
-    // i dont know how to test this
+  it("should navigate to drinkdetails",() => {
+    cy.get('[href="/project2/details/0"] > [data-cy="result-list-items"]').click()
+    cy.url().should('include', 'details/0')
   });
+
+  
 
   // testing resultlist functionality
 
-  it("should ", () => {
-
-
-  })
-
-  it("", () => {
-    
-  })
 });
