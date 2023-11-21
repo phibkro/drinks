@@ -1,4 +1,4 @@
-import { ADD_REVIEW } from "@/lib/queries";
+import { ADD_REVIEW, GET_REVIEW_BY_DRINKID } from "@/lib/queries";
 import { useMutation } from "@apollo/client";
 import { RadioGroupItem } from "@radix-ui/react-radio-group";
 import { Martini } from "lucide-react";
@@ -35,6 +35,10 @@ function ReviewForm({
   const [submitted, setSubmitted] = useState(false);
   const [addReview] = useMutation(ADD_REVIEW, {
     variables: { drinkId: drinkId, textContent: "", rating: rating },
+    refetchQueries: [
+      GET_REVIEW_BY_DRINKID, // DocumentNode object parsed with gql
+      "ReviewsByDrinkId", // Query name
+    ],
   });
   const {
     register,
