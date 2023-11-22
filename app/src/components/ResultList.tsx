@@ -23,7 +23,11 @@ export function ResultList(props: Result) {
   props.results.forEach((item) => {
     listTest.push(ResultListItem(item));
   });
-  return <nav className="flex flex-col gap-5">{listTest}</nav>;
+  return (
+    <nav data-cy="result-list" className="flex flex-col gap-5">
+      {listTest}
+    </nav>
+  );
 }
 
 export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
@@ -42,9 +46,11 @@ export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
   return (
     <Link to={`details/${id}`}>
       <div
+        data-cy="result-list-items"
         role="link"
         tabIndex={0}
         className="flex gap-4 bg-primary-foreground"
+        id={`${id}`}
       >
         <div className="basis-1/4">
           <img
