@@ -24,9 +24,9 @@ export function ResultList(props: Result) {
     listTest.push(ResultListItem(item));
   });
   return (
-    <div data-cy="result-list" className="flex flex-col gap-5">
+    <nav data-cy="result-list" className="flex flex-col gap-5">
       {listTest}
-    </div>
+    </nav>
   );
 }
 
@@ -47,7 +47,9 @@ export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
     <Link to={`details/${id}`}>
       <div
         data-cy="result-list-items"
-        className="flex gap-4 bg-primary-foreground hover:cursor-pointer"
+        role="link"
+        tabIndex={0}
+        className="flex gap-4 bg-primary-foreground"
         id={`${id}`}
       >
         <div className="basis-1/4">
