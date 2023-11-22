@@ -48,54 +48,73 @@ export default function SearchPage() {
           event.preventDefault();
           handleSearch();
         }}
+        role="search"
         className="flex flex-col gap-4"
       >
-        <Label>Search for your favorite drink!</Label>
-        <Input
-          placeholder={'"Margarita"'}
-          onChange={(event) => {
-            inputVar(event.target.value);
-          }}
-          value={inputValue}
-        />
-        <div className="flex gap-12 self-center">
-          <RadioGroup
-            onValueChange={(value) => {
-              optionsVar({ sort: value, alcohol: optionsVar().alcohol });
+        <Label>
+          Search for your favorite drink!
+          <Input
+            placeholder={'"Margarita"'}
+            onChange={(event) => {
+              inputVar(event.target.value);
             }}
-            defaultValue={optionsValue.sort}
-            className="flex flex-col"
-          >
-            <h2 className="text-center text-xl ">Sorting</h2>
-            <Label
-              className="flex items-center gap-1 text-lg"
-              htmlFor="option-one"
+            value={inputValue}
+            role="searchbox"
+          />
+        </Label>
+
+        <div className="flex gap-12 self-center">
+          <div>
+            <h2 className="text-center text-xl ">Sort name by:</h2>
+            <RadioGroup
+              onValueChange={(value) => {
+                optionsVar({ sort: value, alcohol: optionsVar().alcohol });
+              }}
+              defaultValue={optionsValue.sort}
+              className="flex flex-col"
             >
-              <RadioGroupItem value="asc" id="option-one" />
-              A-Z
-            </Label>
-            <Label
-              className="flex items-center gap-1 text-lg"
-              htmlFor="option-two"
-            >
-              <RadioGroupItem value="desc" id="option-two" />
-              Z-A
-            </Label>
-          </RadioGroup>
+              <div className="flex items-center gap-1 ">
+                <RadioGroupItem
+                  aria-labelledby="asc_label"
+                  value="asc"
+                  id="asc"
+                />
+                <Label className="text-lg" htmlFor="asc" id="asc_label">
+                  A-Z
+                </Label>
+              </div>
+
+              <div className="flex items-center gap-1 ">
+                <RadioGroupItem
+                  aria-labelledby="desc_label"
+                  value="desc"
+                  id="desc"
+                />
+                <Label className="text-lg" htmlFor="desc" id="desc_label">
+                  Z-A
+                </Label>
+              </div>
+            </RadioGroup>
+          </div>
 
           <div className="flex flex-col">
             <h2 className="text-xl">Alcohol</h2>
-            <Label
-              htmlFor="terms1"
-              className="flex flex-row gap-1 text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
+            <div className="flex flex-row gap-1">
               <Checkbox
                 className="self-center"
                 checked={!optionsValue.alcohol}
                 onCheckedChange={handleCheckbox}
+                id="non-alcoholic"
+                aria-labelledby="non-alcoholic_label"
               />
-              <p>Non-alcoholic</p>
-            </Label>
+              <Label
+                className="text-lg font-medium"
+                htmlFor="non-alcoholic"
+                id="non-alcoholic_label"
+              >
+                Non-alcoholic
+              </Label>
+            </div>
           </div>
           <Button onClick={handleSearch}>Apply</Button>
           {/* 

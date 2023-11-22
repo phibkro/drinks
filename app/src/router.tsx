@@ -1,13 +1,13 @@
-import { Outlet, createBrowserRouter } from "react-router-dom";
+import { Outlet, createHashRouter } from "react-router-dom";
 import App from "./App";
 import DetailsPage from "./pages/DetailsPage";
 import SearchPage from "./pages/SearchPage";
 
 // For browserRouter
-const rootPath = import.meta.env.BASE_URL;
+// export const rootPath = import.meta.env.BASE_URL;
 // For hashRouter
-// const rootPath = "/";
-export const appRouter = createBrowserRouter([
+export const rootPath = "/";
+export const appRouter = createHashRouter([
   {
     path: rootPath,
     element: <App />,
