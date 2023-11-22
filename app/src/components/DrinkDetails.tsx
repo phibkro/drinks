@@ -27,7 +27,12 @@ export default function DrinkDetails({
         <h1 className="text-4xl">{name}</h1>
       </header>
       <div className="md:basis-2/6">
-        <img src={imageUrl} alt={`Photo of a ${name}`} />
+        <img
+          width={700}
+          height={700}
+          src={imageUrl}
+          alt={`Photo of a ${name}`}
+        />
       </div>
       <div>
         <h2>Ingredients</h2>

@@ -5,84 +5,118 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup";
 import { SEARCH_DRINKS_BY_NAME } from "@/lib/queries";
-import { useQuery } from "@apollo/client";
-import { useState } from "react";
+import { makeVar, useQuery, useReactiveVar } from "@apollo/client";
+
+const inputVar = makeVar("");
+const optionsVar = makeVar({
+  sort: "asc",
+  alcohol: true,
+});
 
 export default function SearchPage() {
+  const inputValue = useReactiveVar(inputVar);
+  const optionsValue = useReactiveVar(optionsVar);
   const { loading, error, data, fetchMore, refetch } = useQuery(
     SEARCH_DRINKS_BY_NAME,
     {
       variables: {
-        name: "",
-        options: {
-          sort: "asc",
-          alcohol: true,
-        },
+        name: inputVar(),
+        options: optionsVar(),
         offset: 0,
         limit: 10,
       },
     },
   );
-  const [inputValue, setInputValue] = useState("");
-  const [checked, setChecked] = useState(false);
-  const [sort, setSort] = useState("asc");
 
-  const handleSearch = () => {
-    refetch({
-      name: inputValue,
-      options: {
-        sort: sort,
-        alcohol: !checked,
-      },
-    });
+  const handleSearch = async () => {
+    refetch();
   };
 
   //usikker på om dette ble omvendt men fiks senere
   const handleCheckbox = () => {
-    setChecked(!checked);
+    // setChecked(!checked);
+    optionsVar({
+      sort: optionsVar().sort,
+      alcohol: !optionsVar().alcohol,
+    });
   };
 
-  //console.log(data);
-
   return (
-    <main className="flex">
-      <div className="basis-1/4">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-xl">Sorting</h2>
-          <RadioGroup
-            onValueChange={(value) => {
-              setSort(value);
-              console.log(value);
+    <main className="flex flex-col gap-10">
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSearch();
+        }}
+        role="search"
+        className="flex flex-col gap-4"
+      >
+        <Label>
+          Search for your favorite drink!
+          <Input
+            placeholder={'"Margarita"'}
+            onChange={(event) => {
+              inputVar(event.target.value);
             }}
-            defaultValue="asc"
-            className="flex flex-col"
-          >
-            <Label
-              className="flex items-center gap-1 text-lg"
-              htmlFor="option-one"
-            >
-              <RadioGroupItem value="asc" id="option-one" />
-              A-Z
-            </Label>
-            <Label
-              className="flex items-center gap-1 text-lg"
-              htmlFor="option-two"
-            >
-              <RadioGroupItem value="desc" id="option-two" />
-              Z-A
-            </Label>
-          </RadioGroup>
+            value={inputValue}
+            role="searchbox"
+          />
+        </Label>
 
-          <h2 className="text-xl">Alcohol</h2>
-          <div className="flex">
-            <Checkbox checked={checked} onCheckedChange={handleCheckbox} />
-            <label
-              htmlFor="terms1"
-              className="text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        <div className="flex gap-12 self-center">
+          <div>
+            <h2 className="text-center text-xl ">Sort name by:</h2>
+            <RadioGroup
+              onValueChange={(value) => {
+                optionsVar({ sort: value, alcohol: optionsVar().alcohol });
+              }}
+              defaultValue={optionsValue.sort}
+              className="flex flex-col"
             >
-              Non-alcoholic
-            </label>
+              <div className="flex items-center gap-1 ">
+                <RadioGroupItem
+                  aria-labelledby="asc_label"
+                  value="asc"
+                  id="asc"
+                />
+                <Label className="text-lg" htmlFor="asc" id="asc_label">
+                  A-Z
+                </Label>
+              </div>
+
+              <div className="flex items-center gap-1 ">
+                <RadioGroupItem
+                  aria-labelledby="desc_label"
+                  value="desc"
+                  id="desc"
+                />
+                <Label className="text-lg" htmlFor="desc" id="desc_label">
+                  Z-A
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
+
+          <div className="flex flex-col">
+            <h2 className="text-xl">Alcohol</h2>
+            <div className="flex flex-row gap-1">
+              <Checkbox
+                className="self-center"
+                checked={!optionsValue.alcohol}
+                onCheckedChange={handleCheckbox}
+                id="non-alcoholic"
+                aria-labelledby="non-alcoholic_label"
+              />
+              <Label
+                className="text-lg font-medium"
+                htmlFor="non-alcoholic"
+                id="non-alcoholic_label"
+              >
+                Non-alcoholic
+              </Label>
+            </div>
+          </div>
+          <Button onClick={handleSearch}>Apply</Button>
           {/* 
           <h2 className="text-xl">Rating</h2>
           {Array(5)
@@ -105,49 +139,29 @@ export default function SearchPage() {
                   ))}
               </div>
             ))}*/}
-          <Button onClick={handleSearch}>Apply</Button>
         </div>
-      </div>
+      </form>
 
-      <div className="flex basis-3/4 flex-col gap-4">
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            handleSearch();
-          }}
-        >
-          <Label>Search for your favorite drink!</Label>
-          <Input
-            type="text"
-            placeholder={'"Margarita"'}
-            onChange={(event) => {
-              setInputValue(event.target.value);
+      {loading && <p>Loading...</p>}
+      {error && <p>Error : {error.message}</p>}
+      {data ? (
+        <>
+          <ResultList results={data.searchDrinksByName} />
+          <Button
+            onClick={() => {
+              fetchMore({
+                variables: {
+                  offset: data.searchDrinksByName.length,
+                },
+              });
             }}
-            value={inputValue}
-          />
-        </form>
-
-        {loading && <p>Loading...</p>}
-        {error && <p>Error : {error.message}</p>}
-        {data ? (
-          <>
-            <ResultList results={data.searchDrinksByName} />
-            <Button
-              onClick={() => {
-                fetchMore({
-                  variables: {
-                    offset: data.searchDrinksByName.length,
-                  },
-                });
-              }}
-            >
-              Load more drinks
-            </Button>
-          </>
-        ) : (
-          <p>No results</p>
-        )}
-      </div>
+          >
+            Load more drinks
+          </Button>
+        </>
+      ) : (
+        <p>No results</p>
+      )}
     </main>
   );
 }

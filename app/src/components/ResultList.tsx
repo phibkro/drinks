@@ -4,7 +4,7 @@ interface DBDrink {
   id: number;
   name: string;
   instructions: string;
-  alcoholic: string;
+  alcoholic: boolean;
   imageUrl: string;
   glass: string;
   measures: Array<{
@@ -53,7 +53,12 @@ export function ResultListItem({ id, name, imageUrl, measures }: DBDrink) {
         id={`${id}`}
       >
         <div className="basis-1/4">
-          <img src={imageUrl} alt={`Image of ${name}`} />
+          <img
+            width={700}
+            height={700}
+            src={imageUrl}
+            alt={`Image of ${name}`}
+          />
         </div>
         <h2>{name}</h2>
         <div>
