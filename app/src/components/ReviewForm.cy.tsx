@@ -1,7 +1,6 @@
 import { ADD_REVIEW } from "@/lib/queries";
-import { MockedProvider, MockedResponse } from "@apollo/react-testing";
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import ReviewForm from "./ReviewForm";
-
 /// <reference types="Cypress"/>
 
 const mockReviews: readonly MockedResponse<
