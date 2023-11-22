@@ -51,17 +51,16 @@ export default function SearchPage() {
         role="search"
         className="flex flex-col gap-4"
       >
-        <Label>
-          Search for your favorite drink!
-          <Input
-            placeholder={'"Margarita"'}
-            onChange={(event) => {
-              inputVar(event.target.value);
-            }}
-            value={inputValue}
-            role="searchbox"
-          />
-        </Label>
+        <Label id="search_label">Search for your favorite drink!</Label>
+        <Input
+          placeholder={'"Margarita"'}
+          onChange={(event) => {
+            inputVar(event.target.value);
+          }}
+          value={inputValue}
+          role="searchbox"
+          aria-labelledby="search_label"
+        />
 
         <div className="flex gap-12 self-center">
           <div>
