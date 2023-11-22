@@ -116,29 +116,9 @@ export default function SearchPage() {
               </Label>
             </div>
           </div>
-          <Button onClick={handleSearch}>Apply</Button>
-          {/* 
-          <h2 className="text-xl">Rating</h2>
-          {Array(5)
-            .fill(5)
-            .map((_, n) => (
-              <div className="flex" key={n}>
-                <Checkbox />
-                <label
-                  htmlFor="terms1"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                ></label>
-                {Array(n + 1)
-                  .fill(n + 1)
-                  .map((_, m) => (
-                    <Martini
-                      color={ratedColor}
-                      className="hover:cursor-pointer"
-                      key={m}
-                    />
-                  ))}
-              </div>
-            ))}*/}
+          <Button variant="default" type="submit">
+            Apply
+          </Button>
         </div>
       </form>
 
