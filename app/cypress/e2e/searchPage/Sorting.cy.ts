@@ -10,16 +10,16 @@ describe("Sorting", () =>{
     cy.intercept('POST', 'http://localhost:4000/').as('backendIterceptAsc')
     cy.get('main.flex > :nth-child(1) > :nth-child(1) > .inline-flex').click()
     cy.wait('@backendIterceptAsc').its('request.body.variables.options.sort').should('contain', 'asc')
+    cy.get('[data-cy="result-list"]').should('be.visible') // results must be visible for user
 
   });
 
   it('should call qraphgl query with sort desc', () => {
     cy.get('#option-two').click()
     cy.intercept('POST', 'http://localhost:4000/').as('backendIterceptDesc') // have to intercept after sort value changed
-    cy.get('main.flex > :nth-child(1) > :nth-child(1) > .inline-flex').click()
-    
+    cy.get('main.flex > :nth-child(1) > :nth-child(1) > .inline-flex').click()  
     cy.wait('@backendIterceptDesc').its('request.body.variables.options.sort').should('contain', 'desc')
-
+    cy.get('[data-cy="result-list"]').should('be.visible') // results must be visible for user
   })
 
   it('should test backend with desc', () => {
