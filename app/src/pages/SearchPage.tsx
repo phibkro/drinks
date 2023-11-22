@@ -4,40 +4,41 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/RadioGroup";
-import { useSearchOptionsStore } from "@/hooks/useSearchOptions";
 import { SEARCH_DRINKS_BY_NAME } from "@/lib/queries";
-import { useQuery } from "@apollo/client";
-import { useState } from "react";
+import { makeVar, useQuery, useReactiveVar } from "@apollo/client";
+
+const inputVar = makeVar("");
+const optionsVar = makeVar({
+  sort: "asc",
+  alcohol: true,
+});
 
 export default function SearchPage() {
-  const query = useSearchOptionsStore((state) => state.query);
-  const setQuery = useSearchOptionsStore((state) => state.setQuery);
+  const inputValue = useReactiveVar(inputVar);
+  const optionsValue = useReactiveVar(optionsVar);
   const { loading, error, data, fetchMore, refetch } = useQuery(
     SEARCH_DRINKS_BY_NAME,
     {
-      variables: query,
+      variables: {
+        name: inputVar(),
+        options: optionsVar(),
+        offset: 0,
+        limit: 10,
+      },
     },
   );
-  const [inputValue, setInputValue] = useState("");
-  const [checked, setChecked] = useState(false);
-  const [sort, setSort] = useState("asc");
 
   const handleSearch = async () => {
-    await setQuery({
-      name: inputValue,
-      options: {
-        sort: sort,
-        alcohol: !checked,
-      },
-      offset: 0,
-      limit: 10,
-    });
-    refetch(query);
+    refetch();
   };
 
   //usikker på om dette ble omvendt men fiks senere
   const handleCheckbox = () => {
-    setChecked(!checked);
+    // setChecked(!checked);
+    optionsVar({
+      sort: optionsVar().sort,
+      alcohol: !optionsVar().alcohol,
+    });
   };
 
   return (
@@ -53,16 +54,16 @@ export default function SearchPage() {
         <Input
           placeholder={'"Margarita"'}
           onChange={(event) => {
-            setInputValue(event.target.value);
+            inputVar(event.target.value);
           }}
           value={inputValue}
         />
         <div className="flex gap-12 self-center">
           <RadioGroup
             onValueChange={(value) => {
-              setSort(value);
+              optionsVar({ sort: value, alcohol: optionsVar().alcohol });
             }}
-            defaultValue="asc"
+            defaultValue={optionsValue.sort}
             className="flex flex-col"
           >
             <h2 className="text-center text-xl ">Sorting</h2>
@@ -90,7 +91,7 @@ export default function SearchPage() {
             >
               <Checkbox
                 className="self-center"
-                checked={checked}
+                checked={!optionsValue.alcohol}
                 onCheckedChange={handleCheckbox}
               />
               <p>Non-alcoholic</p>
