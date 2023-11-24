@@ -1,5 +1,7 @@
 # Drinks
 
+[[_TOC_]]
+
 ## Project description
 
 Share your drink recipes and review others!
@@ -79,85 +81,21 @@ More specific commands you find by checking out the subrepos `/app` and `/server
     - `index.ts` is the main entry point for the server
       - Here we define the server and connect it to the database
 
+## Semantic versioning
+
+We use semantic versioning to keep track of our releases.
+
+App versioning is unnecessary as the consumers of our app are not dependent on a specific version of our app.
+
+Our server/backend is versioned as it is a public API that is consumed by our frontend.
+
+Please refer to <https://semver.org/> for more information.
+
 ## Tech-stack
-
-### React
-
-Javascript frameworks are a staple of modern web development and React is our choice for its popularity and ease of use.
 
 ### Typescript
 
 Typescript is essential for our workflow as it provides us with type safety and a better development experience (DX).
-
-### Vite
-
-Vite is our required frontend build tool. No configuration is required outside of whats included in the repo.
-
-### React Router
-
-React Router allows us to employ URL path routing in our Single Page Application (SPA)
-
-#### Implementation
-
-- All pages are wrapped within `<App />` which contains layout elements like a universal header
-- Search Page (/): Users can search for and are presented with a myriad of cocktail recipes
-- Details Page (/cocktail/:cocktailId): Displays information specific to the cocktailId parameter
-- Error Page (*): Displays if a routing error occurs, for example navigating to an undefined page url
-
-```jsx
-const rootPath = import.meta.env.BASE_URL
-export const appRouter = createBrowserRouter([
-  {
-    path: rootPath,
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: rootPath,
-        element: <SearchPage />,
-      },
-      {
-        path: "cocktail/:cocktailId",
-        element: <DetailsPage />,
-        errorElement: <ErrorPage />,
-      },
-    ],
-  },
-  ]);
-```
-
-### Tailwind
-
-Tailwind is our choice for in-line styling.
-It is popular for good reasons.
-The development experience (DX) it provides lets us focus on making a good website without having to bother with the intricacies of plain css.
-
-### shadcn/ui
-
-Shadcn/ui or Shadui for short is a collection of re-usable components that you can copy and paste into your apps.
-This is not a component library in the sense that it is not a dependency.
-
-We use shadcn/ui components as our base and build on top of the sensible defaults it provides.
-
-### Zustand
-
-Zustand is our choice of state management library.
-It is a simple and lightweight library that provides us with uncomplicated global state management.
-A choice like Redux would be overkill for our use case.
-
-### Testing with Cypress
-
-Cypress is our choice of testing library for its ease of use and its excellent E2E testing environment.
-To open the Cypress testing app run `npm run cypress:open` and it will automatically open.
-From there on you can choose whether to run component or end-to-end (E2E) tests.
-
-#### Component testing
-
-We do not write custom tests the shadcn/ui components as it is a stable "library" and we are not tinkering with its primitives.
-
-#### End-to-end testing
-
-Our most important tests are our e2e tests that ensures the app works as intended for our users.
 
 ### Linting
 
@@ -188,6 +126,92 @@ The plugins we use are:
 
 These sort and clean up our imports and tailwind classes so to avoid meaningless merge conflicts.
 
+### React
+
+Javascript frameworks are a staple of modern web development and React is our choice for its popularity and ease of use.
+
+### Vite
+
+Vite is our required frontend build tool. No configuration is required outside of whats included in the repo.
+
+### Tailwind
+
+Tailwind is our choice for in-line styling.
+It is popular for good reasons.
+The development experience (DX) it provides lets us focus on making a good website without having to bother with the intricacies of plain css.
+
+### shadcn/ui
+
+Shadcn/ui or Shadui for short is a collection of re-usable components that you can copy and paste into your apps.
+This is not a component library in the sense that it is not a dependency.
+
+We use shadcn/ui components as our base and build on top of the sensible defaults it provides.
+
+### Zustand
+
+Zustand is our choice of state management library.
+It is a simple and lightweight library that provides us with uncomplicated global state management.
+A choice like Redux would be overkill for our use case.
+
+### React Router
+
+React Router allows us to employ URL path routing in our Single Page Application (SPA)
+
+#### Implementation
+
+- All pages are wrapped within `<App />` which contains layout elements like a universal header
+- Search Page (/): Users can search for and are presented with a myriad of cocktail recipes
+- Details Page (/cocktail/:cocktailId): Displays information specific to the cocktailId parameter
+- Error Page (*): Displays if a routing error occurs, for example navigating to an undefined page url
+
+```jsx
+const rootPath = import.meta.env.BASE_URL
+export const appRouter = createBrowserRouter([
+  {
+    path: rootPath,
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: rootPath,
+        element: <SearchPage />,
+      },
+      {
+        path: "details/:drinkId",
+        element: <DetailsPage />,
+        errorElement: <ErrorPage />,
+      },
+    ],
+  },
+  ]);
+```
+
+### Testing with Cypress
+
+Cypress is our choice of testing library for its ease of use and its excellent E2E testing environment.
+To open the Cypress testing app run `npm run cypress:open` and it will automatically open.
+From there on you can choose whether to run component or end-to-end (E2E) tests.
+
+#### Component testing
+
+We do not write custom tests the shadcn/ui components as it is a stable "library" and we are not tinkering with its primitives.
+
+#### End-to-end testing
+
+Our most important tests are our e2e tests that ensures the app works as intended for our users.
+
+### PostgresQL
+
+PostgresQL is all we need for our database.
+We could have chosen to make a project using a graph database,
+but for that choice to make sense it would require us to make for example a social media app with a lot of relations, like Twitter(X) or Facebook.
+
+### Prisma
+
+Prisma makes it incredibly easy to implement a database in our stack.
+It gives us type safety when defining our GraphQL resolvers and a simple way to interact with our database.
+It also provides us with a way to seed our database with mock data.
+
 ### GraphQL
 
 GraphQL is an effective and environmentally friendly way to query data from a server.
@@ -206,17 +230,6 @@ It is important not to overcomplicate our stack with too many libraries and Apol
 Apollo server is used to implement our GraphQL server.
 
 Apollo client is used fetch data from our GraphQL server in the frontend.
-
-### Prisma
-
-Prisma makes it incredibly easy to implement a database in our stack.
-It gives us type safety when defining our GraphQL resolvers and a simple way to interact with our database.
-
-### PostgresQL
-
-PostgresQL is all we need for our database.
-We could have chosen to make a project using a graph database,
-but for that choice to make sense it would require us to make for example a social media app with a lot of relations, like Twitter(X) or Facebook.
 
 ## Code style
 
@@ -262,7 +275,7 @@ flowchart LR
     end
 ```
 
-### Component hierarchy
+### Component hierarchy (OUTDATED)
 
 ```mermaid
 classDiagram

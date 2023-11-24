@@ -1,6 +1,6 @@
 {
   "name": "drinks",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Share your drink recipes and review others!",
   "main": "index.js",
   "scripts": {

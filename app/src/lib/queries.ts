@@ -87,3 +87,12 @@ export const GET_REVIEW_BY_DRINKID = gql`
     }
   }
 `;
+export const REMOVE_REVIEW = gql`
+  mutation RemoveReview($removeReviewId: Int!) {
+    removeReview(id: $removeReviewId) {
+      textContent
+      rating
+      id
+   }
+  }
+`;
