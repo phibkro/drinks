@@ -36,7 +36,6 @@ describe("<ReviewForm />", () => {
   });
 
   it("renders without submit button", () => {
-    // see: https://on.cypress.io/mounting-react
     cy.get(".text-xl").should("have.text", "Give this cocktail a review!");
     cy.get("textarea").should("have.text", "");
     cy.get("textarea").should("exist");
