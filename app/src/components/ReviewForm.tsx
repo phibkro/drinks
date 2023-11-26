@@ -82,7 +82,7 @@ function ReviewForm({
           >
             <Label id={`rating-group-item-${i}_label`}>{i}</Label>
             <Martini
-              color={i <= rating ? ratedColor : "white"}
+              color={i <= rating ? ratedColor : "currentColor"}
               onClick={() => setRating(i)}
               className="hover:cursor-pointer"
               key={i}

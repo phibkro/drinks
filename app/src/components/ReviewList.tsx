@@ -42,7 +42,7 @@ export function ReviewListItem(review: { comment: string; rating: number }) {
         {ratingRange.map((i) => (
           <Martini
             aria-label="Martini glass icon"
-            color={i <= review.rating ? ratedColor : "white"}
+            color={i <= review.rating ? ratedColor : "currentColor"}
             data-cy={i <= review.rating ? "ratedMartini" : "unratedMartini"}
             key={i}
           />
