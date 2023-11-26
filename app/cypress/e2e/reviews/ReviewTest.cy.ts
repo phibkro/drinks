@@ -1,12 +1,8 @@
 // components/somewhere.ts   
 describe("Review Submitting", () => {
 
-  before(() => {
-    cy.exec("npm run cypress:seed", { failOnNonZeroExit: false })
-  })
-
   beforeEach(() => {
-    cy.visit("/details/8");
+    cy.visit("http://localhost:5173/project2#/details/8");
   });
 
   it("Loads both components", () => {
@@ -14,17 +10,17 @@ describe("Review Submitting", () => {
     })
     it("Submitted review appears in ReviewList without reloading", () => {
       //Må oppdateres til nye ReviewList og form
-      cy.get("svg").eq(6).click()
+      cy.get("button[role=radio]").eq(4).click()
       cy.get("textarea").click().type("Booooozy. And goooood")
-      cy.get("input").click()
+      cy.get("button[type=submit]").click()
       cy.get("textarea").should("not.exist")
       cy.get("[data-cy=reviewListItem]").last().should("contain.text", "Booooozy. And goooood")
     })
 
     it("Both reviews are in ReviewList after a new one is loaded", () => {
-      cy.get("svg").eq(6).click()
+      cy.get("button[role=radio]").eq(4).click()
       cy.get("textarea").click().type("Booooozy. And goooood")
-      cy.get("input").click()
+      cy.get("button[type=submit]").click()
       cy.get("textarea").should("not.exist")
       cy.get("[data-cy=reviewListItem]").last().should("contain.text", "Booooozy. And goooood")
     })
