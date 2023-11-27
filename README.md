@@ -231,6 +231,18 @@ Apollo server is used to implement our GraphQL server.
 
 Apollo client is used fetch data from our GraphQL server in the frontend.
 
+## Accessibility and sustainability
+
+We implemented the Shadcn/ui library, which is built on top of Radix, designed with accessibility in mind. For remaining gaps, we added aria-label to necessary components, such as interactive buttons.
+
+Additionally, we chose to use low-resolution images from our dataset, considering that the quality from other images was unnecessary.
+
+We made the website keyboard-friendly so that users can navigate through the site using only the keyboard (tab, enter, space, and arrow keys).
+
+The website also features a dark mode, both to protect sensitive eyes and to reduce power consumption on screens.
+
+In our ApolloClient we implemented InMemoryCache which stores results from the GraphQL quries in memory. This can result in reduced network traffic, faster data responses and optimized resource usage. Which leads to reduced energy consumption. 
+
 ## Code style
 
 ### Commit messages
