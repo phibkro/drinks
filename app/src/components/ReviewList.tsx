@@ -48,7 +48,7 @@ export function ReviewListItem(review: { comment: string; rating: number }) {
           />
         ))}
       </div>
-      <p>{review.comment}</p>
+      <p className="break-words">{review.comment}</p>
     </div>
   );
 }
