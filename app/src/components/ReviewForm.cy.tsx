@@ -68,4 +68,24 @@ describe("<ReviewForm />", () => {
     cy.get("button[role=radio]").should("not.exist");
     cy.get("button[type=submit]").should("not.exist");
   });
+
+  it("gives warning if trying to submit only white space", () => {
+    cy.get("button[role=radio]").first().click();
+    cy.get("button[type=submit]").click();
+    cy.get("textarea").click().type(" ");
+    cy.get("span").should(
+      "have.text",
+      "You need more than spaces in your review",
+    );
+  });
+  it("gives warning if trying to submit over 280 characters", () => {
+    let testString = "TenCharStr";
+    testString = testString.repeat(28);
+
+    cy.get("button[role=radio]").first().click();
+    cy.get("button[type=submit]").click();
+    cy.get("textarea").click().type(testString);
+    cy.get("textarea").click().type("1");
+    cy.get("span").should("have.text", "Please use less than 280 characters");
+  });
 });

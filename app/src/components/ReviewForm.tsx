@@ -97,15 +97,15 @@ function ReviewForm({
         {...register("comment", {
           required: {
             value: true,
-            message: "You need to comment your review",
+            message: "Please add a comment before submitting you review",
           },
           minLength: {
             value: 1,
-            message: "Your review cant have less than 3 characters",
+            message: "Please write more before submitting",
           },
           maxLength: {
             value: 280,
-            message: "You cant use more than 280 characters",
+            message: "Please use less than 280 characters",
           },
           pattern: {
             value: /(.|\s)*\S(.|\s)*/,
