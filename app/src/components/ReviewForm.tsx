@@ -94,7 +94,24 @@ function ReviewForm({
       <Label id="textarea_label">What do you think?</Label>
       <Textarea
         placeholder="Did you like your cocktail?"
-        {...register("comment", { required: true })}
+        {...register("comment", {
+          required: {
+            value: true,
+            message: "You need to comment your review",
+          },
+          minLength: {
+            value: 1,
+            message: "Your review cant have less than 3 characters",
+          },
+          maxLength: {
+            value: 280,
+            message: "You cant use more than 280 characters",
+          },
+          pattern: {
+            value: /(.|\s)*\S(.|\s)*/,
+            message: "You need more than spaces in your review",
+          },
+        })}
         className="max-w-prose bg-gray-200 text-black"
         rows={4}
         cols={50}
@@ -102,7 +119,7 @@ function ReviewForm({
       ></Textarea>
       {errors.comment ? (
         //Error if user doesnt leave comment when reviewing drink
-        <span>Please add a comment before submitting you review</span>
+        <span>{errors.comment.message}</span>
       ) : (
         <div className="h-6"></div>
       )}
