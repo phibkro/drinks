@@ -79,6 +79,7 @@ function ReviewForm({
             aria-labelledby={`rating-group-item-${i}_label`}
             value={`${i}`}
             onFocus={() => setRating(i)}
+            key={i}
           >
             <Label id={`rating-group-item-${i}_label`}>{i}</Label>
             <Martini
