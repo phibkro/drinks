@@ -1,7 +1,6 @@
 import { ADD_REVIEW } from "@/lib/queries";
-import { MockedProvider, MockedResponse } from "@apollo/react-testing";
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import ReviewForm from "./ReviewForm";
-
 /// <reference types="Cypress"/>
 
 const mockReviews: readonly MockedResponse<
@@ -37,7 +36,6 @@ describe("<ReviewForm />", () => {
   });
 
   it("renders without submit button", () => {
-    // see: https://on.cypress.io/mounting-react
     cy.get(".text-xl").should("have.text", "Give this cocktail a review!");
     cy.get("textarea").should("have.text", "");
     cy.get("textarea").should("exist");
@@ -69,5 +67,25 @@ describe("<ReviewForm />", () => {
     cy.get("textarea").should("not.exist");
     cy.get("button[role=radio]").should("not.exist");
     cy.get("button[type=submit]").should("not.exist");
+  });
+
+  it("gives warning if trying to submit only white space", () => {
+    cy.get("button[role=radio]").first().click();
+    cy.get("button[type=submit]").click();
+    cy.get("textarea").click().type(" ");
+    cy.get("span").should(
+      "have.text",
+      "You need more than spaces in your review",
+    );
+  });
+  it("gives warning if trying to submit over 280 characters", () => {
+    let testString = "TenCharStr";
+    testString = testString.repeat(28);
+
+    cy.get("button[role=radio]").first().click();
+    cy.get("button[type=submit]").click();
+    cy.get("textarea").click().type(testString);
+    cy.get("textarea").click().type("1");
+    cy.get("span").should("have.text", "Please use less than 280 characters");
   });
 });

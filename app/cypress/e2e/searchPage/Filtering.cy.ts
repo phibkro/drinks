@@ -8,7 +8,7 @@ describe("Filtering", () =>{
     cy.get('.peer').click() //check checkbox
     cy.get('.peer').click() //uncheck checkbox
     cy.intercept('POST', 'http://localhost:4000/').as('backendIterceptTrue')
-    cy.get('main.flex > :nth-child(1) > :nth-child(1) > .inline-flex').click() // apply filtering
+    cy.get('.gap-12 > .inline-flex').click() // apply filtering
     cy.wait('@backendIterceptTrue').its('request.body.variables.options.alcohol').should('eq', true) //if alcoholic variable in query is correct
     cy.get('[data-cy="result-list"]').should('be.visible') // results must be visible for user
 
@@ -18,7 +18,7 @@ describe("Filtering", () =>{
   it('should call qraphgl query with alcohol false', () => {
     cy.get('.peer').click() //check checkbox
     cy.intercept('POST', 'http://localhost:4000/').as('backendIterceptFalse')
-    cy.get('main.flex > :nth-child(1) > :nth-child(1) > .inline-flex').click() // apply filtering
+    cy.get('.gap-12 > .inline-flex').click() // apply filtering
     cy.wait('@backendIterceptFalse').its('request.body.variables.options.alcohol').should('eq', false) //if alcoholic variable in query is correct 
     cy.get('[data-cy="result-list"]').should('be.visible') // results must be visible for user
   })

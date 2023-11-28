@@ -3,13 +3,13 @@
 
 describe("SearchPage Component", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173/project2"); // replace with the actual path to your SearchPage component
+    cy.visit("http://localhost:5173/project2"); // replace with the path to website when running
   });
 
   // testing search functionality
   const search = "Margarita"
   it("should display results on page load", () => {
-    cy.get("[data-cy=result-list]").should("be.visible"); // replace 'search-result' with the actual id of the element you want to test
+    cy.get("[data-cy=result-list]").should("be.visible"); 
   });
 
   it("should display a search input", () => {

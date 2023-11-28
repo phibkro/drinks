@@ -79,10 +79,11 @@ function ReviewForm({
             aria-labelledby={`rating-group-item-${i}_label`}
             value={`${i}`}
             onFocus={() => setRating(i)}
+            key={i}
           >
             <Label id={`rating-group-item-${i}_label`}>{i}</Label>
             <Martini
-              color={i <= rating ? ratedColor : "white"}
+              color={i <= rating ? ratedColor : "currentColor"}
               onClick={() => setRating(i)}
               className="hover:cursor-pointer"
               key={i}
@@ -94,7 +95,24 @@ function ReviewForm({
       <Label id="textarea_label">What do you think?</Label>
       <Textarea
         placeholder="Did you like your cocktail?"
-        {...register("comment", { required: true })}
+        {...register("comment", {
+          required: {
+            value: true,
+            message: "Please add a comment before submitting you review",
+          },
+          minLength: {
+            value: 1,
+            message: "Please write more before submitting",
+          },
+          maxLength: {
+            value: 280,
+            message: "Please use less than 280 characters",
+          },
+          pattern: {
+            value: /(.|\s)*\S(.|\s)*/,
+            message: "You need more than spaces in your review",
+          },
+        })}
         className="max-w-prose bg-gray-200 text-black"
         rows={4}
         cols={50}
@@ -102,7 +120,7 @@ function ReviewForm({
       ></Textarea>
       {errors.comment ? (
         //Error if user doesnt leave comment when reviewing drink
-        <span>Please add a comment before submitting you review</span>
+        <span>{errors.comment.message}</span>
       ) : (
         <div className="h-6"></div>
       )}

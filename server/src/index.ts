@@ -68,6 +68,7 @@ const typeDefs = `#graphql
   }
   type Mutation {
     addReview(drinkId: Int!, rating: Int!, textContent: String!): Review
+    removeReview(id: Int!): Review
   }
 `;
 
@@ -143,6 +144,12 @@ const resolvers = {
           textContent: args.textContent,
         },
       }),
+      removeReview: (_parent, args) =>
+        prisma.review.delete({
+          where: {
+            id: args.id
+          }
+        })
   },
 
   // Trivial resolvers for relations
