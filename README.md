@@ -231,7 +231,7 @@ Apollo server is used to implement our GraphQL server.
 
 Apollo client is used fetch data from our GraphQL server in the frontend.
 
-## Accessibility and sustainability
+## Accessibility
 
 We implemented the Shadcn/ui library, which is built on top of Radix, designed with accessibility in mind. For remaining gaps, we added aria-label to necessary components, such as interactive buttons.
 
