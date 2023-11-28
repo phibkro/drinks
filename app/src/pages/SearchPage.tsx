@@ -16,6 +16,7 @@ const optionsVar = makeVar({
 export default function SearchPage() {
   const inputValue = useReactiveVar(inputVar);
   const optionsValue = useReactiveVar(optionsVar);
+  //const [lastLength, setLastLength] = useState(0);
   const { loading, error, data, fetchMore, refetch } = useQuery(
     SEARCH_DRINKS_BY_NAME,
     {
@@ -147,17 +148,27 @@ export default function SearchPage() {
       {data ? (
         <>
           <ResultList results={data.searchDrinksByName} />
-          <Button
-            onClick={() => {
-              fetchMore({
-                variables: {
-                  offset: data.searchDrinksByName.length,
-                },
-              });
-            }}
-          >
-            Load more drinks
-          </Button>
+          {
+            /*data.searchDrinksByName.length == lastLength + 10 && // if pagination load less than 10 new elements there are no more elements to load
+          data.searchDrinksByName.length >= 10 ? ( // if less than 10 elements show from search no more elements to load
+           */ <Button
+              onClick={() => {
+                //setLastLength(data.searchDrinksByName.length);
+                //console.log(lastLength);
+
+                fetchMore({
+                  variables: {
+                    offset: data.searchDrinksByName.length,
+                  },
+                });
+              }}
+            >
+              Load more drinks
+            </Button> /*
+          ) : (
+            <p>No more results to load</p>
+          )*/
+          }
         </>
       ) : (
         <p>No results</p>
