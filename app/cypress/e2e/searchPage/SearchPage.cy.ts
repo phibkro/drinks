@@ -45,11 +45,42 @@ describe("SearchPage Component", () => {
     cy.get('[data-cy="result-list"]').should('be.visible') 
   });
 
+  it("should test backend with Margarita", () => {
+    cy.request('POST', 'http://localhost:4000/', {
+       operationName: 'SearchDrinksByName',
+       query: "query SearchDrinksByName($name: String!, $options: SearchOptions, $offset: Int, $limit: Int) {\n  searchDrinksByName(\n    name: $name\n    options: $options\n    offset: $offset\n    limit: $limit\n  ) {\n    id\n    name\n    alcoholic\n    glass\n    instructions\n    imageUrl\n    measures {\n      measure\n      ingredient {\n        name\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+       variables: {
+        limit: 10,
+        name: search,
+        offset: 0,
+        options: {
+            alcohol: true,
+            sort: 'asc'
+        }
+       } 
+    }).then((res) => {
+        const resultNameList: string[] = [];
+        
+        res.body.data.searchDrinksByName.forEach((element: any) => {
+            resultNameList.push(element.name)
+        });        
+        cy.wrap(resultNameList).each((val) => {
+          expect(val).to.contain(search); // each value must be true for response to be correct
+        });
+        
+        
+    })
+  });
+
+
+  // test routing
 
   it("should navigate to drinkdetails",() => {
     cy.get('[href="#/details/0"] > [data-cy="result-list-items"]').click()
     cy.url().should('include', 'details/0')
   });
+
+  // test pagination
 
   it("should load more elements when load more button is clicked", () => {
     cy.get('[data-cy="result-list-items"]').should('have.length', 10)
@@ -57,6 +88,5 @@ describe("SearchPage Component", () => {
     cy.get('[data-cy="result-list-items"]').should('have.length', 20)
   })
 
-  // testing resultlist functionality
 
 });
