@@ -147,11 +147,11 @@ This is not a component library in the sense that it is not a dependency.
 
 We use shadcn/ui components as our base and build on top of the sensible defaults it provides.
 
-### Zustand
+### Apollo Local State Management
 
-Zustand is our choice of state management library.
-It is a simple and lightweight library that provides us with uncomplicated global state management.
-A choice like Redux would be overkill for our use case.
+For state management we use Apollo Local State Management.
+It is a simple and effective way to manage state in our application.
+It is also a good choice as we are already using Apollo for our GraphQL server and client.
 
 ### React Router
 
