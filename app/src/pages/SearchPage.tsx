@@ -43,14 +43,14 @@ export default function SearchPage() {
   };
 
   return (
-    <main className="flex flex-col gap-10">
+    <main className="flex flex-col items-center gap-10 ">
       <form
         onSubmit={(event) => {
           event.preventDefault();
           handleSearch();
         }}
         role="search"
-        className="flex flex-col gap-4"
+        className="flex w-8/12 flex-col items-center gap-4 "
       >
         <Label id="search_label">Search for your favorite drink!</Label>
         <div className="flex flex-col gap-4 sm:flex-row">
@@ -68,7 +68,7 @@ export default function SearchPage() {
           </Button>
         </div>
 
-        <div className="flex max-w-full flex-col gap-12 self-center sm:flex-row">
+        <div className="flex max-w-full flex-col gap-8 sm:flex-row">
           <div className="flex flex-col items-center">
             <h2 className="text-center text-xl ">Sort name by:</h2>
             <RadioGroup
@@ -142,6 +142,7 @@ export default function SearchPage() {
             /*data.searchDrinksByName.length == lastLength + 10 && // if pagination load less than 10 new elements there are no more elements to load
           data.searchDrinksByName.length >= 10 ? ( // if less than 10 elements show from search no more elements to load
            */ <Button
+              className="min-w-min"
               onClick={() => {
                 //setLastLength(data.searchDrinksByName.length);
                 //console.log(lastLength);
