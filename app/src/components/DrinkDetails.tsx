@@ -1,17 +1,5 @@
-interface DBDrink {
-  id: number;
-  name: string;
-  instructions: string;
-  alcoholic: boolean;
-  imageUrl: string;
-  glass: string;
-  measures: Array<{
-    measure: string;
-    ingredient: {
-      name: string;
-    };
-  }>;
-}
+import { DBDrink } from "@/lib/utils";
+
 interface Props extends DBDrink {}
 export default function DrinkDetails({
   name,
