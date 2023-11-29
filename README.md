@@ -57,17 +57,18 @@ More specific commands you find by checking out the subrepos `/app` and `/server
 - `app/` contains web app code
   - `index.html` configure metadata here
     - is technically the main entry point for the application
+  - `cypress/` contains cypress tests and config
+    - `e2e/` contains end-to-end tests
   - `public/` contains public assets
   - `src/` contains the main code for the application
     - `assets/` contains private assets like images and fonts
     - `components/` contains components our team has written
       - `ui/` contains shadcn/ui components
-    - `hooks/` contains our custom hooks
-    - `pages/` define separate pages in the application
-      - Importantly have the responsibility of data handling and conditional rendering
-    - `server/` contains code related to fetching data from the server
     - `lib/` contains different utilities
       - Basically "etc." but for code reused throughout the application
+    - `pages/` define separate pages in the application
+      - Importantly have the responsibility of data handling and conditional rendering
+    - `apolloClient.ts` is where we configure our Apollo client
     - `App.tsx` is where we apply our app layout
     - `global.css` defines css variables and resets default styling
     - `main.tsx` is the main entry point for our application
@@ -76,8 +77,13 @@ More specific commands you find by checking out the subrepos `/app` and `/server
 - `data/` contains static mock data
 - `server/` contains server code
   - `prisma/`
+    - `migrations/` contains database migrations
+    - `.env` contains environment variables
     - `schema.prisma` defines the database schema
   - `src/` contains the main code for the server
+    - `data/` contains the data we "scraped" from TheCocktailDB and its transformations
+    - `lib/` contains scripts for transforming data and creating seed data
+    - `prisma/` contains our seed script
     - `index.ts` is the main entry point for the server
       - Here we define the server and connect it to the database
 
@@ -147,11 +153,13 @@ This is not a component library in the sense that it is not a dependency.
 
 We use shadcn/ui components as our base and build on top of the sensible defaults it provides.
 
-### Zustand
+### Apollo Local State Management
 
-Zustand is our choice of state management library.
-It is a simple and lightweight library that provides us with uncomplicated global state management.
-A choice like Redux would be overkill for our use case.
+For state management we use Apollo Local State Management.
+It is a simple and effective way to manage state in our application.
+It is also a good choice as we are already using Apollo for our GraphQL server and client.
+
+We use Apollo Local State Management for storing the search paremeters and results, so searchPage persists when navigating to detailsPage and back.
 
 ### React Router
 
@@ -165,25 +173,33 @@ React Router allows us to employ URL path routing in our Single Page Application
 - Error Page (*): Displays if a routing error occurs, for example navigating to an undefined page url
 
 ```jsx
-const rootPath = import.meta.env.BASE_URL
-export const appRouter = createBrowserRouter([
+export const rootPath = "/";
+export const appRouter = createHashRouter([
   {
     path: rootPath,
     element: <App />,
-    errorElement: <ErrorPage />,
     children: [
       {
         path: rootPath,
         element: <SearchPage />,
       },
       {
-        path: "details/:drinkId",
-        element: <DetailsPage />,
-        errorElement: <ErrorPage />,
+        path: "details",
+        element: (
+          <>
+            <Outlet />
+          </>
+        ),
+        children: [
+          {
+            path: ":drinkId",
+            element: <DetailsPage />,
+          },
+        ],
       },
     ],
   },
-  ]);
+]);
 ```
 
 ### Testing with Cypress
@@ -195,10 +211,18 @@ From there on you can choose whether to run component or end-to-end (E2E) tests.
 #### Component testing
 
 We do not write custom tests the shadcn/ui components as it is a stable "library" and we are not tinkering with its primitives.
+We do however write tests for our custom components.
+They are written in the same folder as the component they are testing and are named `*.cy.tsx`.
+Cypress is allowed for component tests.
+Check thread @128 in Piazza 😉
 
 #### End-to-end testing
 
 Our most important tests are our e2e tests that ensures the app works as intended for our users.
+
+To run the e2e tests both the app and server must be running.
+Then run `npm run cypress:open` in app/ and choose the `e2e` folder.
+Or run `npm run test-e2e` in app/ to run all tests in the `e2e` folder.
 
 ### PostgresQL
 
