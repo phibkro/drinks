@@ -24,7 +24,7 @@ export default function SearchPage() {
         name: inputVar(),
         options: optionsVar(),
         offset: 0,
-        limit: 10,
+        limit: 12,
       },
     },
   );
@@ -52,20 +52,19 @@ export default function SearchPage() {
         role="search"
         className="flex flex-col gap-4"
       >
-        <Label>
-          Search for your favorite drink!
-          <Input
-            placeholder={'"Margarita"'}
-            onChange={(event) => {
-              inputVar(event.target.value);
-            }}
-            value={inputValue}
-            role="searchbox"
-          />
-        </Label>
+        <Label id="search_label">Search for your favorite drink!</Label>
+        <Input
+          placeholder={'"Margarita"'}
+          onChange={(event) => {
+            inputVar(event.target.value);
+          }}
+          value={inputValue}
+          role="searchbox"
+          aria-labelledby="search_label"
+        />
 
-        <div className="flex gap-12 self-center">
-          <div>
+        <div className="flex max-w-full flex-col gap-12 self-center sm:flex-row">
+          <div className="flex flex-col items-center">
             <h2 className="text-center text-xl ">Sort name by:</h2>
             <RadioGroup
               onValueChange={(value) => {
@@ -98,7 +97,7 @@ export default function SearchPage() {
             </RadioGroup>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center">
             <h2 className="text-xl">Alcohol</h2>
             <div className="flex flex-row gap-1">
               <Checkbox
@@ -117,29 +116,9 @@ export default function SearchPage() {
               </Label>
             </div>
           </div>
-          <Button onClick={handleSearch}>Apply</Button>
-          {/* 
-          <h2 className="text-xl">Rating</h2>
-          {Array(5)
-            .fill(5)
-            .map((_, n) => (
-              <div className="flex" key={n}>
-                <Checkbox />
-                <label
-                  htmlFor="terms1"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                ></label>
-                {Array(n + 1)
-                  .fill(n + 1)
-                  .map((_, m) => (
-                    <Martini
-                      color={ratedColor}
-                      className="hover:cursor-pointer"
-                      key={m}
-                    />
-                  ))}
-              </div>
-            ))}*/}
+          <Button variant="default" type="submit">
+            Apply
+          </Button>
         </div>
       </form>
 
