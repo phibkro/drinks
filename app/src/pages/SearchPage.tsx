@@ -23,7 +23,7 @@ export default function SearchPage() {
         name: inputVar(),
         options: optionsVar(),
         offset: 0,
-        limit: 10,
+        limit: 12,
       },
     },
   );
