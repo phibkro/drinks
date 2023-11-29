@@ -29,7 +29,7 @@ export default function SearchPage() {
     },
   );
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     refetch();
   };
 
@@ -67,8 +67,13 @@ export default function SearchPage() {
           <div className="flex flex-col items-center">
             <h2 className="text-center text-xl ">Sort name by:</h2>
             <RadioGroup
-              onValueChange={(value) => {
-                optionsVar({ sort: value, alcohol: optionsVar().alcohol });
+              onValueChange={async (value) => {
+                await optionsVar({
+                  sort: value,
+                  alcohol: optionsVar().alcohol,
+                });
+                // wait for optionsVar to update before refetching
+                handleSearch();
               }}
               defaultValue={optionsValue.sort}
               className="flex flex-col"
@@ -103,7 +108,11 @@ export default function SearchPage() {
               <Checkbox
                 className="self-center"
                 checked={!optionsValue.alcohol}
-                onCheckedChange={handleCheckbox}
+                onCheckedChange={async () => {
+                  await handleCheckbox();
+                  // wait for optionsVar to update before refetching
+                  handleSearch();
+                }}
                 id="non-alcoholic"
                 aria-labelledby="non-alcoholic_label"
               />
