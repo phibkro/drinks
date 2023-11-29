@@ -62,8 +62,8 @@ export default function SearchPage() {
           aria-labelledby="search_label"
         />
 
-        <div className="flex gap-12 self-center">
-          <div>
+        <div className="flex max-w-full flex-col gap-12 self-center sm:flex-row">
+          <div className="flex flex-col items-center">
             <h2 className="text-center text-xl ">Sort name by:</h2>
             <RadioGroup
               onValueChange={(value) => {
@@ -96,7 +96,7 @@ export default function SearchPage() {
             </RadioGroup>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center">
             <h2 className="text-xl">Alcohol</h2>
             <div className="flex flex-row gap-1">
               <Checkbox
