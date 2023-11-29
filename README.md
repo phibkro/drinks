@@ -52,22 +52,23 @@ These programs can be run with `npm run run:drinksToJSON` and `npm run run:drink
 
 More specific commands you find by checking out the subrepos `/app` and `/server`
 
-## File structure (OUTDATED)
+## File structure
 
 - `app/` contains web app code
   - `index.html` configure metadata here
     - is technically the main entry point for the application
+  - `cypress/` contains cypress tests and config
+    - `e2e/` contains end-to-end tests
   - `public/` contains public assets
   - `src/` contains the main code for the application
     - `assets/` contains private assets like images and fonts
     - `components/` contains components our team has written
       - `ui/` contains shadcn/ui components
-    - `hooks/` contains our custom hooks
-    - `pages/` define separate pages in the application
-      - Importantly have the responsibility of data handling and conditional rendering
-    - `server/` contains code related to fetching data from the server
     - `lib/` contains different utilities
       - Basically "etc." but for code reused throughout the application
+    - `pages/` define separate pages in the application
+      - Importantly have the responsibility of data handling and conditional rendering
+    - `apolloClient.ts` is where we configure our Apollo client
     - `App.tsx` is where we apply our app layout
     - `global.css` defines css variables and resets default styling
     - `main.tsx` is the main entry point for our application
@@ -76,8 +77,13 @@ More specific commands you find by checking out the subrepos `/app` and `/server
 - `data/` contains static mock data
 - `server/` contains server code
   - `prisma/`
+    - `migrations/` contains database migrations
+    - `.env` contains environment variables
     - `schema.prisma` defines the database schema
   - `src/` contains the main code for the server
+    - `data/` contains the data we "scraped" from TheCocktailDB and its transformations
+    - `lib/` contains scripts for transforming data and creating seed data
+    - `prisma/` contains our seed script
     - `index.ts` is the main entry point for the server
       - Here we define the server and connect it to the database
 
