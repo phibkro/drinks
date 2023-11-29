@@ -17,7 +17,7 @@ const drinkData1 = {
   ],
 };
 const drinkData2 = {
-  id: 1,
+  id: 2,
   name: "Test Drink 2",
   instructions: "Hello world 2",
   alcoholic: true,
@@ -42,7 +42,7 @@ describe("DrinkDetails Component", () => {
 
   it("should display list of ResultListItems with passed data", () => {
     // test first ResultListItem in mock data
-    cy.get(".flex-col > :nth-child(1) > .flex h2")
+    cy.get("[data-cy=result-list-item-1]")
       .should("exist")
       .and("be.visible")
       .and("have.text", drinkData1.name);
