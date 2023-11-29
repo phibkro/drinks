@@ -53,15 +53,20 @@ export default function SearchPage() {
         className="flex flex-col gap-4"
       >
         <Label id="search_label">Search for your favorite drink!</Label>
-        <Input
-          placeholder={'"Margarita"'}
-          onChange={(event) => {
-            inputVar(event.target.value);
-          }}
-          value={inputValue}
-          role="searchbox"
-          aria-labelledby="search_label"
-        />
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Input
+            placeholder={'"Margarita"'}
+            onChange={(event) => {
+              inputVar(event.target.value);
+            }}
+            value={inputValue}
+            role="searchbox"
+            aria-labelledby="search_label"
+          />
+          <Button variant="default" type="submit" className="m-auto min-w-min">
+            Search
+          </Button>
+        </div>
 
         <div className="flex max-w-full flex-col gap-12 self-center sm:flex-row">
           <div className="flex flex-col items-center">
@@ -125,9 +130,6 @@ export default function SearchPage() {
               </Label>
             </div>
           </div>
-          <Button variant="default" type="submit">
-            Apply
-          </Button>
         </div>
       </form>
 
