@@ -58,7 +58,13 @@ function ReviewForm({
   };
 
   return submitted ? (
-    <div className="flex h-80 w-[40em] flex-col items-center justify-center self-center border-2">
+    <div
+      className={`${className}
+    mx-10 flex  h-80 
+    w-[40em] max-w-full flex-col
+    items-center justify-center gap-4
+    `}
+    >
       <p className="text-xl">{"Thank you for submitting a review <3"}</p>
     </div>
   ) : (
@@ -66,12 +72,12 @@ function ReviewForm({
       onSubmit={handleSubmit(onSubmit)}
       id="reviewForm"
       className={`${className}
-      flex h-[20em] w-[40em] flex-col 
+      mx-10 flex  h-80 
+      w-[40em] max-w-full flex-col
       items-center justify-center gap-4
-      border-2
       `}
     >
-      <h2 className="text-xl">Give this cocktail a review!</h2>
+      <h2 className="text-center text-xl">Give this cocktail a review!</h2>
 
       <RadioGroup aria-labelledby="Rate it" className="flex flex-row">
         {ratingRange.map((i) => (
@@ -113,8 +119,8 @@ function ReviewForm({
             message: "You need more than spaces in your review",
           },
         })}
-        className="max-w-prose bg-gray-200 text-black"
-        rows={4}
+        className="max-w-full bg-gray-200 text-black"
+        rows={8}
         cols={50}
         aria-labelledby="textarea_label"
       ></Textarea>
