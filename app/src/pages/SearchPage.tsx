@@ -139,7 +139,7 @@ export default function SearchPage() {
 
       {loading && <p>Loading...</p>}
       {error && <p>Error : {error.message}</p>}
-      {data ? (
+      {data && data.searchDrinksByName.length !== 0 ? (
         <>
           <ResultList results={data.searchDrinksByName} />
           {
