@@ -60,10 +60,10 @@ function ReviewForm({
   return submitted ? (
     <div
       className={`${className}
-    mx-10 flex  h-80 
-    w-[40em] max-w-full flex-col
-    items-center justify-center gap-4
-    `}
+        mx-10 flex  h-80 
+        w-[40em] max-w-full flex-col
+        items-center justify-center gap-4
+      `}
     >
       <p className="text-xl">{"Thank you for submitting a review <3"}</p>
     </div>
@@ -72,9 +72,9 @@ function ReviewForm({
       onSubmit={handleSubmit(onSubmit)}
       id="reviewForm"
       className={`${className}
-      mx-10 flex  h-80 
-      w-[40em] max-w-full flex-col
-      items-center justify-center gap-4
+        mx-10 flex  h-80 
+        w-[40em] max-w-full flex-col
+        items-center justify-center gap-4
       `}
     >
       <h2 className="text-center text-xl">Give this cocktail a review!</h2>

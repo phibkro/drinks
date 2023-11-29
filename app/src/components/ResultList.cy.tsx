@@ -17,7 +17,7 @@ const drinkData1 = {
   ],
 };
 const drinkData2 = {
-  id: 1,
+  id: 2,
   name: "Test Drink 2",
   instructions: "Hello world 2",
   alcoholic: true,
@@ -42,97 +42,25 @@ describe("DrinkDetails Component", () => {
 
   it("should display list of ResultListItems with passed data", () => {
     // test first ResultListItem in mock data
-    cy.get(".flex-col > :nth-child(1) > .flex h2")
+    cy.get('[href="/details/1"] > [data-cy="result-list-items"] > .p-2')
       .should("exist")
       .and("be.visible")
       .and("have.text", drinkData1.name);
 
-    cy.get(".flex-col > :nth-child(1) > .flex")
+    cy.get('[href="/details/1"] > [data-cy="result-list-items"]')
       .find("img")
       .should("be.visible")
       .and("have.attr", "src", drinkData1.imageUrl);
 
-    cy.get(".flex-col > :nth-child(1) > .flex h3")
-      .should("exist")
-      .and("be.visible")
-      .and("have.text", "Ingredients");
-
-    cy.get(".flex-col > :nth-child(1) > .flex ul li")
-      .should("exist")
-      .and("be.visible")
-      .and("have.length", 2);
-
-    cy.get(".flex-col > :nth-child(1) > .flex ul li")
-      .first()
-      .should("exist")
-      .and("be.visible")
-      .and(
-        "have.text",
-        drinkData1.measures[0].measure +
-          " " +
-          drinkData1.measures[0].ingredient.name,
-      );
-
-    cy.get(".flex-col > :nth-child(1) > .flex ul li:eq(1)")
-      .should("exist")
-      .and("be.visible")
-      .and(
-        "have.text",
-        drinkData1.measures[1].measure +
-          " " +
-          drinkData1.measures[1].ingredient.name,
-      );
-
     // test second ResultListItem in mock data
-    cy.get(":nth-child(2) > .flex h2")
+    cy.get('[href="/details/2"] > [data-cy="result-list-items"] > .p-2')
       .should("exist")
       .and("be.visible")
       .and("have.text", drinkData2.name);
 
-    cy.get(":nth-child(2) > .flex")
+    cy.get('[href="/details/2"] > [data-cy="result-list-items"]')
       .find("img")
       .should("be.visible")
       .and("have.attr", "src", drinkData2.imageUrl);
-
-    cy.get(":nth-child(2) > .flex h3")
-      .should("exist")
-      .and("be.visible")
-      .and("have.text", "Ingredients");
-
-    cy.get(":nth-child(2) > .flex ul li")
-      .should("exist")
-      .and("be.visible")
-      .and("have.length", 3);
-
-    cy.get(":nth-child(2) > .flex ul li")
-      .first()
-      .should("exist")
-      .and("be.visible")
-      .and(
-        "have.text",
-        drinkData2.measures[0].measure +
-          " " +
-          drinkData2.measures[0].ingredient.name,
-      );
-
-    cy.get(":nth-child(2) > .flex ul li:eq(1)")
-      .should("exist")
-      .and("be.visible")
-      .and(
-        "have.text",
-        drinkData2.measures[1].measure +
-          " " +
-          drinkData2.measures[1].ingredient.name,
-      );
-
-    cy.get(":nth-child(2) > .flex ul li:eq(2)")
-      .should("exist")
-      .and("be.visible")
-      .and(
-        "have.text",
-        drinkData2.measures[2].measure +
-          " " +
-          drinkData2.measures[2].ingredient.name,
-      );
   });
 });

@@ -21,10 +21,6 @@ export default function DetailsPage() {
   } = useQuery(GET_REVIEW_BY_DRINKID, {
     variables: { drinkId: Number(drinkId) },
   });
-  if (dataReviews) {
-    console.log("reviews", dataReviews.reviewsByDrinkId[0]);
-  }
-  console.log(dataDrink);
   return (
     <main className="flex flex-col gap-8">
       {loadingDrink && <p>Loading...</p>}

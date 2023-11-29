@@ -18,7 +18,7 @@ It is built with modern web technologies like React, Typescript, Tailwind and Gr
 - Spin up a postgres database
   - Mac
     - I use [Postgres.app](https://postgresapp.com/) to host my database and [Postico](https://eggerapps.at/postico/) to interact with it
-    - You can also use [Homebrew](https://formulae.brew.sh/formula/postgresql)
+    - You can also use [Homebrew](https://formulae.brew.sh/formula/postgresql@13#default)
     - Or [Docker](https://hub.docker.com/_/postgres)
 - Create a `.env` file in the `/server/prisma` directory
 - Add the database url to the `.env` file
@@ -34,7 +34,7 @@ It is built with modern web technologies like React, Typescript, Tailwind and Gr
 
 To generate our seed data we use the [TheCocktailDB](https://www.thecocktaildb.com/api.php) API.
 
-Ingredients data was downloaded from [TheCocktailDB]( www.thecocktaildb.com/api/json/v1/1/list.php?i=list) and manually cleaned and prepared for use in `server/src/prisma/seed.ts`.
+Ingredients data was downloaded from [TheCocktailDB](https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list) and manually cleaned and prepared for use in `server/src/prisma/seed.ts`.
 
 All drinks data was downloaded from a [Kaggle dataset](https://www.kaggle.com/datasets/ai-first/cocktail-ingredients/).
 The data was manually cleaned,

@@ -1,19 +1,6 @@
+import { DBDrink } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
-interface DBDrink {
-  id: number;
-  name: string;
-  instructions: string;
-  alcoholic: boolean;
-  imageUrl: string;
-  glass: string;
-  measures: Array<{
-    measure: string;
-    ingredient: {
-      name: string;
-    };
-  }>;
-}
 interface Result {
   results: DBDrink[];
 }
