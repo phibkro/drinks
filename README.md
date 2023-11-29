@@ -159,6 +159,8 @@ For state management we use Apollo Local State Management.
 It is a simple and effective way to manage state in our application.
 It is also a good choice as we are already using Apollo for our GraphQL server and client.
 
+We use Apollo Local State Management for storing the search paremeters and results, so searchPage persists when navigating to detailsPage and back.
+
 ### React Router
 
 React Router allows us to employ URL path routing in our Single Page Application (SPA)
