@@ -16,10 +16,6 @@ export const appRouter = createHashRouter([
         path: rootPath,
         element: <SearchPage />,
       },
-      /* {
-        path: "details:drinkId",
-        element: <DetailsPage />,
-      }, */
       {
         path: "details",
         element: (
