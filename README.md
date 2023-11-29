@@ -195,6 +195,10 @@ From there on you can choose whether to run component or end-to-end (E2E) tests.
 #### Component testing
 
 We do not write custom tests the shadcn/ui components as it is a stable "library" and we are not tinkering with its primitives.
+We do however write tests for our custom components.
+They are written in the same folder as the component they are testing and are named `*.cy.tsx`.
+Cypress is allowed for component tests.
+Check thread @128 in Piazza 😉
 
 #### End-to-end testing
 
