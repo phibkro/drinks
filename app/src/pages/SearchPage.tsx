@@ -23,18 +23,16 @@ export default function SearchPage() {
         name: inputVar(),
         options: optionsVar(),
         offset: 0,
-        limit: 10,
+        limit: 12,
       },
     },
   );
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     refetch();
   };
 
-  //usikker på om dette ble omvendt men fiks senere
   const handleCheckbox = () => {
-    // setChecked(!checked);
     optionsVar({
       sort: optionsVar().sort,
       alcohol: !optionsVar().alcohol,
@@ -42,17 +40,17 @@ export default function SearchPage() {
   };
 
   return (
-    <main className="flex flex-col gap-10">
+    <main className="flex flex-col items-center gap-10 ">
       <form
         onSubmit={(event) => {
           event.preventDefault();
           handleSearch();
         }}
         role="search"
-        className="flex flex-col gap-4"
+        className="flex w-8/12 flex-col items-center gap-4 "
       >
-        <Label>
-          Search for your favorite drink!
+        <Label id="search_label">Search for your favorite drink!</Label>
+        <div className="flex flex-col gap-4 sm:flex-row">
           <Input
             placeholder={'"Margarita"'}
             onChange={(event) => {
@@ -60,15 +58,30 @@ export default function SearchPage() {
             }}
             value={inputValue}
             role="searchbox"
+            aria-labelledby="search_label"
+            data-cy="search-input"
           />
-        </Label>
+          <Button
+            variant="default"
+            type="submit"
+            className="m-auto min-w-min"
+            data-cy="search_button"
+          >
+            Search
+          </Button>
+        </div>
 
-        <div className="flex gap-12 self-center">
-          <div>
+        <div className="flex max-w-full flex-col gap-8 sm:flex-row">
+          <div className="flex flex-col items-center">
             <h2 className="text-center text-xl ">Sort name by:</h2>
             <RadioGroup
-              onValueChange={(value) => {
-                optionsVar({ sort: value, alcohol: optionsVar().alcohol });
+              onValueChange={async (value) => {
+                await optionsVar({
+                  sort: value,
+                  alcohol: optionsVar().alcohol,
+                });
+                // wait for optionsVar to update before refetching
+                handleSearch();
               }}
               defaultValue={optionsValue.sort}
               className="flex flex-col"
@@ -97,13 +110,17 @@ export default function SearchPage() {
             </RadioGroup>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center">
             <h2 className="text-xl">Alcohol</h2>
             <div className="flex flex-row gap-1">
               <Checkbox
                 className="self-center"
                 checked={!optionsValue.alcohol}
-                onCheckedChange={handleCheckbox}
+                onCheckedChange={async () => {
+                  await handleCheckbox();
+                  // wait for optionsVar to update before refetching
+                  handleSearch();
+                }}
                 id="non-alcoholic"
                 aria-labelledby="non-alcoholic_label"
               />
@@ -116,48 +133,33 @@ export default function SearchPage() {
               </Label>
             </div>
           </div>
-          <Button onClick={handleSearch}>Apply</Button>
-          {/* 
-          <h2 className="text-xl">Rating</h2>
-          {Array(5)
-            .fill(5)
-            .map((_, n) => (
-              <div className="flex" key={n}>
-                <Checkbox />
-                <label
-                  htmlFor="terms1"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                ></label>
-                {Array(n + 1)
-                  .fill(n + 1)
-                  .map((_, m) => (
-                    <Martini
-                      color={ratedColor}
-                      className="hover:cursor-pointer"
-                      key={m}
-                    />
-                  ))}
-              </div>
-            ))}*/}
         </div>
       </form>
 
       {loading && <p>Loading...</p>}
       {error && <p>Error : {error.message}</p>}
-      {data ? (
+      {data && data.searchDrinksByName.length !== 0 ? (
         <>
           <ResultList results={data.searchDrinksByName} />
-          <Button
-            onClick={() => {
-              fetchMore({
-                variables: {
-                  offset: data.searchDrinksByName.length,
-                },
-              });
-            }}
-          >
-            Load more drinks
-          </Button>
+          {data.searchDrinksByName.length % 12 === 0 ? (
+            // if the number of results is a multiple of 12, there are more results to load
+            // temporary solution
+            <Button
+              className="min-w-min"
+              data-cy="load-more"
+              onClick={() => {
+                fetchMore({
+                  variables: {
+                    offset: data.searchDrinksByName.length,
+                  },
+                });
+              }}
+            >
+              Load more drinks
+            </Button>
+          ) : (
+            <p>No more results to load</p>
+          )}
         </>
       ) : (
         <p>No results</p>

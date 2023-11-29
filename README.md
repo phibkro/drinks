@@ -18,7 +18,7 @@ It is built with modern web technologies like React, Typescript, Tailwind and Gr
 - Spin up a postgres database
   - Mac
     - I use [Postgres.app](https://postgresapp.com/) to host my database and [Postico](https://eggerapps.at/postico/) to interact with it
-    - You can also use [Homebrew](https://formulae.brew.sh/formula/postgresql)
+    - You can also use [Homebrew](https://formulae.brew.sh/formula/postgresql@13#default)
     - Or [Docker](https://hub.docker.com/_/postgres)
 - Create a `.env` file in the `/server/prisma` directory
 - Add the database url to the `.env` file
@@ -34,7 +34,7 @@ It is built with modern web technologies like React, Typescript, Tailwind and Gr
 
 To generate our seed data we use the [TheCocktailDB](https://www.thecocktaildb.com/api.php) API.
 
-Ingredients data was downloaded from [TheCocktailDB]( www.thecocktaildb.com/api/json/v1/1/list.php?i=list) and manually cleaned and prepared for use in `server/src/prisma/seed.ts`.
+Ingredients data was downloaded from [TheCocktailDB](https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list) and manually cleaned and prepared for use in `server/src/prisma/seed.ts`.
 
 All drinks data was downloaded from a [Kaggle dataset](https://www.kaggle.com/datasets/ai-first/cocktail-ingredients/).
 The data was manually cleaned,
@@ -230,6 +230,20 @@ It is important not to overcomplicate our stack with too many libraries and Apol
 Apollo server is used to implement our GraphQL server.
 
 Apollo client is used fetch data from our GraphQL server in the frontend.
+
+## Accessibility
+
+We implemented the Shadcn/ui library, which is built on top of Radix, designed with accessibility in mind. For remaining gaps, we added aria-label to necessary components, such as interactive buttons.
+
+We made the website keyboard-friendly so that users can navigate through the site using only the keyboard (tab, enter, space, and arrow keys).
+
+The website also features dark mode, both to protect sensitive eyes and to reduce power consumption on screens. Speaking of which...
+
+## Sustainability
+
+We chose to use low-resolution images from our dataset, considering that the quality from other images was unnecessary. This reduces the amount of data that needs to be transferred, which in turn reduces the energy consumption of the website. We could have gone further and converted them to WEBP instead of PNGs, but we decided that the time spent on that would be better spent on other features.
+
+In our ApolloClient we implemented InMemoryCache which stores results from the GraphQL queries in memory. This can result in reduced network traffic, faster data responses and optimized resource usage. Which leads to reduced energy consumption.
 
 ## Code style
 

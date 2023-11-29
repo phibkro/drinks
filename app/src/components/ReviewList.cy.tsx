@@ -10,7 +10,6 @@ const testReviews: ReviewShape[] = [
 
 describe("<ReviewList />", () => {
   it("renders with all reviews", () => {
-    // see: https://on.cypress.io/mounting-react
     cy.mount(<ReviewList className="" reviews={testReviews} />);
     cy.contains("Did other people like this cocktail?");
     cy.contains("Worst ever tested");

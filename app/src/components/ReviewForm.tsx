@@ -58,7 +58,13 @@ function ReviewForm({
   };
 
   return submitted ? (
-    <div className="flex h-80 w-[40em] flex-col items-center justify-center self-center border-2">
+    <div
+      className={`${className}
+        mx-10 flex  h-80 
+        w-[40em] max-w-full flex-col
+        items-center justify-center gap-4
+      `}
+    >
       <p className="text-xl">{"Thank you for submitting a review <3"}</p>
     </div>
   ) : (
@@ -66,12 +72,12 @@ function ReviewForm({
       onSubmit={handleSubmit(onSubmit)}
       id="reviewForm"
       className={`${className}
-      flex h-[20em] w-[40em] flex-col 
-      items-center justify-center gap-4
-      border-2
+        mx-10 flex  h-80 
+        w-[40em] max-w-full flex-col
+        items-center justify-center gap-4
       `}
     >
-      <h2 className="text-xl">Give this cocktail a review!</h2>
+      <h2 className="text-center text-xl">Give this cocktail a review!</h2>
 
       <RadioGroup aria-labelledby="Rate it" className="flex flex-row">
         {ratingRange.map((i) => (
@@ -79,10 +85,11 @@ function ReviewForm({
             aria-labelledby={`rating-group-item-${i}_label`}
             value={`${i}`}
             onFocus={() => setRating(i)}
+            key={i}
           >
             <Label id={`rating-group-item-${i}_label`}>{i}</Label>
             <Martini
-              color={i <= rating ? ratedColor : "white"}
+              color={i <= rating ? ratedColor : "currentColor"}
               onClick={() => setRating(i)}
               className="hover:cursor-pointer"
               key={i}
@@ -94,15 +101,32 @@ function ReviewForm({
       <Label id="textarea_label">What do you think?</Label>
       <Textarea
         placeholder="Did you like your cocktail?"
-        {...register("comment", { required: true })}
-        className="max-w-prose bg-gray-200 text-black"
-        rows={4}
+        {...register("comment", {
+          required: {
+            value: true,
+            message: "Please add a comment before submitting you review",
+          },
+          minLength: {
+            value: 1,
+            message: "Please write more before submitting",
+          },
+          maxLength: {
+            value: 280,
+            message: "Please use less than 280 characters",
+          },
+          pattern: {
+            value: /(.|\s)*\S(.|\s)*/,
+            message: "You need more than spaces in your review",
+          },
+        })}
+        className="max-w-full bg-gray-200 text-black"
+        rows={8}
         cols={50}
         aria-labelledby="textarea_label"
       ></Textarea>
       {errors.comment ? (
         //Error if user doesnt leave comment when reviewing drink
-        <span>Please add a comment before submitting you review</span>
+        <span>{errors.comment.message}</span>
       ) : (
         <div className="h-6"></div>
       )}

@@ -6,7 +6,7 @@ import { rootPath } from "./router";
 
 function App() {
   return (
-    <div className="flex min-h-screen flex-col gap-5 p-8">
+    <div className="flex min-h-screen flex-col gap-5 p-8 lg:px-40 lg:py-8">
       <header className="flex justify-between">
         <Link to={rootPath} aria-label="Link to home page">
           <Button variant="outline" size="icon">
