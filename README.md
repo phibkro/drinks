@@ -165,25 +165,33 @@ React Router allows us to employ URL path routing in our Single Page Application
 - Error Page (*): Displays if a routing error occurs, for example navigating to an undefined page url
 
 ```jsx
-const rootPath = import.meta.env.BASE_URL
-export const appRouter = createBrowserRouter([
+export const rootPath = "/";
+export const appRouter = createHashRouter([
   {
     path: rootPath,
     element: <App />,
-    errorElement: <ErrorPage />,
     children: [
       {
         path: rootPath,
         element: <SearchPage />,
       },
       {
-        path: "details/:drinkId",
-        element: <DetailsPage />,
-        errorElement: <ErrorPage />,
+        path: "details",
+        element: (
+          <>
+            <Outlet />
+          </>
+        ),
+        children: [
+          {
+            path: ":drinkId",
+            element: <DetailsPage />,
+          },
+        ],
       },
     ],
   },
-  ]);
+]);
 ```
 
 ### Testing with Cypress
