@@ -52,7 +52,7 @@ These programs can be run with `npm run run:drinksToJSON` and `npm run run:drink
 
 More specific commands you find by checking out the subrepos `/app` and `/server`
 
-## File structure
+## File structure (OUTDATED)
 
 - `app/` contains web app code
   - `index.html` configure metadata here
@@ -199,6 +199,10 @@ We do not write custom tests the shadcn/ui components as it is a stable "library
 #### End-to-end testing
 
 Our most important tests are our e2e tests that ensures the app works as intended for our users.
+
+To run the e2e tests both the app and server must be running.
+Then run `npm run cypress:open` in app/ and choose the `e2e` folder.
+Or run `npm run test-e2e` in app/ to run all tests in the `e2e` folder.
 
 ### PostgresQL
 
