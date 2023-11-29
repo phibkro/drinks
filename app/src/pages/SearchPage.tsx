@@ -16,7 +16,6 @@ const optionsVar = makeVar({
 export default function SearchPage() {
   const inputValue = useReactiveVar(inputVar);
   const optionsValue = useReactiveVar(optionsVar);
-  //const [lastLength, setLastLength] = useState(0);
   const { loading, error, data, fetchMore, refetch } = useQuery(
     SEARCH_DRINKS_BY_NAME,
     {
@@ -144,6 +143,7 @@ export default function SearchPage() {
           <ResultList results={data.searchDrinksByName} />
           {data.searchDrinksByName.length % 12 === 0 ? (
             // if the number of results is a multiple of 12, there are more results to load
+            // temporary solution
             <Button
               className="min-w-min"
               data-cy="load-more"
