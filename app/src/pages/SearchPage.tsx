@@ -33,9 +33,7 @@ export default function SearchPage() {
     refetch();
   };
 
-  //usikker på om dette ble omvendt men fiks senere
   const handleCheckbox = () => {
-    // setChecked(!checked);
     optionsVar({
       sort: optionsVar().sort,
       alcohol: !optionsVar().alcohol,
@@ -62,8 +60,14 @@ export default function SearchPage() {
             value={inputValue}
             role="searchbox"
             aria-labelledby="search_label"
+            data-cy="search-input"
           />
-          <Button variant="default" type="submit" className="m-auto min-w-min">
+          <Button
+            variant="default"
+            type="submit"
+            className="m-auto min-w-min"
+            data-cy="search_button"
+          >
             Search
           </Button>
         </div>
@@ -143,6 +147,7 @@ export default function SearchPage() {
           data.searchDrinksByName.length >= 10 ? ( // if less than 10 elements show from search no more elements to load
            */ <Button
               className="min-w-min"
+              data-cy="load-more"
               onClick={() => {
                 //setLastLength(data.searchDrinksByName.length);
                 //console.log(lastLength);

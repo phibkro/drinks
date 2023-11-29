@@ -4,9 +4,8 @@ describe("Sorting", () => {
   });
 
   it("should call qraphgl query with sort asc", () => {
-    cy.get("#asc").click();
     cy.intercept("POST", "http://localhost:4000/").as("backendIterceptAsc");
-    cy.get(".gap-12 > .inline-flex").click();
+    cy.get("#asc").click();
     cy.wait("@backendIterceptAsc")
       .its("request.body.variables.options.sort")
       .should("contain", "asc");
@@ -16,7 +15,7 @@ describe("Sorting", () => {
   it("should call qraphgl query with sort desc", () => {
     cy.get("#desc").click();
     cy.intercept("POST", "http://localhost:4000/").as("backendIterceptDesc"); // have to intercept after sort value changed
-    cy.get(".gap-12 > .inline-flex").click();
+    cy.get("[data-cy=search_button]").click();
     cy.wait("@backendIterceptDesc")
       .its("request.body.variables.options.sort")
       .should("contain", "desc");
