@@ -142,16 +142,12 @@ export default function SearchPage() {
       {data && data.searchDrinksByName.length !== 0 ? (
         <>
           <ResultList results={data.searchDrinksByName} />
-          {
-            /*data.searchDrinksByName.length == lastLength + 10 && // if pagination load less than 10 new elements there are no more elements to load
-          data.searchDrinksByName.length >= 10 ? ( // if less than 10 elements show from search no more elements to load
-           */ <Button
+          {data.searchDrinksByName.length % 12 === 0 ? (
+            // if the number of results is a multiple of 12, there are more results to load
+            <Button
               className="min-w-min"
               data-cy="load-more"
               onClick={() => {
-                //setLastLength(data.searchDrinksByName.length);
-                //console.log(lastLength);
-
                 fetchMore({
                   variables: {
                     offset: data.searchDrinksByName.length,
@@ -160,11 +156,10 @@ export default function SearchPage() {
               }}
             >
               Load more drinks
-            </Button> /*
+            </Button>
           ) : (
             <p>No more results to load</p>
-          )*/
-          }
+          )}
         </>
       ) : (
         <p>No results</p>
