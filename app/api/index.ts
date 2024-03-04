@@ -1,8 +1,8 @@
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { addMocksToSchema } from "@graphql-tools/mock";
 import { ApolloServer } from "@apollo/server";
-import { PrismaClient } from "@prisma/client";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { addMocksToSchema } from "@graphql-tools/mock";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -144,12 +144,12 @@ const resolvers = {
           textContent: args.textContent,
         },
       }),
-      removeReview: (_parent, args) =>
-        prisma.review.delete({
-          where: {
-            id: args.id
-          }
-        })
+    removeReview: (_parent, args) =>
+      prisma.review.delete({
+        where: {
+          id: args.id,
+        },
+      }),
   },
 
   // Trivial resolvers for relations
@@ -207,3 +207,5 @@ const { url } = await startStandaloneServer(server, {
 });
 
 console.log(`🚀  Server ready at: ${url}`);
+
+module.exports = server;
