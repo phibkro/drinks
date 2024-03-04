@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "next lint",
     "format": "prettier ./src --write",
     "test": "npm run lint && npm run test-components && npm run test-e2e",
     "test-e2e": "cypress run",

@@ -8,5 +8,4 @@ module.exports = {
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs", "cypress"],
   parser: "@typescript-eslint/parser",
-  plugins: ["react-refresh"],
 };
