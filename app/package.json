@@ -14,6 +14,9 @@
     "test-components": "cypress run --component",
     "cypress:open": "cypress open"
   },
+  "prisma": {
+    "seed": "cd api && node --loader ts-node/esm src/prisma/seed.ts"
+  },
   "dependencies": {
     "@apollo/client": "^3.8.7",
     "@apollo/react-testing": "^4.0.0",
