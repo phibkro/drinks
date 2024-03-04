@@ -33,7 +33,5 @@
     }
   },
   "include": ["./src", "./cypress", "./dist/types/**/*.ts", "./next-env.d.ts"],
-  "exclude": ["./node_modules"],
-
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": ["./node_modules"]
 }
