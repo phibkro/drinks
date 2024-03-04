@@ -25,7 +25,9 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.9.4",
+    "@as-integrations/next": "^3.0.0",
     "@prisma/client": "^5.4.2",
+    "@vercel/node": "^3.0.20",
     "graphql": "^16.8.1",
     "prisma": "^5.4.2"
   },

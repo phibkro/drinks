@@ -3,7 +3,7 @@ import { offsetLimitPagination } from "@apollo/client/utilities";
 
 const httpLink = createHttpLink({
   // Connect to local server
-  uri: "http://localhost:4000",
+  uri: "http://localhost:3000/api",
   // Connect to PROD on vm
   // uri: "http://it2810-40.idi.ntnu.no:4000/",
 });
