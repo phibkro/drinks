@@ -96,7 +96,6 @@ const resolvers = {
 					alcoholic: args.options?.alcohol,
 					name: {
 						contains: args.name,
-						mode: "insensitive",
 					},
 				},
 			});

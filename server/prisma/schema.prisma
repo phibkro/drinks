@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Drink {
@@ -36,7 +36,7 @@ model Measure {
 
   measure String
 
-  @@id([drinkId, ingredientId])
+  @@unique([drinkId, ingredientId])
 }
 
 model Review {

@@ -12,7 +12,6 @@ async function main() {
 	await prisma.drink.createMany(seedDrinks);
 	await prisma.measure.createMany({
 		data: seedMeasures.data,
-		skipDuplicates: true,
 	});
 }
 main()
