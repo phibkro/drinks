@@ -25,9 +25,9 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.9.4",
-    "@prisma/client": "^5.4.2",
+    "@prisma/client": "^5.19.1",
     "graphql": "^16.8.1",
-    "prisma": "^5.4.2"
+    "prisma": "^5.19.1"
   },
   "devDependencies": {
     "@graphql-tools/mock": "^9.0.0",
