@@ -8,16 +8,16 @@
     "dev": "npm run build && NODE_ENV=development node ./dist/index.js",
     "start": "npm run build && NODE_ENV=production node ./dist/index.js",
     "test": "echo \"no tests yet\" ",
-    "run:drinksToJSON": "node --loader ts-node/esm src/lib/csvToJSON.ts src/data/cleaned_all_drinks.csv",
-    "run:createDrinksSeed": "node --loader ts-node/esm src/lib/createDrinksSeed.ts",
-    "run:createIngredientAndMeasuresSeed": "node --loader ts-node/esm src/lib/createIngredientsAndMeasuresSeeds.ts",
+    "run:drinksToJSON": "node --loader ts-node/esm scripts/csvToJSON.ts src/data/cleaned_all_drinks.csv",
+    "run:createDrinksSeed": "node --loader ts-node/esm scripts/createDrinksSeed.ts",
+    "run:createIngredientAndMeasuresSeed": "node --loader ts-node/esm scripts/createIngredientsAndMeasuresSeeds.ts",
     "prisma:reset": "prisma migrate reset",
     "prisma:prototype": "prisma db push",
     "prisma:migrate-dev": "prisma migrate dev",
     "prisma:studio": "prisma studio"
   },
   "prisma": {
-    "seed": "node --loader ts-node/esm src/prisma/seed.ts"
+    "seed": "node --loader ts-node/esm scripts/seed.ts"
   },
   "keywords": [],
   "author": "",
