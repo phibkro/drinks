@@ -1,10 +1,9 @@
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { addMocksToSchema } from "@graphql-tools/mock";
 import { ApolloServer } from "@apollo/server";
 import { PrismaClient } from "@prisma/client";
-import { startStandaloneServer } from "@apollo/server/standalone";
-
-const prisma = new PrismaClient();
+import type { Context, Env } from "../worker-configuration";
+import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
+import { startServerAndCreateCloudflareWorkersHandler } from "@as-integrations/cloudflare-workers";
+import { PrismaD1 } from "@prisma/adapter-d1";
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -78,15 +77,17 @@ const resolvers = {
 	// TODO: Query ingredients by drink by
 	// getting all ingredients for measures in a drink
 	Query: {
-		allDrinks: () => prisma.drink.findMany(),
-		drinkById: (_parent, args) =>
+		allDrinks: (_parent, _args, c) => c.prisma.drink.findMany(),
+		drinkById: (_parent, args, c) => {
+			const { prisma } = c;
 			prisma.drink.findUnique({
 				where: {
 					id: args.id,
 				},
-			}),
-		searchDrinksByName: (_parent, args) => {
-			return prisma.drink.findMany({
+			});
+		},
+		searchDrinksByName: (_parent, args, c) => {
+			return c.prisma.drink.findMany({
 				skip: args.offset,
 				take: args.limit,
 				orderBy: {
@@ -100,28 +101,28 @@ const resolvers = {
 				},
 			});
 		},
-		allIngredients: () => prisma.ingredient.findMany(),
-		ingredientById: (_parent, args) =>
-			prisma.ingredient.findUnique({ where: { id: args.id } }),
+		allIngredients: (_parent, _args, c) => c.prisma.ingredient.findMany(),
+		ingredientById: (_parent, args, c) =>
+			c.prisma.ingredient.findUnique({ where: { id: args.id } }),
 
-		allReviews: () => prisma.review.findMany(),
-		reviewsByDrinkId: (_parent, args) =>
-			prisma.review.findMany({
+		allReviews: (_parent, _args, c) => c.prisma.review.findMany(),
+		reviewsByDrinkId: (_parent, args, c) =>
+			c.prisma.review.findMany({
 				where: {
 					drink: {
 						id: args.id,
 					},
 				},
 			}),
-		reviewById: (_parent, args) =>
-			prisma.review.findUnique({
+		reviewById: (_parent, args, c) =>
+			c.prisma.review.findUnique({
 				where: {
 					id: args.id,
 				},
 			}),
-		allMeasures: () => prisma.measure.findMany(),
+		allMeasures: () => c.prisma.measure.findMany(),
 		measuresInDrink: (_parent, args) => {
-			return prisma.measure.findMany({
+			return c.prisma.measure.findMany({
 				where: {
 					drink: {
 						id: args.id,
@@ -131,8 +132,8 @@ const resolvers = {
 		},
 	},
 	Mutation: {
-		addReview: (_parent, args) =>
-			prisma.review.create({
+		addReview: (_parent, args, c) =>
+			c.prisma.review.create({
 				data: {
 					drink: {
 						connect: {
@@ -143,8 +144,8 @@ const resolvers = {
 					textContent: args.textContent,
 				},
 			}),
-		removeReview: (_parent, args) =>
-			prisma.review.delete({
+		removeReview: (_parent, args, c) =>
+			c.prisma.review.delete({
 				where: {
 					id: args.id,
 				},
@@ -154,55 +155,44 @@ const resolvers = {
 	// Trivial resolvers for relations
 	Drink: {
 		// Resolve the 'measures' field for the Drink type
-		measures: (parent) =>
-			prisma.measure.findMany({ where: { drinkId: parent.id } }),
-		reviews: (parent) =>
-			prisma.review.findMany({ where: { drinkId: parent.id } }),
+		measures: (parent, _args, c: Context) =>
+			c.prisma.measure.findMany({ where: { drinkId: parent.id } }),
+		reviews: (parent, _args, c: Context) =>
+			c.prisma.review.findMany({ where: { drinkId: parent.id } }),
 	},
 	Ingredient: {
 		// Resolve the 'measure' field for the Ingredient type
-		measure: (parent) =>
-			prisma.measure.findMany({ where: { ingredientId: parent.id } }),
+		measure: (parent, _args, c: Context) =>
+			c.prisma.measure.findMany({ where: { ingredientId: parent.id } }),
 	},
 	Measure: {
 		// Resolve the 'ingredient' field for the Measure type
-		ingredient: (parent) =>
-			prisma.ingredient.findUnique({ where: { id: parent.ingredientId } }),
+		ingredient: (parent, _args, c: Context) =>
+			c.prisma.ingredient.findUnique({ where: { id: parent.ingredientId } }),
 
 		// Resolve the 'drink' field for the Measure type
-		drink: (parent) =>
-			prisma.drink.findUnique({ where: { id: parent.drinkId } }),
+		drink: (parent, _args, c: Context) =>
+			c.prisma.drink.findUnique({ where: { id: parent.drinkId } }),
 	},
 	Review: {
-		drink: (parent) =>
-			prisma.drink.findUnique({ where: { id: parent.drinkId } }),
+		drink: (parent, _args, c: Context) =>
+			c.prisma.drink.findUnique({ where: { id: parent.drinkId } }),
 	},
 };
 
-const environment = process.env.NODE_ENV || "development";
-
-const server =
-	environment === "production"
-		? new ApolloServer({
-				typeDefs,
-				resolvers,
-			})
-		: new ApolloServer({
-				schema: addMocksToSchema({
-					schema: makeExecutableSchema({ typeDefs, resolvers }),
-					preserveResolvers: true,
-				}),
-			});
-
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
-
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
-const { url } = await startStandaloneServer(server, {
-	listen: { port: 4000 },
+const server = new ApolloServer<Context>({
+	typeDefs,
+	resolvers,
+	introspection: true,
+	plugins: [ApolloServerPluginLandingPageLocalDefault({ footer: false })],
 });
 
-console.log(`🚀  Server ready at: ${url}`);
+export default {
+	fetch: startServerAndCreateCloudflareWorkersHandler<Env, Context>(server, {
+		context: async ({ env, request, ctx }) => {
+			const adapter = new PrismaD1(env.db);
+			const prisma = new PrismaClient({ adapter });
+			return { prisma };
+		},
+	}),
+};

@@ -1,0 +1,13 @@
+# Top-level configuration
+name = "drinks-server"
+# main = ".pylon/index.js"
+main = "src/index.ts"
+compatibility_date = "2024-03-29"
+compatibility_flags = [ "nodejs_compat_v2" ]
+
+workers_dev = false
+
+[[d1_databases]]
+binding = "db"
+database_name = "drinks-db"
+database_id = "24ec1a35-f2f2-4ac5-828f-66ea3605710c"

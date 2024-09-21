@@ -7,8 +7,9 @@
     "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "types": ["node"],
+    "types": ["node", "@cloudflare/workers-types"],
     "resolveJsonModule": true
   },
+  "include": ["worker-configuration.d.ts"],
   "exclude": ["scripts"]
 }
