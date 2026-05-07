@@ -2,22 +2,26 @@
   "name": "drinks",
   "version": "1.0.0",
   "description": "Share your drink recipes and review others!",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "install": "cd app && npm install & cd server && npm install",
-    "start": "npm run app:start & npm run server:start",
-    "dev": "npm run server:dev & npm run app:dev",
-    "test": "npm run app:test & cd server && npm test",
+    "install:all": "cd app && npm install && cd ../server && bun install",
+    "dev": "concurrently -n server,app -c blue,green \"npm:server:dev\" \"npm:app:dev\"",
     "app:dev": "cd app && npm run dev",
-    "app:start": "cd app && npm run build && npm run preview",
+    "app:build": "cd app && npm run build",
+    "app:preview": "cd app && npm run preview",
     "app:test": "cd app && npm run test",
-    "server:dev": "cd server && npm run dev",
-    "server:start": "cd server && npm start"
+    "server:dev": "cd server && bun run dev",
+    "server:start": "cd server && bun run start",
+    "server:seed": "cd server && bun run seed",
+    "server:migrate": "cd server && bun run migrate"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.stud.idi.ntnu.no/it2810-h23/Team-40/prosjekt2"
+    "url": "https://github.com/phibkro/drinks"
   },
   "author": "@eskildov, @philipbk, @solvhold",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
 }

@@ -1,15 +1,20 @@
-import type { PrismaClient } from "@prisma/client";
-import seedIngredients from "../data/seedIngredients.json" assert {
+import { PrismaClient } from "@prisma/client";
+import seedDrinks from "../data/seedDrinks.json" with { type: "json" };
+import seedIngredients from "../data/seedIngredients.json" with {
 	type: "json",
 };
-import seedDrinks from "../data/seedDrinks.json" assert { type: "json" };
-import seedMeasures from "../data/seedMeasures.json" assert { type: "json" };
+import seedMeasures from "../data/seedMeasures.json" with { type: "json" };
 
 export async function seed(prisma: PrismaClient) {
-	// Populate db
-	await prisma.ingredient.createMany(seedIngredients);
-	await prisma.drink.createMany(seedDrinks);
-	await prisma.measure.createMany({
-		data: seedMeasures.data,
-	});
+	await prisma.ingredient.createMany({ data: seedIngredients.data });
+	await prisma.drink.createMany({ data: seedDrinks.data });
+	await prisma.measure.createMany({ data: seedMeasures.data });
+}
+
+const prisma = new PrismaClient();
+try {
+	await seed(prisma);
+	console.log("seeded");
+} finally {
+	await prisma.$disconnect();
 }

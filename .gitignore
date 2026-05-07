@@ -1,0 +1,6 @@
+node_modules/
+.claude/
+.env
+.direnv/
+result
+result-*
