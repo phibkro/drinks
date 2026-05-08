@@ -1,3 +1,5 @@
+import "./sentry"; // must run before any other code so it can patch fetch/XHR
+
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { ApolloProvider } from "@apollo/client";
 import React from "react";

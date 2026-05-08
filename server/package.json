@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.13.0",
+    "@sentry/bun": "^10.52.0",
     "drizzle-orm": "^0.45.2",
     "graphql": "^16.14.0",
     "zod": "^4.4.3"

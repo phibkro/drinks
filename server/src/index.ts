@@ -1,3 +1,5 @@
+import "./sentry.ts"; // must run before any other code so it can patch globals
+
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { and, asc, desc, eq, like } from "drizzle-orm";
