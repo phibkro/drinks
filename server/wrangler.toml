@@ -1,0 +1,24 @@
+# drinks-server — Apollo GraphQL on Cloudflare Workers + D1.
+#
+# Schema is already in the live D1 from the 2024 deploy (the legacy
+# Prisma init landed identical column names + types to what Drizzle
+# now expects). No migration apply needed on first deploy.
+#
+# Deploy:
+#   wrangler deploy
+#
+# Local dev (uses miniflare's D1 shim):
+#   wrangler dev
+
+name = "drinks-server"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "drinks-db"
+database_id = "24ec1a35-f2f2-4ac5-828f-66ea3605710c"
+
+[observability]
+enabled = true

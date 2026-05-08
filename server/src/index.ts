@@ -1,17 +1,19 @@
-import "./sentry.ts"; // must run before any other code so it can patch globals
-
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import { startServerAndCreateCloudflareWorkersHandler } from "@as-integrations/cloudflare-workers";
 import { and, asc, desc, eq, like } from "drizzle-orm";
 import { GraphQLError } from "graphql";
 import { z } from "zod";
 
-import { db, schema } from "./db/index.ts";
+import { getDb, schema } from "./db.ts";
 
 const { drinks, ingredients, measures, reviews } = schema;
 
+interface Env {
+	DB: D1Database;
+}
+
 interface Context {
-	db: typeof db;
+	db: ReturnType<typeof getDb>;
 }
 
 const typeDefs = `#graphql
@@ -251,11 +253,11 @@ const server = new ApolloServer<Context>({
 	introspection: true,
 });
 
-const port = Number(process.env.PORT ?? 4000);
-
-const { url } = await startStandaloneServer(server, {
-	listen: { port, host: process.env.HOST ?? "0.0.0.0" },
-	context: async () => ({ db }),
-});
-
-console.log(`🍹 drinks-server ready at ${url}`);
+// Workers entry point. ApolloServer's Workers integration handles
+// the request lifecycle; per-request `db` is built from the D1
+// binding in env.
+export default {
+	fetch: startServerAndCreateCloudflareWorkersHandler<Env, Context>(server, {
+		context: async ({ env }) => ({ db: getDb(env.DB) }),
+	}),
+};

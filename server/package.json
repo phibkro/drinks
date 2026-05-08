@@ -1,25 +1,26 @@
 {
   "name": "drinks-server",
-  "version": "1.0.0",
-  "description": "Backend for the drinks app",
+  "version": "2.0.0",
+  "description": "Backend for the drinks app — Apollo on Cloudflare Workers + D1",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun --watch run src/index.ts",
-    "start": "bun run src/index.ts",
-    "migrate": "bun run src/migrate.ts",
-    "seed": "bun run src/seed.ts"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "seed": "bun run src/seed.ts",
+    "tail": "wrangler tail"
   },
   "dependencies": {
     "@apollo/server": "^4.13.0",
-    "@sentry/bun": "^10.52.0",
+    "@as-integrations/cloudflare-workers": "^1.1.1",
     "drizzle-orm": "^0.45.2",
     "graphql": "^16.14.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260508.1",
     "@types/node": "^20.19.40",
-    "bun-types": "^1.3.13",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.90.0"
   }
 }
