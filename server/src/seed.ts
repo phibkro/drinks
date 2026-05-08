@@ -1,20 +1,22 @@
-import { PrismaClient } from "@prisma/client";
 import seedDrinks from "../data/seedDrinks.json" with { type: "json" };
 import seedIngredients from "../data/seedIngredients.json" with {
 	type: "json",
 };
 import seedMeasures from "../data/seedMeasures.json" with { type: "json" };
 
-export async function seed(prisma: PrismaClient) {
-	await prisma.ingredient.createMany({ data: seedIngredients.data });
-	await prisma.drink.createMany({ data: seedDrinks.data });
-	await prisma.measure.createMany({ data: seedMeasures.data });
+import { db, schema } from "./db/index.ts";
+
+const { drinks, ingredients, measures } = schema;
+
+export async function seed() {
+	// Drizzle's bulk insert handles arrays of any size; SQLite's
+	// 999-parameter limit applies per statement, so very large
+	// bulk sets might need chunking. The current ~570 ingredients +
+	// ~600 drinks + ~3000 measures is well under that.
+	await db.insert(ingredients).values(seedIngredients.data);
+	await db.insert(drinks).values(seedDrinks.data);
+	await db.insert(measures).values(seedMeasures.data);
 }
 
-const prisma = new PrismaClient();
-try {
-	await seed(prisma);
-	console.log("seeded");
-} finally {
-	await prisma.$disconnect();
-}
+await seed();
+console.log("seeded");

@@ -4,3 +4,8 @@ node_modules/
 .direnv/
 result
 result-*
+
+# bun:sqlite
+*.db
+*.db-shm
+*.db-wal

@@ -8,7 +8,8 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node"],
+    "allowImportingTsExtensions": true,
+    "types": ["node", "bun-types"],
     "noEmit": true
   },
   "include": ["src/**/*"]
