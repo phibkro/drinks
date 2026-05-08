@@ -15,6 +15,13 @@ main = "src/index.ts"
 compatibility_date = "2026-05-01"
 compatibility_flags = ["nodejs_compat"]
 
+# Custom domain. Lives at top level (TOML rules: anything after
+# [[d1_databases]] without a new section header gets parsed as a
+# member of that table).
+routes = [
+  { pattern = "drinks-api.phibkro.org", custom_domain = true },
+]
+
 [[d1_databases]]
 binding = "DB"
 database_name = "drinks-db"
