@@ -1,4 +1,4 @@
-/// <reference types="Cypress"/>
+/// <reference types="cypress"/>
 describe("Filtering", () => {
   beforeEach(() => {
     cy.visit("/");
