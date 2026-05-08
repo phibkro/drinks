@@ -1,9 +1,42 @@
 import { ApolloServer } from "@apollo/server";
+import { GraphQLError } from "graphql";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 
 interface Context {
 	prisma: PrismaClient;
+}
+
+// ── Mutation input validation ────────────────────────────────────
+// drinks-api is internet-public (drinks-api.phibkro.org). The
+// Cloudflare rate-limiting rule caps abuse volume at 60 req/min/IP;
+// these schemas cap abuse *quality* — bounded ratings, sane review
+// length, no whitespace-only or empty text. Validation runs before
+// Prisma touches the DB; failures throw GraphQLError with a 400-ish
+// `BAD_USER_INPUT` code so clients see a clean error.
+
+const positiveInt = z.int().positive();
+
+const addReviewInput = z.object({
+	drinkId: positiveInt,
+	rating: z.int().min(1).max(5),
+	textContent: z
+		.string()
+		.trim()
+		.min(3, "review needs at least 3 characters")
+		.max(2000, "review can be at most 2000 characters")
+		.refine((s) => !/^https?:\/\/\S+$/i.test(s), "review can't be just a URL"),
+});
+
+const removeReviewInput = z.object({
+	id: positiveInt,
+});
+
+function badInput(err: z.ZodError): GraphQLError {
+	return new GraphQLError(err.issues.map((i) => i.message).join("; "), {
+		extensions: { code: "BAD_USER_INPUT" },
+	});
 }
 
 const typeDefs = `#graphql
@@ -115,16 +148,22 @@ const resolvers = {
 			_p: unknown,
 			args: { drinkId: number; rating: number; textContent: string },
 			c: Context,
-		) =>
-			c.prisma.review.create({
+		) => {
+			const parsed = addReviewInput.safeParse(args);
+			if (!parsed.success) throw badInput(parsed.error);
+			return c.prisma.review.create({
 				data: {
-					drink: { connect: { id: args.drinkId } },
-					rating: args.rating,
-					textContent: args.textContent,
+					drink: { connect: { id: parsed.data.drinkId } },
+					rating: parsed.data.rating,
+					textContent: parsed.data.textContent,
 				},
-			}),
-		removeReview: (_p: unknown, args: { id: number }, c: Context) =>
-			c.prisma.review.delete({ where: { id: args.id } }),
+			});
+		},
+		removeReview: (_p: unknown, args: { id: number }, c: Context) => {
+			const parsed = removeReviewInput.safeParse(args);
+			if (!parsed.success) throw badInput(parsed.error);
+			return c.prisma.review.delete({ where: { id: parsed.data.id } });
+		},
 	},
 
 	Drink: {
