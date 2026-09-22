@@ -1,6 +1,8 @@
 # Deploy Drinks at the Cloudflare edge
 
 Frozen: yes
+Status: deployed and accepted on 2026-09-22. The homelab runtime retired after production acceptance.
+
 Revision: 2026-09-22. The repository uses one Bun workspace lock for the
 application, API, and deployment program. The existing D1 database is retained
 if its deployment declaration is removed. Local development uses only local

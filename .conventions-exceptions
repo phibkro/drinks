@@ -1,0 +1,4 @@
+divergences:
+  - key: linter
+    value: existing-eslint-prettier
+    reason: The frontend retains its existing ESLint, Prettier, and Cypress toolchain; migrating the multi-package workspace to the foundry Oxlint and Oxfmt pair is separate product work.

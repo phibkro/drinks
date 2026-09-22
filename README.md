@@ -57,22 +57,19 @@ bun run deploy
 Inspect the plan before deployment.
 It must adopt and retain `drinks-db`. It must not replace or delete the database.
 
-For the first cutover:
-
-1. Record the current Pages deployment, API Worker revision, DNS records, and custom-domain attachments.
-2. Detach `drinks.phibkro.org` from Pages, or remove its Pages CNAME, immediately before the approved deployment.
-3. Run the deployment and verify both public domains before removing either prior deployment.
+The Cloudflare cutover completed on September 22, 2026.
+The application and API now deploy from this repository.
+No homelab runtime or current Pages attachment is part of the release path.
 
 ## Rollback
 
-For the first cutover, detach `drinks.phibkro.org` from the new Worker.
-Reattach the hostname to the previous Pages deployment.
-Redeploy the previous API Worker revision if the API changed.
-Do not delete or recreate `drinks-db`.
+Use a clean worktree at the last known-good revision. Install its lock file, run
+its checks, inspect `bun run plan`, and run `bun run deploy` only after operator
+approval. Verify both public domains and an existing D1-backed read.
 
-For later releases, use a clean worktree at the last known-good revision.
-Install its lock file, run its checks, inspect `bun run plan`, and run `bun run deploy` after operator approval.
-Do not use `alchemy destroy` as a rollback command.
+Do not delete or recreate `drinks-db`, and do not use `alchemy destroy` as a
+rollback command. The former Pages deployment is cutover history, not the
+default rollback target.
 
 ## Production addresses
 
