@@ -256,8 +256,58 @@ const server = new ApolloServer<Context>({
 // Workers entry point. ApolloServer's Workers integration handles
 // the request lifecycle; per-request `db` is built from the D1
 // binding in env.
+const apolloHandler = startServerAndCreateCloudflareWorkersHandler<
+	Env,
+	Context
+>(server, {
+	context: async ({ env }) => ({ db: getDb(env.DB) }),
+});
+
+const productionOrigin = "https://drinks.phibkro.org";
+const localOrigins: Record<string, true> = {
+	"http://localhost:5173": true,
+	"http://127.0.0.1:5173": true,
+};
+
+function corsHeaders(request: Request): Headers {
+	const headers = new Headers({
+		"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+		"Access-Control-Allow-Headers": "Content-Type",
+		Vary: "Origin",
+	});
+	const origin = request.headers.get("Origin");
+	const apiHostname = new URL(request.url).hostname;
+	const allowed =
+		origin === productionOrigin
+			? apiHostname === "drinks-api.phibkro.org"
+			: origin !== null &&
+				localOrigins[origin] === true &&
+				(apiHostname === "localhost" || apiHostname === "127.0.0.1");
+	if (allowed && origin !== null) {
+		headers.set("Access-Control-Allow-Origin", origin);
+	}
+	return headers;
+}
+
 export default {
-	fetch: startServerAndCreateCloudflareWorkersHandler<Env, Context>(server, {
-		context: async ({ env }) => ({ db: getDb(env.DB) }),
-	}),
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		const headers = corsHeaders(request);
+		if (request.method === "OPTIONS") {
+			return new Response(null, {
+				status: headers.has("Access-Control-Allow-Origin") ? 204 : 403,
+				headers,
+			});
+		}
+
+		const response = await apolloHandler(request, env, ctx);
+		const responseHeaders = new Headers(response.headers);
+		for (const [name, value] of headers) {
+			responseHeaders.set(name, value);
+		}
+		return new Response(response.body, {
+			status: response.status,
+			statusText: response.statusText,
+			headers: responseHeaders,
+		});
+	},
 };

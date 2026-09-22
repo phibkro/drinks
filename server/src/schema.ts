@@ -6,13 +6,9 @@ import {
 	text,
 } from "drizzle-orm/sqlite-core";
 
-// Schema mirrors the live SQLite at /var/lib/drinks/db.sqlite that
-// was originally created via Prisma's `migrate deploy` in the
-// 20240920151910_init migration. Column names + types preserved
-// verbatim (PascalCase table names from Prisma's default mapping)
-// so the existing data stays valid against this schema without any
-// Drizzle migration on first activation — `drizzle-kit push` is a
-// no-op against the matching live DB.
+// Schema preserves the existing production D1 table and column names from the
+// original Prisma migration. The Alchemy baseline migration creates the same
+// shape for fresh local D1 instances without replacing production data.
 
 export const drinks = sqliteTable("Drink", {
 	id: integer("id").primaryKey({ autoIncrement: true }),

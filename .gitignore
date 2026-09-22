@@ -4,6 +4,7 @@ node_modules/
 .direnv/
 result
 result-*
+.alchemy/
 
 # bun:sqlite
 *.db
